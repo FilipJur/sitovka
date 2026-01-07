@@ -2,78 +2,108 @@
 // Import the Logo as a React component
 // Note: We use the '?react' suffix because of vite-plugin-svgr
 import Logo from "../../assets/logo.svg?react";
-import { Button } from '../ui/Button';
+import { Button } from "../ui/Button";
+import { cn } from "../../utils/cn";
 
-const navItems = [
-    { name: "Úvod", href: "/" },
-    { name: "Co umíme", href: "#co-umime" },
-    { name: "Reference", href: "#reference" },
-    { name: "Kontakty", href: "#kontakty" },
+interface NavItem {
+  name: string;
+  href: string;
+  variant?: "primary" | "outline" | "dark";
+}
+
+const navItems: NavItem[] = [
+  { name: "Úvod", href: "/" },
+  { name: "Co umíme", href: "#co-umime", variant: "outline" },
+  { name: "Reference", href: "#reference", variant: "primary" },
+  { name: "Kontakty", href: "#kontakty" },
 ];
 ---
 
 <header
-    class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-brand-dark/5 transition-all duration-300"
+  class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-brand-dark/5 transition-all duration-300"
 >
-    <div class="container mx-auto px-6 h-24 flex items-center justify-between">
-        <!--
+  <div class="container mx-auto px-6 h-24 flex items-center justify-between">
+    <!--
       1. LOGO
       Using SVGR component allows us to style the internal paths.
       The 'text-brand-dark' class fills the SVG because your logo.svg likely uses fill attributes.
       We add 'group' to animate color on hover.
     -->
-        <a href="/" class="flex-shrink-0 group" aria-label="Domů">
-            <Logo className="h-10 w-auto" aria-hidden="true" />
-        </a>
+    <a href="/" class="flex-shrink-0 group" aria-label="Domů">
+      <Logo className="h-10 w-auto" aria-hidden="true" />
+    </a>
 
-        <!--
+    <!--
       2. NAVIGATION & CTA
       Layout: Flex Row with gap-10
     -->
-        <div class="flex items-center gap-10">
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex items-center gap-10">
-                {
-                    navItems.map((item) => (
-                        <a
-                            href={item.href}
-                            class="text-base font-bold italic text-brand-dark hover:text-brand-green transition-colors uppercase tracking-wide"
-                        >
-                            {item.name}
-                        </a>
-                    ))
-                }
-            </nav>
+    <div class="flex items-center gap-10">
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center">
+        {
+          navItems.map((item, index) => {
+            const isLast = index === navItems.length - 1;
+            const nextItem = navItems[index + 1];
+            const needsMargin =
+              !isLast &&
+              (item.variant === undefined || nextItem.variant === undefined);
+            const buttonGap = !isLast && item.variant && nextItem.variant;
 
-            <!--
+            return item.variant ? (
+              <Button
+                href={item.href}
+                variant={item.variant}
+                textColor={item.variant === "outline" ? "brand-dark" : undefined}
+                className={cn(
+                  "py-2.5",
+                  needsMargin && "mr-5",
+                  buttonGap && "mr-px",
+                )}
+              >
+                {item.name}
+              </Button>
+            ) : (
+              <a
+                href={item.href}
+                class={cn(
+                  "text-base font-bold italic text-brand-dark hover:text-brand-green transition-colors uppercase tracking-wide",
+                  needsMargin && "mr-5",
+                )}
+              >
+                {item.name}
+              </a>
+            );
+          })
+        }
+      </nav>
+
+      <!--
         CTA BUTTON
         Using standardized Button component
       -->
-            <div class="hidden md:block">
-                <Button href="#poptavka" variant="dark">
-                    Poptávka
-                </Button>
-            </div>
+      <div class="hidden md:block">
+        <Button href="#poptavka" variant="dark" className="py-2.5"> Poptávka </Button>
+      </div>
 
-            <!-- Mobile Menu Trigger (Inline SVG for now) -->
-            <button
-                class="md:hidden text-brand-dark p-2 hover:text-brand-green transition-colors"
-                aria-label="Menu"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="w-8 h-8"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3.75 9h16.5m-16.5 6.75h16.5"></path>
-                </svg>
-            </button>
-        </div>
+      <!-- Mobile Menu Trigger (Inline SVG for now) -->
+      <button
+        class="md:hidden text-brand-dark p-2 hover:text-brand-green transition-colors"
+        aria-label="Menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 9h16.5m-16.5 6.75h16.5"></path>
+        </svg>
+      </button>
     </div>
+  </div>
 </header>

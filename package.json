@@ -28,5 +28,9 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vite-plugin-svgr": "^4.5.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }
