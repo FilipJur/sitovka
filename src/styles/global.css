@@ -1,9 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-green: #00ff80;
-  --color-brand-black: #1a1a1a;
+  /* --- COLORS --- */
+  --color-brand-green: #00ff80; /* Primary neon green */
+  --color-brand-dark: #2d3143; /* Primary dark blue/charcoal */
+  --color-brand-surface: #f5f5f5; /* Light gray backgrounds */
 
-  --font-display: "YourFont", sans-serif;
-  --font-body: "YourFont", sans-serif;
+  /* --- TYPOGRAPHY: SIZES --- */
+  /* These override/extend standard utilities like text-xs, text-2xl */
+  --text-xs: 12px; /* Copyright/metadata */
+  --text-sm: 14px; /* Body text */
+  --text-base: 16px; /* Navigation, buttons, tags */
+  --text-lg: 18px; /* Lead paragraphs */
+  --text-2xl: 28px; /* Section headers */
+  --text-display: 120px; /* Hero headlines */
+
+  /* --- TYPOGRAPHY: FAMILY & WEIGHTS --- */
+  /* Setting this as --font-sans makes it the default font for the site */
+  --font-sans: "gotham", sans-serif;
+
+  --font-weight-book: 400; /* Usage: font-book */
+  --font-weight-bold: 700; /* Usage: font-bold */
+}
+
+/* --- UTILITY CLASSES --- */
+@layer utilities {
+  .font-brand-heading {
+    font-weight: 700;
+    font-style: italic;
+  }
+}
+
+/* --- BASE STYLES --- */
+@layer base {
+  body {
+    /* Ensures the font applies globally */
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-book);
+  }
 }

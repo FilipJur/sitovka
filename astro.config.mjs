@@ -1,9 +1,12 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
 import keystatic from "@keystatic/astro";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     output: "static",
-    integrations: [react(), tailwind({ applyBaseStyles: false }), keystatic()],
+    integrations: [react(), keystatic()],
+    vite: {
+        plugins: [tailwindcss()]
+    }
 });
