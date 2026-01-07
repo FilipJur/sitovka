@@ -1,9 +1,9 @@
 ---
 // Import the Logo as a React component
 // Note: We use the '?react' suffix because of vite-plugin-svgr
-import Logo from "../../assets/logo.svg?react";
-import { Button } from "../ui/Button";
-import { cn } from "../../utils/cn";
+import Logo from "@/assets/logo.svg?react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/utils/cn";
 
 interface NavItem {
   name: string;
@@ -19,17 +19,17 @@ const navItems: NavItem[] = [
 ];
 ---
 
-<header
-  class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-brand-dark/5 transition-all duration-300"
->
-  <div class="container mx-auto px-6 h-36 flex items-center justify-between">
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+  <div
+    class="container mx-auto px-6 h-36 flex items-center justify-between bg-white"
+  >
     <!--
       1. LOGO
       Using SVGR component allows us to style the internal paths.
       The 'text-brand-dark' class fills the SVG because your logo.svg likely uses fill attributes.
       We add 'group' to animate color on hover.
     -->
-    <a href="/" class="flex-shrink-0 group" aria-label="Domů">
+    <a href="/" class="shrink-0 group" aria-label="Domů">
       <Logo className="h-10 w-auto" aria-hidden="true" />
     </a>
 

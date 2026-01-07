@@ -1,0 +1,140 @@
+---
+// 1. Import Logo
+import LogoWhite from "@/assets/logo-white.svg?react";
+
+// 2. Import Social Icons from src/assets/icons/
+import FacebookIcon from "@/assets/icons/facebook.svg?react";
+import InstagramIcon from "@/assets/icons/instagram.svg?react";
+import XIcon from "@/assets/icons/x.svg?react";
+import LinkedInIcon from "@/assets/icons/linkedin.svg?react";
+import YoutubeIcon from "@/assets/icons/youtube.svg?react";
+import HashtagIcon from "@/assets/icons/hashtag.svg?react";
+
+// Links from JSON (Col 4)
+const footerLinks = [
+  { name: "Úvod", href: "/" },
+  { name: "Co umíme", href: "#co-umime" },
+  { name: "Reference", href: "#reference" },
+];
+---
+
+<!--
+  Layout: Footer Card Style
+  - rounded-[60px]: As requested
+  - bg-brand-dark: #2D3143
+  - pt-[90px]: Top padding as requested
+-->
+<footer
+  class="bg-brand-dark text-white rounded-[60px] pt-22.5 overflow-hidden relative"
+>
+  <div class="container mx-auto px-10">
+    <!-- ROW 1: Logo on the left -->
+    <div class="flex justify-start">
+      <a href="/" class="shrink-0 group" aria-label="Domů">
+        <LogoWhite className="h-10 w-auto" aria-hidden="true" />
+      </a>
+    </div>
+
+    <!-- GAP: 28px -->
+    <div class="h-7"></div>
+
+    <!-- ROW 2: 4 Columns -->
+    <div
+      class="ml-4 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm font-book leading-relaxed"
+    >
+      <!-- Col 1: Address -->
+      <div class="space-y-1">
+        <p class="text-base font-brand-heading">Síťovka.net s.r.o.</p>
+        <p>Jaurisova 515/4</p>
+        <p>140 00 Praha 4</p>
+      </div>
+
+      <!-- Col 2: Legal -->
+      <div class="space-y-1">
+        <p>IČO: 24164879</p>
+        <p>DIČ: CZ24164879</p>
+        <p>Vedená u Městského s</p>
+      </div>
+
+      <!-- Col 3: Bank -->
+      <div class="space-y-1">
+        <p>Číslo účtu: 6582068001/5500</p>
+        <p>SWIFT: RZBCCZPP</p>
+        <p>IBAN:</p>
+      </div>
+
+      <!-- Col 4: Links (Bold Italic 16px) -->
+      <nav class="flex flex-col gap-2">
+        {
+          footerLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-base font-brand-heading text-white hover:text-brand-green transition-colors w-fit"
+            >
+              {link.name}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <!-- GAP: 28px -->
+    <div class="h-7"></div>
+
+    <!-- ROW 3: Social Icons -->
+    <div class="flex justify-center items-center gap-6">
+      <a
+        href="#"
+        aria-label="Facebook"
+        class="text-white hover:text-brand-green transition-colors"
+      >
+        <FacebookIcon className="w-6 h-6" />
+      </a>
+      <a
+        href="#"
+        aria-label="Instagram"
+        class="text-white hover:text-brand-green transition-colors"
+      >
+        <InstagramIcon className="w-6 h-6" />
+      </a>
+      <a
+        href="#"
+        aria-label="X"
+        class="text-white hover:text-brand-green transition-colors"
+      >
+        <XIcon className="w-6 h-6" />
+      </a>
+      <a
+        href="#"
+        aria-label="LinkedIn"
+        class="text-white hover:text-brand-green transition-colors"
+      >
+        <LinkedInIcon className="w-6 h-6" />
+      </a>
+      <a
+        href="#"
+        aria-label="YouTube"
+        class="text-white hover:text-brand-green transition-colors"
+      >
+        <YoutubeIcon className="w-6 h-6" />
+      </a>
+    </div>
+
+    <!-- GAP: 75px -->
+    <div class="h-19"></div>
+
+    <!-- ROW 4: Copyright | SVG | Cookies -->
+    <div
+      class="flex flex-col md:flex-row items-center justify-center gap-4 text-xs font-book -mb-6"
+    >
+      <span>© 2025 Síťovka</span>
+
+      <!-- The small hashtag SVG requested in description -->
+      <HashtagIcon className="w-20 h-25 text-brand-green" />
+
+      <a href="/cookies" class="hover:text-brand-green transition-colors">
+        Používáme cookies
+      </a>
+    </div>
+  </div>
+</footer>
