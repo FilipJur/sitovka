@@ -3,7 +3,7 @@
 ## Build & Development Commands
 
 ### Core Commands
-- `npm run dev` - Start development server at localhost:4321
+- `npm run dev` - Start development server at localhost:4321 (⚠️ **NEVER run this command - dev server runs in background**)
 - `npm run build` - Build production site to ./dist/
 - `npm run preview` - Preview production build locally
 - `npm run astro -- --help` - Get Astro CLI help

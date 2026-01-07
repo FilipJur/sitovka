@@ -2,6 +2,7 @@
 // Import the Logo as a React component
 // Note: We use the '?react' suffix because of vite-plugin-svgr
 import Logo from "../../assets/logo.svg?react";
+import { Button } from '../ui/Button';
 
 const navItems = [
     { name: "Úvod", href: "/" },
@@ -46,14 +47,13 @@ const navItems = [
 
             <!--
         CTA BUTTON
-        Matches JSON: Bg #2D3143, Text White, Bold Italic
+        Using standardized Button component
       -->
-            <a
-                href="#poptavka"
-                class="hidden md:inline-flex bg-brand-dark text-white text-base font-bold italic px-8 py-3 rounded-full hover:bg-brand-green hover:text-brand-dark transition-all duration-300"
-            >
-                Poptávka
-            </a>
+            <div class="hidden md:block">
+                <Button href="#poptavka" variant="dark">
+                    Poptávka
+                </Button>
+            </div>
 
             <!-- Mobile Menu Trigger (Inline SVG for now) -->
             <button

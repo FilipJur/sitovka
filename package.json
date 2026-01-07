@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.4.2",
     "@keystatic/astro": "^5.0.6",
     "@keystatic/core": "^0.5.48",
@@ -17,6 +18,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.6",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.24.9",
@@ -24,6 +26,7 @@
     "react-dom": "^19.2.3",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
     "vite-plugin-svgr": "^4.5.0"
   }
 }

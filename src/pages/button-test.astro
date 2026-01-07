@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Button } from '../components/ui/Button';
+---
+
+<Layout title="Button Test">
+  <main class="flex min-h-screen flex-col items-center justify-center gap-10 bg-white">
+    
+    <!-- Button Test Section -->
+    <section class="text-center space-y-8">
+      <h1 class="text-2xl font-brand-heading text-brand-dark">
+        Button Component Test
+      </h1>
+      
+      <div class="flex flex-col items-center gap-6">
+        <div class="flex gap-4">
+          <Button variant="primary" href="#test">Primary Button</Button>
+          <Button variant="outline" href="#test">Outline Button</Button>
+          <Button variant="dark" href="#test">Dark Button</Button>
+        </div>
+        
+        <div class="flex gap-4">
+          <Button variant="primary" size="sm">Small Primary</Button>
+          <Button variant="outline" size="default">Default Outline</Button>
+          <Button variant="dark" size="lg">Large Dark</Button>
+        </div>
+        
+        <div class="flex gap-4">
+          <Button variant="primary" disabled>Disabled Primary</Button>
+          <Button variant="outline" disabled>Disabled Outline</Button>
+          <Button variant="dark" disabled>Disabled Dark</Button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>
