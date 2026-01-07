@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #00ff80;
+  --color-brand-black: #1a1a1a;
+
+  --font-display: "YourFont", sans-serif;
+  --font-body: "YourFont", sans-serif;
+}
