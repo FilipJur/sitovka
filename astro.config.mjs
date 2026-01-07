@@ -5,15 +5,20 @@ import tailwindcss from "@tailwindcss/vite";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-    output: "static",
-    integrations: [react(), keystatic()],
-    vite: {
-        plugins: [
-            tailwindcss(),
-            svgr({
-                svgrOptions: { exportType: "default", ref: true, svgo: true, titleProp: true },
-                include: "**/*.svg?react",
-            })
-        ]
-    }
+  output: "static",
+  integrations: [react(), keystatic()],
+  vite: {
+    plugins: [
+      tailwindcss(),
+      svgr({
+        svgrOptions: {
+          exportType: "default",
+          ref: true,
+          svgo: true,
+          titleProp: true,
+        },
+        include: "**/*.svg?react",
+      }),
+    ],
+  },
 });
