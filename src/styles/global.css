@@ -30,6 +30,8 @@
 /* Override default container to use 1140px (71.25rem) as the default max-width */
 @utility container {
   width: 100%;
+  margin-inline: auto;
+  padding-inline: 2rem;
   @media (width >= 40rem) {
     max-width: 40rem;
   }
@@ -40,10 +42,10 @@
     max-width: 64rem;
   }
   @media (width >= 80rem) {
-    max-width: 71.25rem; /* 1140px - Custom default width */
+    max-width: 72.75rem; /* 1140px - Custom default width */
   }
   @media (width >= 96rem) {
-    max-width: 71.25rem; /* 1140px - Keep consistent at larger breakpoints */
+    max-width: 72.75rem; /* 1140px - Keep consistent at larger breakpoints */
   }
 }
 

@@ -1,5 +1,5 @@
-import { defineCollection, z } from 'astro:content';
-import { file, glob } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { file, glob } from "astro/loaders";
 
 // Footer Schema
 const footer = defineCollection({
@@ -20,13 +20,15 @@ const footer = defineCollection({
       swift: z.string(),
       iban: z.string().optional(),
     }),
-    socials: z.object({
-      facebook: z.string().url().nullable().optional(),
-      instagram: z.string().url().nullable().optional(),
-      x: z.string().url().nullable().optional(),
-      linkedin: z.string().url().nullable().optional(),
-      youtube: z.string().url().nullable().optional(),
-    }).optional(),
+    socials: z
+      .object({
+        facebook: z.string().url().nullable().optional(),
+        instagram: z.string().url().nullable().optional(),
+        x: z.string().url().nullable().optional(),
+        linkedin: z.string().url().nullable().optional(),
+        youtube: z.string().url().nullable().optional(),
+      })
+      .optional(),
   }),
 });
 
@@ -35,6 +37,16 @@ const homepage = defineCollection({
   loader: glob({ pattern: "home.json", base: "./src/content/pages" }),
   schema: z.object({
     heroHeadline: z.string().optional(),
+    benefits: z
+      .array(
+        z.object({
+          iconId: z.enum(["target", "board", "light"]),
+          titleHashtag: z.string(),
+          titleRemainder: z.string(),
+          description: z.string(),
+        }),
+      )
+      .optional(),
   }),
 });
 

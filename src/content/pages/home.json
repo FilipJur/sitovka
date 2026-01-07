@@ -1,3 +1,23 @@
 {
-  "heroHeadline": "Marketing, který zraje"
+  "heroHeadline": "Marketing, který zraje",
+  "benefits": [
+    {
+      "iconId": "target",
+      "titleHashtag": "#děláme",
+      "titleRemainder": " obsah, který funguje",
+      "description": "Spravujeme sociální sítě, tvoříme texty, fotky i videa, které baví lidi  a podporují značku."
+    },
+    {
+      "iconId": "board",
+      "titleHashtag": "#umíme",
+      "titleRemainder": " zacílit správně",
+      "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých ti opravdu záleží — bez plýtvání rozpočtem."
+    },
+    {
+      "iconId": "light",
+      "titleHashtag": "#jsme",
+      "titleRemainder": " kreativní a féroví",
+      "description": "Kombinujeme nápady s daty, držíme krok s trendy a mluvíme s tebou lidsky, ne agenturně."
+    }
+  ]
 }

@@ -1,0 +1,43 @@
+---
+import TargetIcon from "@/assets/icons/target.svg?react";
+import BoardIcon from "@/assets/icons/board.svg?react";
+import LightIcon from "@/assets/icons/light.svg?react";
+
+interface Props {
+  iconId: "target" | "board" | "light";
+  hashtag: string;
+  title: string;
+  description: string;
+}
+
+const { iconId, hashtag, title, description } = Astro.props;
+
+// Map the string ID to the actual SVGR component
+const Icons = {
+  target: TargetIcon,
+  board: BoardIcon,
+  light: LightIcon,
+};
+
+const IconComponent = Icons[iconId];
+---
+
+<div class="flex flex-row gap-5">
+  <!-- Icon: 48px size as per w-12 -->
+  <div class="text-brand-green h-12 w-12 min-w-fit">
+    <IconComponent className="w-full h-full" />
+  </div>
+
+  <div class="space-y-5">
+    <!-- H2: 28px (text-2xl) Bold Italic -->
+    <h2 class="text-2xl font-brand-heading leading-tight text-brand-dark">
+      <span class="text-brand-green">{hashtag}</span>
+      {title}
+    </h2>
+
+    <!-- H3: 14px (text-sm) Book weight -->
+    <h3 class="text-sm font-book text-brand-dark leading-relaxed">
+      {description}
+    </h3>
+  </div>
+</div>
