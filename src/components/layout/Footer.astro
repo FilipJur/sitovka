@@ -13,7 +13,41 @@ import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 // 3. Fetch footer data from CMS
 import { getEntry } from "astro:content";
 const footerEntry = await getEntry("footer", "footer");
-const { company, legal, bank, socials } = footerEntry.data;
+const {
+  company = {},
+  legal = {},
+  bank = {},
+  socials = {},
+} = footerEntry?.data || {};
+
+// Social links data array
+const socialLinksData = [
+  {
+    key: "facebook",
+    href: socials?.facebook,
+    icon: FacebookIcon,
+    label: "Facebook",
+  },
+  {
+    key: "instagram",
+    href: socials?.instagram,
+    icon: InstagramIcon,
+    label: "Instagram",
+  },
+  { key: "x", href: socials?.x, icon: XIcon, label: "X" },
+  {
+    key: "linkedin",
+    href: socials?.linkedin,
+    icon: LinkedInIcon,
+    label: "LinkedIn",
+  },
+  {
+    key: "youtube",
+    href: socials?.youtube,
+    icon: YoutubeIcon,
+    label: "YouTube",
+  },
+].filter((link) => link.href);
 
 // Links from JSON (Col 4)
 const footerLinks = [
@@ -49,23 +83,23 @@ const footerLinks = [
     >
       <!-- Col 1: Address -->
       <div class="space-y-1">
-        <p class="text-base font-brand-heading">{company.name}</p>
-        <p>{company.street}</p>
-        <p>{company.city}</p>
+        <p class="text-base font-brand-heading">{company?.name || ""}</p>
+        <p>{company?.street || ""}</p>
+        <p>{company?.city || ""}</p>
       </div>
 
       <!-- Col 2: Legal -->
       <div class="space-y-1">
-        <p>IČO: {legal.ico}</p>
-        <p>DIČ: {legal.dic}</p>
-        <p>{legal.court}</p>
+        <p>IČO: {legal?.ico || ""}</p>
+        <p>DIČ: {legal?.dic || ""}</p>
+        <p>{legal?.court || ""}</p>
       </div>
 
       <!-- Col 3: Bank -->
       <div class="space-y-1">
-        <p>Číslo účtu: {bank.accountNumber}</p>
-        <p>SWIFT: {bank.swift}</p>
-        {bank.iban && <p>IBAN: {bank.iban}</p>}
+        <p>Číslo účtu: {bank?.accountNumber || ""}</p>
+        <p>SWIFT: {bank?.swift || ""}</p>
+        {bank?.iban && <p>IBAN: {bank?.iban}</p>}
       </div>
 
       <!-- Col 4: Links (Bold Italic 16px) -->
@@ -89,74 +123,21 @@ const footerLinks = [
     <!-- ROW 3: Social Icons -->
     <div class="flex justify-center items-center gap-6">
       {
-        socials?.facebook && (
+        socialLinksData.map((link) => (
           <a
-            href={socials.facebook}
+            href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Facebook"
-            class="text-white hover:text-brand-green transition-colors"
+            aria-label={link.label}
+            class="rounded-full border border-transparent hover:border-brand-green transition-all p-4"
           >
-            <FacebookIcon className="w-6 h-6" />
+            <link.icon className="w-4 h-4" />
           </a>
-        )
-      }
-      {
-        socials?.instagram && (
-          <a
-            href={socials.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            class="text-white hover:text-brand-green transition-colors"
-          >
-            <InstagramIcon className="w-6 h-6" />
-          </a>
-        )
-      }
-      {
-        socials?.x && (
-          <a
-            href={socials.x}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X"
-            class="text-white hover:text-brand-green transition-colors"
-          >
-            <XIcon className="w-6 h-6" />
-          </a>
-        )
-      }
-      {
-        socials?.linkedin && (
-          <a
-            href={socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            class="text-white hover:text-brand-green transition-colors"
-          >
-            <LinkedInIcon className="w-6 h-6" />
-          </a>
-        )
-      }
-      {
-        socials?.youtube && (
-          <a
-            href={socials.youtube}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube"
-            class="text-white hover:text-brand-green transition-colors"
-          >
-            <YoutubeIcon className="w-6 h-6" />
-          </a>
-        )
+        ))
       }
     </div>
 
-    <!-- GAP: 75px -->
-    <div class="h-19"></div>
+    <div class="h-12"></div>
 
     <!-- ROW 4: Copyright | SVG | Cookies -->
     <div
