@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  /* --- LAYOUT --- */
+  --breakpoint-2xl: 71.25rem; /* 1140px - Custom container width */
+
   /* --- COLORS --- */
   --color-brand-green: #00ff80; /* Primary neon green */
   --color-brand-dark: #2d3143; /* Primary dark blue/charcoal */
@@ -21,6 +24,27 @@
 
   --font-weight-book: 400; /* Usage: font-book */
   --font-weight-bold: 700; /* Usage: font-bold */
+}
+
+/* --- CUSTOM CONTAINER UTILITY --- */
+/* Override default container to use 1140px (71.25rem) as the default max-width */
+@utility container {
+  width: 100%;
+  @media (width >= 40rem) {
+    max-width: 40rem;
+  }
+  @media (width >= 48rem) {
+    max-width: 48rem;
+  }
+  @media (width >= 64rem) {
+    max-width: 64rem;
+  }
+  @media (width >= 80rem) {
+    max-width: 71.25rem; /* 1140px - Custom default width */
+  }
+  @media (width >= 96rem) {
+    max-width: 71.25rem; /* 1140px - Keep consistent at larger breakpoints */
+  }
 }
 
 /* --- UTILITY CLASSES --- */

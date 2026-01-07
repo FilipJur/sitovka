@@ -22,7 +22,7 @@ const navItems: NavItem[] = [
 <header
   class="fixed top-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-brand-dark/5 transition-all duration-300"
 >
-  <div class="container mx-auto px-6 h-24 flex items-center justify-between">
+  <div class="container mx-auto px-6 h-36 flex items-center justify-between">
     <!--
       1. LOGO
       Using SVGR component allows us to style the internal paths.
@@ -53,7 +53,9 @@ const navItems: NavItem[] = [
               <Button
                 href={item.href}
                 variant={item.variant}
-                textColor={item.variant === "outline" ? "brand-dark" : undefined}
+                textColor={
+                  item.variant === "outline" ? "brand-dark" : undefined
+                }
                 className={cn(
                   "py-2.5",
                   needsMargin && "mr-5",
@@ -82,7 +84,9 @@ const navItems: NavItem[] = [
         Using standardized Button component
       -->
       <div class="hidden md:block">
-        <Button href="#poptavka" variant="dark" className="py-2.5"> Poptávka </Button>
+        <Button href="#poptavka" variant="dark" className="py-2.5">
+          Poptávka
+        </Button>
       </div>
 
       <!-- Mobile Menu Trigger (Inline SVG for now) -->
