@@ -11,13 +11,13 @@ import YoutubeIcon from "@/assets/icons/youtube.svg?react";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 
 // 3. Fetch footer data from CMS
-import { getEntry } from 'astro:content';
-const footerEntry = await getEntry('footer', 'footer');
+import { getEntry } from "astro:content";
+const footerEntry = await getEntry("footer", "footer");
 const { company, legal, bank, socials } = footerEntry.data;
 
 // Links from JSON (Col 4)
 const footerLinks = [
-  { name: "Úvod", href: "/" },
+  { name: "Úvod", href: "#" },
   { name: "Co umíme", href: "#co-umime" },
   { name: "Reference", href: "#reference" },
 ];
@@ -35,7 +35,7 @@ const footerLinks = [
   <div class="container mx-auto px-10">
     <!-- ROW 1: Logo on the left -->
     <div class="flex justify-start">
-      <a href="/" class="shrink-0 group" aria-label="Domů">
+      <a href="#" class="shrink-0 group" aria-label="Domů">
         <LogoWhite className="h-10 w-auto" aria-hidden="true" />
       </a>
     </div>
@@ -88,61 +88,71 @@ const footerLinks = [
 
     <!-- ROW 3: Social Icons -->
     <div class="flex justify-center items-center gap-6">
-      {socials?.facebook && (
-        <a
-          href={socials.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          class="text-white hover:text-brand-green transition-colors"
-        >
-          <FacebookIcon className="w-6 h-6" />
-        </a>
-      )}
-      {socials?.instagram && (
-        <a
-          href={socials.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          class="text-white hover:text-brand-green transition-colors"
-        >
-          <InstagramIcon className="w-6 h-6" />
-        </a>
-      )}
-      {socials?.x && (
-        <a
-          href={socials.x}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X"
-          class="text-white hover:text-brand-green transition-colors"
-        >
-          <XIcon className="w-6 h-6" />
-        </a>
-      )}
-      {socials?.linkedin && (
-        <a
-          href={socials.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          class="text-white hover:text-brand-green transition-colors"
-        >
-          <LinkedInIcon className="w-6 h-6" />
-        </a>
-      )}
-      {socials?.youtube && (
-        <a
-          href={socials.youtube}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="YouTube"
-          class="text-white hover:text-brand-green transition-colors"
-        >
-          <YoutubeIcon className="w-6 h-6" />
-        </a>
-      )}
+      {
+        socials?.facebook && (
+          <a
+            href={socials.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            class="text-white hover:text-brand-green transition-colors"
+          >
+            <FacebookIcon className="w-6 h-6" />
+          </a>
+        )
+      }
+      {
+        socials?.instagram && (
+          <a
+            href={socials.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            class="text-white hover:text-brand-green transition-colors"
+          >
+            <InstagramIcon className="w-6 h-6" />
+          </a>
+        )
+      }
+      {
+        socials?.x && (
+          <a
+            href={socials.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            class="text-white hover:text-brand-green transition-colors"
+          >
+            <XIcon className="w-6 h-6" />
+          </a>
+        )
+      }
+      {
+        socials?.linkedin && (
+          <a
+            href={socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            class="text-white hover:text-brand-green transition-colors"
+          >
+            <LinkedInIcon className="w-6 h-6" />
+          </a>
+        )
+      }
+      {
+        socials?.youtube && (
+          <a
+            href={socials.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            class="text-white hover:text-brand-green transition-colors"
+          >
+            <YoutubeIcon className="w-6 h-6" />
+          </a>
+        )
+      }
     </div>
 
     <!-- GAP: 75px -->
