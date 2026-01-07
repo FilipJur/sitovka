@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+// 1. Import the new component
+import Header from '../components/layout/Header.astro';
 
 interface Props {
   title?: string;
@@ -26,6 +28,14 @@ const {
     <title>{title}</title>
   </head>
   <body class="bg-white text-brand-dark antialiased">
-    <slot />
+    
+    <!-- 2. Mount the Header -->
+    <Header />
+    
+    <!-- 3. Add padding-top to main so content isn't hidden behind fixed header -->
+    <main class="pt-24">
+        <slot />
+    </main>
+
   </body>
 </html>
