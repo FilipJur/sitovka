@@ -1,16 +1,25 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Marketing Agency">
+  <main class="flex min-h-screen flex-col items-center justify-center gap-10">
+    
+    <!-- Test Section to verify Design Tokens -->
+    <section class="text-center space-y-4">
+      <h1 class="text-display font-brand-heading leading-tight">
+        #marketing<br/>
+        <span class="text-brand-green">který zraje</span>
+      </h1>
+      
+      <p class="text-lg text-brand-dark max-w-xl mx-auto">
+        Testing the Gotham font in Book weight vs <span class="font-bold">Bold weight</span>.
+      </p>
+
+      <div class="p-10 bg-brand-surface rounded-xl">
+        <span class="text-xs text-brand-dark/50">SURFACE TEST</span>
+      </div>
+    </section>
+
+  </main>
+</Layout>

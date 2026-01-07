@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Agency Landing Page", 
+  description = "Marketing and Creative Agency" 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="cs" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Adobe Fonts / Typekit -->
+    <link rel="stylesheet" href="https://use.typekit.net/rsm7rew.css">
+    
+    <title>{title}</title>
+  </head>
+  <body class="bg-white text-brand-dark antialiased">
+    <slot />
+  </body>
+</html>
