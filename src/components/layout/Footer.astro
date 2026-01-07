@@ -10,6 +10,11 @@ import LinkedInIcon from "@/assets/icons/linkedin.svg?react";
 import YoutubeIcon from "@/assets/icons/youtube.svg?react";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 
+// 3. Fetch footer data from CMS
+import { getEntry } from 'astro:content';
+const footerEntry = await getEntry('footer', 'footer');
+const { company, legal, bank, socials } = footerEntry.data;
+
 // Links from JSON (Col 4)
 const footerLinks = [
   { name: "Úvod", href: "/" },
@@ -44,23 +49,23 @@ const footerLinks = [
     >
       <!-- Col 1: Address -->
       <div class="space-y-1">
-        <p class="text-base font-brand-heading">Síťovka.net s.r.o.</p>
-        <p>Jaurisova 515/4</p>
-        <p>140 00 Praha 4</p>
+        <p class="text-base font-brand-heading">{company.name}</p>
+        <p>{company.street}</p>
+        <p>{company.city}</p>
       </div>
 
       <!-- Col 2: Legal -->
       <div class="space-y-1">
-        <p>IČO: 24164879</p>
-        <p>DIČ: CZ24164879</p>
-        <p>Vedená u Městského s</p>
+        <p>IČO: {legal.ico}</p>
+        <p>DIČ: {legal.dic}</p>
+        <p>{legal.court}</p>
       </div>
 
       <!-- Col 3: Bank -->
       <div class="space-y-1">
-        <p>Číslo účtu: 6582068001/5500</p>
-        <p>SWIFT: RZBCCZPP</p>
-        <p>IBAN:</p>
+        <p>Číslo účtu: {bank.accountNumber}</p>
+        <p>SWIFT: {bank.swift}</p>
+        {bank.iban && <p>IBAN: {bank.iban}</p>}
       </div>
 
       <!-- Col 4: Links (Bold Italic 16px) -->
@@ -83,41 +88,61 @@ const footerLinks = [
 
     <!-- ROW 3: Social Icons -->
     <div class="flex justify-center items-center gap-6">
-      <a
-        href="#"
-        aria-label="Facebook"
-        class="text-white hover:text-brand-green transition-colors"
-      >
-        <FacebookIcon className="w-6 h-6" />
-      </a>
-      <a
-        href="#"
-        aria-label="Instagram"
-        class="text-white hover:text-brand-green transition-colors"
-      >
-        <InstagramIcon className="w-6 h-6" />
-      </a>
-      <a
-        href="#"
-        aria-label="X"
-        class="text-white hover:text-brand-green transition-colors"
-      >
-        <XIcon className="w-6 h-6" />
-      </a>
-      <a
-        href="#"
-        aria-label="LinkedIn"
-        class="text-white hover:text-brand-green transition-colors"
-      >
-        <LinkedInIcon className="w-6 h-6" />
-      </a>
-      <a
-        href="#"
-        aria-label="YouTube"
-        class="text-white hover:text-brand-green transition-colors"
-      >
-        <YoutubeIcon className="w-6 h-6" />
-      </a>
+      {socials?.facebook && (
+        <a
+          href={socials.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          class="text-white hover:text-brand-green transition-colors"
+        >
+          <FacebookIcon className="w-6 h-6" />
+        </a>
+      )}
+      {socials?.instagram && (
+        <a
+          href={socials.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          class="text-white hover:text-brand-green transition-colors"
+        >
+          <InstagramIcon className="w-6 h-6" />
+        </a>
+      )}
+      {socials?.x && (
+        <a
+          href={socials.x}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X"
+          class="text-white hover:text-brand-green transition-colors"
+        >
+          <XIcon className="w-6 h-6" />
+        </a>
+      )}
+      {socials?.linkedin && (
+        <a
+          href={socials.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          class="text-white hover:text-brand-green transition-colors"
+        >
+          <LinkedInIcon className="w-6 h-6" />
+        </a>
+      )}
+      {socials?.youtube && (
+        <a
+          href={socials.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="YouTube"
+          class="text-white hover:text-brand-green transition-colors"
+        >
+          <YoutubeIcon className="w-6 h-6" />
+        </a>
+      )}
     </div>
 
     <!-- GAP: 75px -->

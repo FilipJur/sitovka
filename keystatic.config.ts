@@ -25,6 +25,13 @@ export default config({
           swift: fields.text({ label: 'SWIFT' }),
           iban: fields.text({ label: 'IBAN' }),
         }, { label: 'Bank Details' }),
+        socials: fields.object({
+          facebook: fields.url({ label: 'Facebook URL' }),
+          instagram: fields.url({ label: 'Instagram URL' }),
+          x: fields.url({ label: 'X (Twitter) URL' }),
+          linkedin: fields.url({ label: 'LinkedIn URL' }),
+          youtube: fields.url({ label: 'YouTube URL' }),
+        }, { label: 'Social Media Links' }),
       },
     }),
 

@@ -20,6 +20,13 @@ const footer = defineCollection({
       swift: z.string(),
       iban: z.string().optional(),
     }),
+    socials: z.object({
+      facebook: z.string().url().nullable().optional(),
+      instagram: z.string().url().nullable().optional(),
+      x: z.string().url().nullable().optional(),
+      linkedin: z.string().url().nullable().optional(),
+      youtube: z.string().url().nullable().optional(),
+    }).optional(),
   }),
 });
 

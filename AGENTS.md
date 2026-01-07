@@ -145,7 +145,11 @@ src/
 ├── components/     # Reusable Astro/React components
 ├── layouts/        # Page layout templates
 ├── styles/         # Global styles and Tailwind config
-└── utils/          # Utility functions and helpers
+├── utils/          # Utility functions and helpers
+└── content/        # CMS content (Keystatic)
+    ├── global/     # Site-wide data
+    ├── pages/      # Page-specific content
+    └── testimonials/ # Collections
 
 public/             # Static assets (images, fonts, etc.)
 ```
@@ -157,12 +161,46 @@ public/             # Static assets (images, fonts, etc.)
 3. **Keystatic CMS**: Headless CMS integration for content management
 4. **No Build Tools**: Uses Astro's built-in tooling, no separate bundler config
 
+## Content Management (Keystatic CMS)
+
+### Content Structure
+```
+src/content/
+├── global/           # Site-wide data (Header, Footer, SEO)
+│   └── footer.json   # Address, Bank, Legal info
+├── pages/            # Content specific to a URL
+│   └── home.json     # Hero slides, "About" text, CTA text
+└── testimonials/     # Repeatable content (Collections)
+    ├── seva.json
+    ├── bigmat.json
+    └── ...
+```
+
+### CMS Configuration Files
+- `keystatic.config.ts` - Keystatic admin UI schema definition
+- `src/content.config.ts` - Astro content collection schemas with Zod validation
+
+### Content Access Pattern
+```astro
+---
+import { getEntry } from 'astro:content';
+const footerData = await getEntry('footer', 'footer');
+const { company, legal, bank } = footerData.data;
+---
+```
+
+### CMS Access
+- Local development: `/keystatic` route for content editing
+- Production: Switch `storage.kind` from `'local'` to `'github'` in `keystatic.config.ts`
+
 ## Development Workflow
 
 1. Start development server: `npm run dev`
 2. Check for TypeScript errors: `astro check`
 3. Build for production: `npm run build`
 4. Preview production build: `npm run preview`
+
+**Note:** Use `glob` loader for content collections (not `file` loader) to avoid build issues
 
 ## Security Notes
 

@@ -13,5 +13,12 @@
     "accountNumber": "6582068001/5500",
     "swift": "RZBCCZPP",
     "iban": ""
+  },
+  "socials": {
+    "facebook": "https://facebook.com/",
+    "instagram": "https://instagram.com/",
+    "x": "https://x.com/",
+    "linkedin": "https://linkedin.com/",
+    "youtube": "https://youtube.com/"
   }
 }
