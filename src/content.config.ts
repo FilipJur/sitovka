@@ -67,7 +67,7 @@ const about = defineCollection({
         heading: z.string(),
         col1: z.string(), // Inline Markdoc is a string
         col2: z.string(),
-        image: image(), // Resolver for @/assets
+        image: image().optional(), // Resolver for @/assets - OPTIONAL
       }),
     }),
 });

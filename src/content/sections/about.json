@@ -1,27 +1,28 @@
 {
   "benefits": [
     {
-      "iconId": "target",
-      "titleHashtag": "awdawd",
-      "titleRemainder": "waddw",
-      "description": "awdad"
+      "iconId": "board",
+      "titleHashtag": "#děláme",
+      "titleRemainder": "obsah, který funguje",
+      "description": "Spravujeme sociální sítě, tvoříme texty, fotky i videa, které baví lidi  a podporují značku."
     },
     {
       "iconId": "target",
-      "titleHashtag": "awdadw",
-      "titleRemainder": "wdadwd",
-      "description": "awdawd"
+      "titleHashtag": "#umíme",
+      "titleRemainder": " zacílit správně",
+      "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých ti opravdu záleží — bez plýtvání rozpočtem."
     },
     {
-      "iconId": "target",
-      "titleHashtag": "awdawd",
-      "titleRemainder": "wadawd",
-      "description": "wadadwd"
+      "iconId": "light",
+      "titleHashtag": "#jsme",
+      "titleRemainder": "kreativní  a féroví",
+      "description": "Kombinujeme nápady s daty, držíme krok s trendy a mluvíme  s tebou lidsky, ne agenturně."
     }
   ],
   "bio": {
     "heading": "O nás",
     "col1": "Jsme Síťovka – obsahová agentura, která věří, že dobrý obsah dokáže víc než reklama. Pomáháme značkám i jednotlivcům **zviditelnit se v digitálním světě** – mluvit jasně, autenticky a s dlouhodobým efektem.\\\nNevyrábíme instantní posty ani prázdné kampaně. Tvoříme **obsah, který dává smysl – baví, vzdělává nebo prodává.** Každý příspěvek, článek i video má svůj účel, strategii a přidanou hodnotu.\n",
-    "col2": "Zaměřujeme se hlavně na **LinkedIn**, kde pomáháme budovat **osobní i firemní značky**. Spravujeme profily, píšeme texty, vymýšlíme strategie a kampaně, které fungují. Umíme ale i další sociální sítě, blogy, články a spolupráce s influencery či UGC tvůrci.\\\nOd prvního nápadu až po publikaci se **postaráme o to, aby váš obsah byl vidět, slyšet a měl výsledky.**\n"
+    "col2": "Zaměřujeme se hlavně na **LinkedIn**, kde pomáháme budovat **osobní i firemní značky**. Spravujeme profily, píšeme texty, vymýšlíme strategie a kampaně, které fungují. Umíme ale i další sociální sítě, blogy, články a spolupráce s influencery či UGC tvůrci.\\\nOd prvního nápadu až po publikaci se **postaráme o to, aby váš obsah byl vidět, slyšet a měl výsledky.**\n",
+    "image": "@/assets/images/about/bio/image.png"
   }
 }
