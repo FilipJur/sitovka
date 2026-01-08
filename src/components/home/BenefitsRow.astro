@@ -1,28 +1,27 @@
 ---
-import { getEntry } from "astro:content";
 import BenefitCard from "./BenefitCard.astro";
 
-const homeData = await getEntry("homepage", "home");
-const benefits = homeData?.data?.benefits || [];
+interface Props {
+  benefits: Array<{
+    iconId: "target" | "board" | "light";
+    titleHashtag: string;
+    titleRemainder: string;
+    description: string;
+  }>;
+}
+
+const { benefits } = Astro.props;
 ---
 
-<section class="bg-white py-24">
-  <div class="container">
-    <!--
-       Grid Layout: 3 columns
-       gap-22.5 is exactly 90px in Tailwind v4 (90 / 4 = 22.5)
-    -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-22.5">
-      {
-        benefits.map((benefit) => (
-          <BenefitCard
-            iconId={benefit.iconId}
-            hashtag={benefit.titleHashtag}
-            title={benefit.titleRemainder}
-            description={benefit.description}
-          />
-        ))
-      }
-    </div>
-  </div>
-</section>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-22.5">
+  {
+    benefits.map((benefit) => (
+      <BenefitCard
+        iconId={benefit.iconId}
+        hashtag={benefit.titleHashtag}
+        title={benefit.titleRemainder}
+        description={benefit.description}
+      />
+    ))
+  }
+</div>

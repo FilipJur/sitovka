@@ -47,13 +47,12 @@ export default config({
       },
     }),
 
-    // Homepage Content
-    homepage: singleton({
-      label: "Homepage",
-      path: "src/content/pages/home",
+    // About Us Section (Benefits + Bio)
+    about: singleton({
+      label: "About Us",
+      path: "src/content/sections/about",
       format: { data: "json" },
       schema: {
-        heroHeadline: fields.text({ label: "Hero Headline" }),
         benefits: fields.array(
           fields.object({
             iconId: fields.select({
@@ -65,10 +64,8 @@ export default config({
               ],
               defaultValue: "target",
             }),
-            titleHashtag: fields.text({
-              label: "Title Highlight (e.g. #děláme)",
-            }),
-            titleRemainder: fields.text({ label: "Title Remainder" }),
+            titleHashtag: fields.text({ label: "Highlight (e.g. #děláme)" }),
+            titleRemainder: fields.text({ label: "Title Text" }),
             description: fields.text({ label: "Description", multiline: true }),
           }),
           {
@@ -78,6 +75,22 @@ export default config({
               " " +
               props.fields.titleRemainder.value,
           },
+        ),
+        bio: fields.object(
+          {
+            heading: fields.text({
+              label: "Row Heading",
+              defaultValue: "O nás",
+            }),
+            col1: fields.markdoc.inline({ label: "Column 1 (Rich Text)" }),
+            col2: fields.markdoc.inline({ label: "Column 2 (Rich Text)" }),
+            image: fields.image({
+              label: "Bleed Image (The Man)",
+              directory: "src/assets/images/about",
+              publicPath: "@/assets/images/about/",
+            }),
+          },
+          { label: "Bio Section" },
         ),
       },
     }),

@@ -50,6 +50,28 @@ const homepage = defineCollection({
   }),
 });
 
+// About Us Schema
+const about = defineCollection({
+  loader: glob({ pattern: "about.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      benefits: z.array(
+        z.object({
+          iconId: z.enum(["target", "board", "light"]),
+          titleHashtag: z.string(),
+          titleRemainder: z.string(),
+          description: z.string(),
+        }),
+      ),
+      bio: z.object({
+        heading: z.string(),
+        col1: z.string(), // Inline Markdoc is a string
+        col2: z.string(),
+        image: image(), // Resolver for @/assets
+      }),
+    }),
+});
+
 // Testimonials Schema
 const testimonials = defineCollection({
   loader: glob({ pattern: "**/*.json", base: "./src/content/testimonials" }),
@@ -60,4 +82,4 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { footer, homepage, testimonials };
+export const collections = { footer, homepage, testimonials, about };

@@ -1,0 +1,31 @@
+---
+import { getEntry } from "astro:content";
+import BenefitsRow from "./BenefitsRow.astro";
+import AboutBio from "./AboutBio.astro";
+import HashtagIcon from "@/assets/icons/hashtag.svg?react";
+
+const entry = await getEntry("about", "about");
+if (!entry) return null;
+
+const { benefits, bio } = entry.data;
+---
+
+<section class="bg-white rounded-[60px] relative overflow-hidden">
+  <div class="container mx-auto px-6 py-24">
+    <!-- Row 1: Benefits -->
+    <BenefitsRow benefits={benefits} />
+
+    <!-- Spacer -->
+    <div class="h-24 lg:h-32"></div>
+
+    <!-- Row 2: Bio -->
+    <AboutBio bio={bio} />
+  </div>
+
+  <!-- Decorative hashtag glued to bottom center -->
+  <div
+    class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 pointer-events-none"
+  >
+    <HashtagIcon className="w-30p h-auto text-brand-green" />
+  </div>
+</section>
