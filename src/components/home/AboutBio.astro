@@ -1,12 +1,18 @@
 ---
 import Markdoc from "@markdoc/markdoc";
+import { Image } from "astro:assets";
 
 interface Props {
   bio: {
     heading: string;
     col1: string; // Inline Markdoc string
     col2: string; // Inline Markdoc string
-    image: any; // Astro image object
+    image?: {
+      src: string;
+      width: number;
+      height: number;
+      format: string;
+    };
   };
 }
 
@@ -17,7 +23,7 @@ const col1Html = Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(bio.col1
 const col2Html = Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(bio.col2)));
 
 // Determine layout based on image availability
-const hasImage = bio.image && bio.image !== null;
+const hasImage = bio.image !== undefined && bio.image !== null;
 
 // Create unified content array
 const contentItems = [
@@ -25,7 +31,7 @@ const contentItems = [
   { type: 'text' as const, html: col2Html },
   ...(hasImage ? [{
     type: 'image' as const,
-    src: bio.image.src,
+    src: bio.image?.src || '',
     alt: ''
   }] : [])
 ];
@@ -45,11 +51,13 @@ const contentItems = [
       {contentItems.map((item) => (
         item.type === 'image' ? (
           <div class="relative flex items-end h-full">
-            <img
-              src={item.src}
-              alt={item.alt}
-              class="w-full h-auto object-contain -mb-24 lg:-mb-32 scale-110 origin-bottom"
-            />
+            {bio.image && (
+              <Image
+                {...bio.image}
+                alt="Bio image"
+                class="w-full h-auto object-contain -mb-24 lg:-mb-32 scale-110 origin-bottom"
+              />
+            )}
           </div>
         ) : (
           <div class="text-sm font-book text-brand-dark leading-relaxed" set:html={item.html} />

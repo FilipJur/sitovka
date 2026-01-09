@@ -1,5 +1,6 @@
 ---
 import Markdoc from "@markdoc/markdoc";
+import { Image } from "astro:assets";
 
 interface Props {
   item: {
@@ -10,23 +11,23 @@ interface Props {
       format: string;
     };
     title: string;
-    description: string;
+    description?: string;
   };
 }
 
 const { item } = Astro.props;
 
 // Render Markdoc description to HTML
-const descriptionHtml = Markdoc.renderers.html(
-  Markdoc.transform(Markdoc.parse(item.description))
-);
+const descriptionHtml = item.description
+  ? Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(item.description)))
+  : "";
 ---
 
 <div class="flex flex-col space-y-5">
   {
     item.image ? (
-      <img
-        src={item.image.src}
+      <Image
+        {...item.image}
         alt={item.title}
         class="w-full h-full rounded-[60px] max-h-[330px]"
       />
@@ -38,9 +39,13 @@ const descriptionHtml = Markdoc.renderers.html(
   }
   <div class="space-y-3">
     <h3 class="text-2xl font-brand-heading text-brand-dark">{item.title}</h3>
-    <div 
-      class="text-sm font-book text-brand-dark leading-relaxed"
-      set:html={descriptionHtml}
-    />
+    {
+      item.description && (
+        <div
+          class="text-sm font-book text-brand-dark leading-relaxed"
+          set:html={descriptionHtml}
+        />
+      )
+    }
   </div>
 </div>

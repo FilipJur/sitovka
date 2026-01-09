@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cleanup:images": "node scripts/cleanup-images.js",
+    "cleanup:images:delete": "node scripts/cleanup-images.js --delete"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",

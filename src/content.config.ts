@@ -75,11 +75,12 @@ const about = defineCollection({
 // Testimonials Schema
 const testimonials = defineCollection({
   loader: glob({ pattern: "**/*.json", base: "./src/content/testimonials" }),
-  schema: z.object({
-    client: z.string(),
-    quote: z.string(),
-    logo: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      client: z.string(),
+      quote: z.string(),
+      logo: image().optional(),
+    }),
 });
 
 // Services Schema
@@ -94,7 +95,7 @@ const services = defineCollection({
         z.object({
           image: image().optional(),
           title: z.string(),
-          description: z.string(),
+          description: z.string().optional(),
         }),
       ),
     }),
