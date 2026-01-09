@@ -103,7 +103,7 @@ const footerLinks = [
       </div>
 
       <!-- Col 4: Links (Bold Italic 16px) -->
-      <nav class="flex flex-col gap-2 items-end">
+      <nav class="flex flex-col gap-2 md:items-end">
         {
           footerLinks.map((link) => (
             <a
@@ -121,7 +121,9 @@ const footerLinks = [
     <div class="h-7"></div>
 
     <!-- ROW 3: Social Icons -->
-    <div class="flex justify-center items-center gap-6">
+    <div
+      class="flex max-w-[300px] mx-auto items-center justify-between flex-wrap"
+    >
       {
         socialLinksData.map((link) => (
           <a
