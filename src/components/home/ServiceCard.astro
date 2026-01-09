@@ -1,0 +1,46 @@
+---
+import Markdoc from "@markdoc/markdoc";
+
+interface Props {
+  item: {
+    image?: {
+      src: string;
+      width: number;
+      height: number;
+      format: string;
+    };
+    title: string;
+    description: string;
+  };
+}
+
+const { item } = Astro.props;
+
+// Render Markdoc description to HTML
+const descriptionHtml = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(item.description))
+);
+---
+
+<div class="flex flex-col space-y-5">
+  {
+    item.image ? (
+      <img
+        src={item.image.src}
+        alt={item.title}
+        class="w-full h-full rounded-[60px] max-h-[330px]"
+      />
+    ) : (
+      <div class="w-full h-64 bg-gray-200 rounded-2xl flex items-center justify-center">
+        <span class="text-gray-400 text-sm">No image</span>
+      </div>
+    )
+  }
+  <div class="space-y-3">
+    <h3 class="text-2xl font-brand-heading text-brand-dark">{item.title}</h3>
+    <div 
+      class="text-sm font-book text-brand-dark leading-relaxed"
+      set:html={descriptionHtml}
+    />
+  </div>
+</div>

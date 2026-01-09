@@ -3,6 +3,7 @@ import { getEntry } from "astro:content";
 import BenefitsRow from "./BenefitsRow.astro";
 import AboutBio from "./AboutBio.astro";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
+import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
 const entry = await getEntry("about", "about");
 if (!entry) return null;
@@ -23,9 +24,7 @@ const { benefits, bio } = entry.data;
   </div>
 
   <!-- Decorative hashtag glued to bottom center -->
-  <div
-    class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 pointer-events-none"
-  >
-    <HashtagIcon className="w-30p h-auto text-brand-green" />
-  </div>
+  <PositionOverlay bottom="-10px">
+    <HashtagIcon className="w-21 h-auto text-brand-green" />
+  </PositionOverlay>
 </section>

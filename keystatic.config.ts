@@ -4,52 +4,9 @@ export default config({
   storage: { kind: "local" },
 
   singletons: {
-    // Global Footer Configuration
-    footer: singleton({
-      label: "Footer Info",
-      path: "src/content/global/footer",
-      format: { data: "json" },
-      schema: {
-        company: fields.object(
-          {
-            name: fields.text({ label: "Company Name" }),
-            street: fields.text({ label: "Street" }),
-            city: fields.text({ label: "City" }),
-          },
-          { label: "Address" },
-        ),
-        legal: fields.object(
-          {
-            ico: fields.text({ label: "IČO" }),
-            dic: fields.text({ label: "DIČ" }),
-            court: fields.text({ label: "Court Registration" }),
-          },
-          { label: "Legal Info" },
-        ),
-        bank: fields.object(
-          {
-            accountNumber: fields.text({ label: "Account Number" }),
-            swift: fields.text({ label: "SWIFT" }),
-            iban: fields.text({ label: "IBAN" }),
-          },
-          { label: "Bank Details" },
-        ),
-        socials: fields.object(
-          {
-            facebook: fields.url({ label: "Facebook URL" }),
-            instagram: fields.url({ label: "Instagram URL" }),
-            x: fields.url({ label: "X (Twitter) URL" }),
-            linkedin: fields.url({ label: "LinkedIn URL" }),
-            youtube: fields.url({ label: "YouTube URL" }),
-          },
-          { label: "Social Media Links" },
-        ),
-      },
-    }),
-
     // About Us Section (Benefits + Bio)
     about: singleton({
-      label: "About Us",
+      label: "2. O Nás",
       path: "src/content/sections/about",
       format: { data: "json" },
       schema: {
@@ -91,6 +48,80 @@ export default config({
             }),
           },
           { label: "Bio Section" },
+        ),
+      },
+    }),
+
+    // Services Section (Co umíme)
+    services: singleton({
+      label: "3. Co umíme",
+      path: "src/content/sections/services",
+      format: { data: "json" },
+      schema: {
+        headingHighlight: fields.text({
+          label: "Heading Green Part",
+          defaultValue: "Co umíme?",
+        }),
+        headingRemainder: fields.text({ label: "Heading Dark Part" }),
+        introText: fields.markdoc.inline({ label: "Intro Text (18px)" }),
+        items: fields.array(
+          fields.object({
+            image: fields.image({
+              label: "Service Image",
+              directory: "src/assets/images/services",
+              publicPath: "@/assets/images/services/",
+            }),
+            title: fields.text({ label: "Title" }),
+            description: fields.markdoc({
+              label: "Description",
+            }),
+          }),
+          {
+            label: "Services Grid",
+            itemLabel: (props) => props.fields.title.value,
+          },
+        ),
+      },
+    }),
+    // Global Footer Configuration
+    footer: singleton({
+      label: "Patička",
+      path: "src/content/global/footer",
+      format: { data: "json" },
+      schema: {
+        company: fields.object(
+          {
+            name: fields.text({ label: "Company Name" }),
+            street: fields.text({ label: "Street" }),
+            city: fields.text({ label: "City" }),
+          },
+          { label: "Address" },
+        ),
+        legal: fields.object(
+          {
+            ico: fields.text({ label: "IČO" }),
+            dic: fields.text({ label: "DIČ" }),
+            court: fields.text({ label: "Court Registration" }),
+          },
+          { label: "Legal Info" },
+        ),
+        bank: fields.object(
+          {
+            accountNumber: fields.text({ label: "Account Number" }),
+            swift: fields.text({ label: "SWIFT" }),
+            iban: fields.text({ label: "IBAN" }),
+          },
+          { label: "Bank Details" },
+        ),
+        socials: fields.object(
+          {
+            facebook: fields.url({ label: "Facebook URL" }),
+            instagram: fields.url({ label: "Instagram URL" }),
+            x: fields.url({ label: "X (Twitter) URL" }),
+            linkedin: fields.url({ label: "LinkedIn URL" }),
+            youtube: fields.url({ label: "YouTube URL" }),
+          },
+          { label: "Social Media Links" },
         ),
       },
     }),

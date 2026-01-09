@@ -82,4 +82,22 @@ const testimonials = defineCollection({
   }),
 });
 
-export const collections = { footer, homepage, testimonials, about };
+// Services Schema
+const services = defineCollection({
+  loader: glob({ pattern: "services.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      headingHighlight: z.string(),
+      headingRemainder: z.string(),
+      introText: z.string(),
+      items: z.array(
+        z.object({
+          image: image().optional(),
+          title: z.string(),
+          description: z.string(),
+        }),
+      ),
+    }),
+});
+
+export const collections = { footer, homepage, testimonials, about, services };

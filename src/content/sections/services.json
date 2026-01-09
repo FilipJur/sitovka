@@ -1,0 +1,27 @@
+{
+  "headingHighlight": "Co umíme?",
+  "headingRemainder": "Tvoříme obsah, který zaujme, vzdělává nebo prodává.",
+  "introText": "Od nápadu po publikaci tvoříme obsah, který dává smysl lidem i algoritmům. Specializujeme se na **LinkedIn –** budujeme autentické **osobní i firemní značky**, připravujeme texty, vizuály, strategie a kampaně s výsledky. Zvládáme i **další sítě**, blogy, články a spolupráce s influencery či UGC tvůrci, každý formát využíváme  k zapamatovatelnému vyprávění vašeho příběhu.\n",
+  "items": [
+    {
+      "image": "@/assets/images/services/items/0/image.png",
+      "title": "#v čem jsme jiní",
+      "description": "Specializujeme se na LinkedIn – tvoříme **obsah na míru** podle cílové skupiny a tone of voice, propojujeme kreativitu s daty a strategickým myšlením. Jsme lidský partner vaší značky, ne jen dodavatel."
+    },
+    {
+      "image": "@/assets/images/services/items/1/image.jpg",
+      "title": "#obsah",
+      "description": "Vytváříme obsah, který funguje – od nápadu až po publikaci. Texty, fotky, videa, které baví, vzdělávají nebo prodávají."
+    },
+    {
+      "image": "@/assets/images/services/items/2/image.png",
+      "title": "#cílení",
+      "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých vám opravdu záleží – bez plýtvání rozpočtem."
+    },
+    {
+      "image": "@/assets/images/services/items/3/image.jpg",
+      "title": "#technologie",
+      "description": "Využíváme moderní nástroje a technologie pro analýzu, optimalizaci a automatizaci vašeho obsahu."
+    }
+  ]
+}
