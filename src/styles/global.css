@@ -42,10 +42,10 @@
     max-width: 64rem;
   }
   @media (width >= 80rem) {
-    max-width: 72.75rem; /* 1140px - Custom default width */
+    max-width: 71.75rem; /* 1140px - Custom default width */
   }
   @media (width >= 96rem) {
-    max-width: 72.75rem; /* 1140px - Keep consistent at larger breakpoints */
+    max-width: 71.75rem; /* 1140px - Keep consistent at larger breakpoints */
   }
 }
 
@@ -64,4 +64,8 @@
     font-family: var(--font-sans);
     font-weight: var(--font-weight-book);
   }
+}
+::selection {
+  background-color: var(--color-brand-green);
+  color: var(--color-brand-dark);
 }
