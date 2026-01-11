@@ -6,9 +6,14 @@ import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
 const entry = await getEntry("about", "about");
-if (!entry) return null;
 
-const { benefits, bio } = entry.data;
+// Robust defensive guard
+if (!entry || !entry.data) {
+  console.warn("About section data missing or corrupted.");
+  return null;
+}
+
+const { benefits = [], bio } = entry.data;
 ---
 
 <section class="bg-white rounded-[60px] relative overflow-hidden">

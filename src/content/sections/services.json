@@ -1,22 +1,6 @@
 {
   "headingHighlight": "Co umíme?",
-  "headingRemainder": "Tvoříme obsah, který zaujme, vzdělává nebo prodává.",
-  "introText": "Od nápadu po publikaci tvoříme obsah, který dává smysl lidem i algoritmům. Specializujeme se na **LinkedIn –** budujeme autentické **osobní i firemní značky**, připravujeme texty, vizuály, strategie a kampaně s výsledky. Zvládáme i **další sítě**, blogy, články a spolupráce s influencery či UGC tvůrci, každý formát využíváme  k zapamatovatelnému vyprávění vašeho příběhu.\n",
-  "items": [
-    {
-      "title": "#v čem jsme jiní"
-    },
-    {
-      "image": "@/assets/images/services/items/1/image.jpg",
-      "title": "#obsah"
-    },
-    {
-      "image": "@/assets/images/services/items/2/image.png",
-      "title": "#cílení"
-    },
-    {
-      "image": "@/assets/images/services/items/3/image.jpg",
-      "title": "#technologie"
-    }
-  ]
+  "headingRemainder": "",
+  "introText": { "node": { "type": "document", "children": [] } },
+  "items": []
 }

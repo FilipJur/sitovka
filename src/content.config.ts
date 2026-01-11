@@ -65,8 +65,13 @@ const about = defineCollection({
       ),
       bio: z.object({
         heading: z.string(),
-        col1: z.string(), // Inline Markdoc is a string
-        col2: z.string(),
+        col1: z.object({
+          // ✅ markdoc.inline() stores { node: MarkdocNode }
+          node: z.any(),
+        }),
+        col2: z.object({
+          node: z.any(),
+        }),
         image: image().optional(), // Resolver for @/assets - OPTIONAL
       }),
     }),
@@ -90,12 +95,20 @@ const services = defineCollection({
     z.object({
       headingHighlight: z.string(),
       headingRemainder: z.string(),
-      introText: z.string(),
+      introText: z.object({
+        // ✅ markdoc.inline() stores { node: MarkdocNode }
+        node: z.any(),
+      }),
       items: z.array(
         z.object({
           image: image().optional(),
           title: z.string(),
-          description: z.string().optional(),
+          description: z
+            .object({
+              // ✅ markdoc.inline() stores { node: MarkdocNode }
+              node: z.any(),
+            })
+            .optional(),
         }),
       ),
     }),

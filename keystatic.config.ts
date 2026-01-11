@@ -72,7 +72,7 @@ export default config({
               publicPath: "@/assets/images/services/",
             }),
             title: fields.text({ label: "Title" }),
-            description: fields.markdoc({
+            description: fields.markdoc.inline({
               label: "Description",
             }),
           }),

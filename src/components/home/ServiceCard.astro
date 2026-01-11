@@ -1,5 +1,5 @@
 ---
-import Markdoc from "@markdoc/markdoc";
+import { DocumentRenderer } from '@keystatic/core/renderer';
 import { Image } from "astro:assets";
 
 interface Props {
@@ -11,16 +11,14 @@ interface Props {
       format: string;
     };
     title: string;
-    description?: string;
+    description?: { node: any };  // markdoc.inline() structure
   };
 }
 
 const { item } = Astro.props;
 
-// Render Markdoc description to HTML
-const descriptionHtml = item.description
-  ? Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(item.description)))
-  : "";
+// DocumentRenderer expects Element[], so we wrap the node in an array
+const descriptionAst = item.description ? [item.description.node] as any : null;
 ---
 
 <div class="flex flex-col space-y-5">
@@ -40,11 +38,10 @@ const descriptionHtml = item.description
   <div class="space-y-3">
     <h3 class="text-2xl font-brand-heading text-brand-dark">{item.title}</h3>
     {
-      item.description && (
-        <div
-          class="text-sm font-book text-brand-dark leading-relaxed"
-          set:html={descriptionHtml}
-        />
+      descriptionAst && (
+        <div class="text-sm font-book text-brand-dark leading-relaxed">
+          <DocumentRenderer document={descriptionAst} />
+        </div>
       )
     }
   </div>
