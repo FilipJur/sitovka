@@ -1,6 +1,6 @@
 ---
-import { DocumentRenderer } from "@keystatic/core/renderer";
 import { getEntry } from "astro:content";
+import Markdoc from "@markdoc/markdoc";
 import ServiceCard from "./ServiceCard.astro";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
@@ -9,8 +9,9 @@ const entry = await getEntry("services", "services");
 if (!entry) return null;
 
 const { headingHighlight, headingRemainder, introText, items } = entry.data;
-// DocumentRenderer expects Element[], so we wrap the node in an array
-const introAst = [introText.node] as any;
+const introHtml = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(introText)),
+);
 ---
 
 <section class="bg-brand-surface rounded-[60px] relative overflow-hidden">
@@ -23,9 +24,8 @@ const introAst = [introText.node] as any;
       </h2>
       <div
         class="text-lg font-book text-brand-dark leading-relaxed max-w-245 mx-auto"
-      >
-        <DocumentRenderer document={introAst} />
-      </div>
+        set:html={introHtml}
+      />
     </div>
 
     <!-- 4-Column Grid -->
