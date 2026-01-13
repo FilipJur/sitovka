@@ -4,7 +4,6 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -18,18 +17,6 @@ export interface TestimonialsCarouselRef {
   canScrollPrev: () => boolean;
   canScrollNext: () => boolean;
 }
-
-export const itemVariants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut" as any,
-    },
-  },
-};
 
 const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
   ({ items, showNavButtons = true }, ref) => {
@@ -98,70 +85,49 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
                   key={item.name || idx}
                   className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] xl:flex-[0_0_25%] min-w-0 px-2.5"
                 >
-                  <motion.div
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <div className="flex flex-col text-sm">
-                      <motion.div
-                        className="flex gap-5 mb-[30px] items-center"
-                        variants={itemVariants}
-                      >
-                        {item.avatar && (
-                          <img
-                            src={item.avatar.src}
-                            alt="Avatar"
-                            className="w-16 h-16 rounded-full object-cover"
-                          />
-                        )}
-                        {item.logo && (
-                          <img
-                            src={item.logo.src}
-                            alt="Client Logo"
-                            className="w-24 h-10 object-contain"
-                          />
-                        )}
-                      </motion.div>
-                      <motion.div className="mb-[30px]" variants={itemVariants}>
-                        <div
-                          className="font-book italic text-brand-dark"
-                          dangerouslySetInnerHTML={{ __html: item.content }}
+                  <div className="flex flex-col text-sm">
+                    <div className="flex gap-5 mb-[30px] items-center">
+                      {item.avatar && (
+                        <img
+                          src={item.avatar.src}
+                          alt="Avatar"
+                          className="w-16 h-16 rounded-full object-cover"
                         />
-                      </motion.div>
-                      {item.name && (
-                        <motion.div
-                          className="font-bold text-brand-dark"
-                          variants={itemVariants}
-                        >
-                          {item.name}
-                        </motion.div>
                       )}
-                      {item.role && (
-                        <motion.div
-                          className="font-book text-brand-dark"
-                          variants={itemVariants}
-                        >
-                          {item.role}
-                        </motion.div>
+                      {item.logo && (
+                        <img
+                          src={item.logo.src}
+                          alt="Client Logo"
+                          className="w-24 h-10 object-contain"
+                        />
                       )}
                     </div>
-                  </motion.div>
+                    <div className="mb-[30px]">
+                      <div
+                        className="font-book italic text-brand-dark"
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
+                    </div>
+                    {item.name && (
+                      <div className="font-bold text-brand-dark">
+                        {item.name}
+                      </div>
+                    )}
+                    {item.role && (
+                      <div className="font-book text-brand-dark">
+                        {item.role}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
               {items.length === 0 && (
                 <div className="embla__slide flex-[0_0_100%] min-w-0">
-                  <motion.div
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <div className="p-6 bg-white/10 rounded-3xl">
-                      <p className="font-book italic text-brand-dark">
-                        Žádné reference k dispozici.
-                      </p>
-                    </div>
-                  </motion.div>
+                  <div className="p-6 bg-white/10 rounded-3xl">
+                    <p className="font-book italic text-brand-dark">
+                      Žádné reference k dispozici.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
