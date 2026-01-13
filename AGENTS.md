@@ -3,12 +3,14 @@
 ## Build & Development Commands
 
 ### Core Commands
+
 - `npm run dev` - Start development server at localhost:4321 (⚠️ **NEVER run this command - dev server runs in background**)
 - `npm run build` - Build production site to ./dist/
 - `npm run preview` - Preview production build locally
 - `npm run astro -- --help` - Get Astro CLI help
 
 ### Testing & Quality
+
 - No test framework configured - add tests as needed
 - No linting/formatting configured - consider adding ESLint/Prettier
 - Use `astro check` for TypeScript and Astro component validation
@@ -16,12 +18,14 @@
 ## Technology Stack
 
 ### Core Framework
+
 - **Astro** - Static site generator with component islands
 - **React** - Interactive components (v19.2.3)
 - **TypeScript** - Strict mode enabled via astro/tsconfigs/strict
 - **Tailwind CSS** - Utility-first CSS framework (v4.1.18)
 
 ### Key Dependencies
+
 - **Keystatic** - Headless CMS integration
 - **Framer Motion** - Animation library
 - **Embla Carousel** - Carousel component
@@ -30,11 +34,13 @@
 ## Design Tokens
 
 ### Color Palette
+
 - `--color-brand-green`: #00FF80 - Primary neon green for accents, highlights, emphasis
 - `--color-brand-dark`: #2D3143 - Dark blue/charcoal for text and dark backgrounds
 - `--color-brand-surface`: #F5F5F5 - Light gray for section backgrounds
 
 ### Typography Scale
+
 - `--text-xs`: 12px - Copyright text, metadata
 - `--text-sm`: 14px - Body text
 - `--text-base`: 16px - Navigation, buttons, tags
@@ -43,13 +49,16 @@
 - `--text-display`: 120px - Hero headlines
 
 ### Typography Weights
+
 - `--font-weight-book`: 400 - Regular body text
 - `--font-weight-bold`: 700 - Headlines and emphasis
 
 ### Utility Classes
+
 - `.font-brand-heading` - Bold + italic combination for headers
 
 ### Font Family
+
 - Primary: "gotham" (via Adobe Fonts/Typekit)
 - Fallback: sans-serif
 - Available variants: Book, Book Italic, Bold, Bold Italic
@@ -57,10 +66,11 @@
 ## Code Style Guidelines
 
 ### Astro Components (.astro files)
+
 ```astro
 ---
 // Component Script (TypeScript)
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 const { title } = Astro.props;
 ---
 
@@ -77,27 +87,28 @@ const { title } = Astro.props;
 ```
 
 ### React Components (.tsx files)
+
 ```tsx
-import React from 'react';
-import { clsx } from 'clsx';
+import React from "react";
+import { clsx } from "clsx";
 
 interface ButtonProps {
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   children: React.ReactNode;
   onClick?: () => void;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-  variant = 'primary', 
-  children, 
-  onClick 
+export const Button: React.FC<ButtonProps> = ({
+  variant = "primary",
+  children,
+  onClick,
 }) => {
   return (
     <button
       className={clsx(
-        'px-4 py-2 rounded-md',
-        variant === 'primary' && 'bg-blue-500 text-white',
-        variant === 'secondary' && 'bg-gray-200 text-gray-800'
+        "px-4 py-2 rounded-md",
+        variant === "primary" && "bg-blue-500 text-white",
+        variant === "secondary" && "bg-gray-200 text-gray-800",
       )}
       onClick={onClick}
     >
@@ -108,31 +119,35 @@ export const Button: React.FC<ButtonProps> = ({
 ```
 
 ### Import Conventions
+
 - **Absolute imports**: Use `@/` prefix for src directory imports
 - **Component imports**: Group by type (React, Astro, utilities)
 - **CSS imports**: Import global styles in layout components only
 - **Type imports**: Use `import type` for TypeScript types
 
 ### Naming Conventions
+
 - **Components**: PascalCase (e.g., `Navigation.astro`, `Button.tsx`)
 - **Utilities**: camelCase (e.g., `formatDate.ts`, `cn.ts`)
 - **Constants**: UPPER_SNAKE_CASE (e.g., `API_ENDPOINTS`)
 - **Files**: Match component name (e.g., `components/Header.astro`)
 
 ### Error Handling
+
 ```typescript
 // Always handle errors explicitly
 try {
   const data = await fetchData();
   return { data };
 } catch (error) {
-  console.error('Failed to fetch data:', error);
+  console.error("Failed to fetch data:", error);
   // Return appropriate fallback or error state
-  return { data: null, error: 'Failed to load data' };
+  return { data: null, error: "Failed to load data" };
 }
 ```
 
 ### TypeScript Configuration
+
 - Strict mode enabled via `astro/tsconfigs/strict`
 - JSX configured for React (`react-jsx`)
 - Include all files except `dist/`
@@ -164,6 +179,7 @@ public/             # Static assets (images, fonts, etc.)
 ## Content Management (Keystatic CMS)
 
 ### Content Structure
+
 ```
 src/content/
 ├── global/           # Site-wide data (Header, Footer, SEO)
@@ -177,19 +193,22 @@ src/content/
 ```
 
 ### CMS Configuration Files
+
 - `keystatic.config.ts` - Keystatic admin UI schema definition
 - `src/content.config.ts` - Astro content collection schemas with Zod validation
 
 ### Content Access Pattern
+
 ```astro
 ---
-import { getEntry } from 'astro:content';
-const footerData = await getEntry('footer', 'footer');
+import { getEntry } from "astro:content";
+const footerData = await getEntry("footer", "footer");
 const { company, legal, bank } = footerData.data;
 ---
 ```
 
 ### CMS Access
+
 - Local development: `/keystatic` route for content editing
 - Production: Switch `storage.kind` from `'local'` to `'github'` in `keystatic.config.ts`
 
@@ -201,6 +220,19 @@ const { company, legal, bank } = footerData.data;
 4. Preview production build: `npm run preview`
 
 **Note:** Use `glob` loader for content collections (not `file` loader) to avoid build issues
+
+## Common Issues & Solutions
+
+### DocumentRenderer Error: "Cannot read properties of undefined (reading 'map')"
+
+**Cause:** Mixing Markdoc parsing with DocumentRenderer. DocumentRenderer expects Keystatic's document structure, not Markdoc AST.
+**Solution:** Use `Markdoc.renderers.html()` instead of DocumentRenderer for Markdoc strings:
+
+```astro
+const ast = Markdoc.parse(markdocString); const content =
+Markdoc.transform(ast); const html = Markdoc.renderers.html(content); // Then
+use: <div set:html={html} />
+```
 
 ## Security Notes
 
