@@ -12,6 +12,7 @@ import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 
 // 3. Fetch footer data from CMS
 import { getEntry } from "astro:content";
+import { Button } from "../ui/Button";
 const footerEntry = await getEntry("footer", "footer");
 
 type FooterData = {
@@ -77,16 +78,21 @@ const footerLinks = [
   - pt-[90px]: Top padding as requested
 -->
 <footer
-  class="bg-brand-dark text-white rounded-[60px] pt-22.5 overflow-hidden relative"
+  class="bg-brand-dark text-white rounded-[60px] overflow-visible relative"
 >
-  <div class="container mx-auto px-10">
+  <div
+    class="hidden md:block absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+  >
+    <Button href="#poptavka" variant="primary"> Poptávka </Button>
+  </div>
+  <div class="container mx-auto px-10 pt-22.5">
     <!-- ROW 1: Logo on the left -->
     <div class="flex justify-start">
       <a href="#" class="shrink-0 group" aria-label="Domů">
         <LogoWhite className="h-10 w-auto" aria-hidden="true" />
       </a>
     </div>
-
+    +
     <!-- GAP: 28px -->
     <div class="h-7"></div>
 
