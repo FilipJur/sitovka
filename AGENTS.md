@@ -10,10 +10,19 @@
 
 - `npm run dev` - **NEVER USE** - Dev server runs in background
 - `npm run build` - Build production static site to `./dist/`
+  - Automatically runs `scripts/sync-keystatic-assets.js` first (via prebuild)
+  - Fixes case sensitivity issues before building
 - `npm run preview` - Preview production build locally
 - `npm run astro -- --help` - Get Astro CLI help
 - `npm run cleanup:images` - List unused image assets
 - `npm run cleanup:images:delete` - Delete unused image assets
+- `node scripts/sync-keystatic-assets.js` - Manual Keystatic asset sync (runs automatically)
+
+**Build Process:**
+
+1. `npm run prebuild` → Runs asset sync script
+2. `npm run build` → Runs Astro build
+3. `npm run preview` → Preview built site
 
 ### Testing & Quality
 
@@ -58,6 +67,15 @@
 
 - `@/*` maps to `./src/*` (tsconfig.json)
 - Use for all internal imports
+
+**Keystatic Asset Sync (scripts/sync-keystatic-assets.js)**
+
+- Runs automatically before build via `prebuild` script
+- Fixes case sensitivity mismatches between JSON references and directories
+- Creates missing directories (e.g., `src/assets/images/case-studies/`)
+- Cleans up empty orphaned directories
+- Warns about directories with assets but no matching JSON
+- **Required for Netlify** - macOS filesystem is case-insensitive, Linux is case-sensitive
 
 ## 🧠 Content Architecture (CRITICAL)
 
