@@ -30,17 +30,36 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
           <motion.div
             key={index}
             layout={isDesktop}
-            initial={false}
+            initial={{ opacity: 0, y: 20 }}
             animate={{
+              opacity: 1,
+              y: 0,
               width: targetWidth,
+              scale: isActive && isDesktop ? 1.02 : 1,
+              boxShadow:
+                isActive && isDesktop
+                  ? "0 15px 30px -5px rgba(0, 0, 0, 0.15)"
+                  : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
             }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 30,
-              mass: 1,
+              opacity: { duration: 0.5, delay: index * 0.1 },
+              y: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                mass: 0.8,
+                delay: index * 0.1,
+              },
+              width: { type: "spring", stiffness: 100, damping: 15, mass: 0.8 },
+              scale: { type: "spring", stiffness: 200, damping: 20 },
+              boxShadow: { duration: 0.3 },
             }}
             onClick={() => setActiveIndex(index)}
+            whileHover={{
+              scale: isDesktop ? 1.01 : 1,
+              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+            }}
             style={{
               backgroundImage: card.image ? `url(${card.image.src})` : "none",
               backgroundSize: "cover",
@@ -51,7 +70,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               "w-full h-[400px] lg:h-[400px] lg:w-auto",
               !card.image &&
                 (card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]"),
-              isActive && isDesktop ? "shadow-2xl z-10" : "hover:brightness-95",
+              isActive && isDesktop ? "z-10" : "hover:brightness-95",
             )}
           >
             <div
