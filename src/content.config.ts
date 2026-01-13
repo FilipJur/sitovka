@@ -41,6 +41,27 @@ const services = defineCollection({
     }),
 });
 
+const contacts = defineCollection({
+  loader: glob({ pattern: "contacts.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      heading: z.string(),
+      introText: z.string(),
+      team: z
+        .array(
+          z.object({
+            name: z.string(),
+            role: z.string().optional().default(""),
+            email: z.string().optional().default(""),
+            phone: z.string().optional().default(""),
+            avatar: image().optional(),
+            isFeatured: z.boolean().optional().default(false),
+          }),
+        )
+        .default([]),
+    }),
+});
+
 const footer = defineCollection({
   loader: glob({ pattern: "footer.json", base: "./src/content/global" }),
   schema: z.object({
@@ -81,4 +102,4 @@ const testimonials = defineCollection({
     }),
 });
 
-export const collections = { about, services, footer, testimonials };
+export const collections = { about, services, contacts, footer, testimonials };

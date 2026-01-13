@@ -83,6 +83,36 @@ export default config({
         ),
       },
     }),
+
+    // Contacts Section (5. Kontakty)
+    contacts: singleton({
+      label: "5. Kontakty",
+      path: "src/content/sections/contacts",
+      format: { data: "json" },
+      schema: {
+        heading: fields.text({ label: "Heading", defaultValue: "Kontakty" }),
+        introText: fields.markdoc.inline({ label: "Intro Text (18px)" }),
+        team: fields.array(
+          fields.object({
+            name: fields.text({ label: "Name" }),
+            role: fields.text({ label: "Role" }),
+            email: fields.text({ label: "Email" }),
+            phone: fields.text({ label: "Phone" }),
+            avatar: fields.image({
+              label: "Profile Picture",
+              directory: "src/assets/images/team",
+              publicPath: "@/assets/images/team/",
+            }),
+            isFeatured: fields.checkbox({ label: "Featured Person" }),
+          }),
+          {
+            label: "Team Members",
+            itemLabel: (props) => props.fields.name.value,
+          },
+        ),
+      },
+    }),
+
     // Global Footer Configuration
     footer: singleton({
       label: "Patička",

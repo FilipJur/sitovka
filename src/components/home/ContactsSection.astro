@@ -1,0 +1,37 @@
+---
+import { getEntry } from "astro:content";
+import Markdoc from "@markdoc/markdoc";
+import ContactCard from "./ContactCard.astro";
+
+const entry = await getEntry("contacts", "contacts");
+if (!entry) return null;
+
+const { heading, introText, team } = entry.data;
+const introHtml = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(introText)),
+);
+---
+
+<section id="kontakty" class="bg-white py-24">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-24 space-y-6 max-w-[980px] mx-auto">
+      <h2 class="text-2xl font-brand-heading text-brand-dark uppercase">
+        {heading}
+      </h2>
+      <div
+        class="text-lg font-book text-brand-dark leading-relaxed"
+        set:html={introHtml}
+      />
+    </div>
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-x-[180px]"
+    >
+      {
+        team
+          .filter((p: any) => p.name && p.name.trim() !== "")
+          .map((person: any) => <ContactCard person={person} />)
+      }
+    </div>
+  </div>
+</section>

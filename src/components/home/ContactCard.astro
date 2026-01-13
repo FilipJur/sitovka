@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  person: {
+    name: string;
+    role?: string;
+    email?: string;
+    phone?: string;
+    avatar?: any;
+  };
+}
+
+const { person } = Astro.props;
+---
+
+<div class="flex flex-col items-center text-center">
+  {
+    person.avatar ? (
+      <Image
+        src={person.avatar}
+        alt={person.name}
+        width={180}
+        height={180}
+        class="rounded-full w-45 h-45 object-cover mb-[30px] bg-brand-surface"
+      />
+    ) : (
+      <div class="rounded-full w-45 h-45 bg-brand-surface mb-[30px]" />
+    )
+  }
+
+  <h3 class="text-lg font-brand-heading text-brand-dark mb-4 uppercase">
+    {person.name}
+  </h3>
+
+  {
+    person.role && person.role.trim() !== '' && (
+      <p class="text-sm font-book text-brand-dark mb-4 opacity-80">
+        {person.role}
+      </p>
+    )
+  }
+
+  {
+    (person.email || person.phone) && (
+      <div class="text-sm font-book text-brand-dark space-y-1">
+        {person.email && person.email.trim() !== '' && (
+          <a
+            href={`mailto:${person.email}`}
+            class="block hover:text-brand-green transition-colors"
+          >
+            {person.email}
+          </a>
+        )}
+        {person.phone && person.phone.trim() !== '' && (
+          <a
+            href={`tel:${person.phone.replace(/\s/g, "")}`}
+            class="block hover:text-brand-green transition-colors"
+          >
+            {person.phone}
+          </a>
+        )}
+      </div>
+    )
+  }
+</div>

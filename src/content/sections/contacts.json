@@ -1,0 +1,53 @@
+{
+  "heading": "Kontakty",
+  "introText": "Spojili jsme zkušené profíky do týmu, který táhne za jeden provaz. Pracujeme poctivě, pozitivně a férově – bez agenturních frází, **vždy naplno**, s výsledky a dobrým pocitem pro všechny.\n",
+  "team": [
+    {
+      "name": "Jana ONDREJECHOVÁ",
+      "role": "obsahový guru",
+      "email": "jana@sitovka.net",
+      "phone": "+420 725 554 418",
+      "avatar": "@/assets/images/team/team/0/avatar.jpg",
+      "isFeatured": true
+    },
+    {
+      "name": "Petr HRUŠKA",
+      "role": "kreativa",
+      "email": "petr@sitovka.net",
+      "phone": "+420 603 289 747",
+      "avatar": "@/assets/images/team/team/1/avatar.jpg",
+      "isFeatured": false
+    },
+    {
+      "name": "Stanislav JULÍČEK",
+      "role": "placená propagace",
+      "email": "standa@sitovka.net",
+      "phone": "+420 777 756 772",
+      "avatar": "@/assets/images/team/team/2/avatar.jpg",
+      "isFeatured": false
+    },
+    {
+      "name": "Jaroslav MAŠEK",
+      "role": "obsahový a marketingový manažer",
+      "email": "jarda@sitovka.net",
+      "phone": "+420 605 155 174",
+      "avatar": "@/assets/images/team/team/3/avatar.jpg",
+      "isFeatured": false
+    },
+    {
+      "name": "Olga OLŠOVÁ",
+      "role": "obsahový a marketingový manažer",
+      "email": "olga@sitovka.net",
+      "phone": "+420 732 193 500",
+      "avatar": "@/assets/images/team/team/4/avatar.jpg",
+      "isFeatured": false
+    },
+    {
+      "name": "Jan ŠEVČÍK",
+      "role": "programátor",
+      "email": "honza@sitovka.net",
+      "avatar": "@/assets/images/team/team/5/avatar.jpg",
+      "isFeatured": false
+    }
+  ]
+}
