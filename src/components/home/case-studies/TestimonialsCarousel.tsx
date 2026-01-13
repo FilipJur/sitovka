@@ -19,13 +19,35 @@ export const TestimonialsCarousel = ({ items }: Props) => {
               className="flex-[0_0_100%] md:flex-[0_0_45%] lg:flex-[0_0_30%] min-w-0"
             >
               <div className="p-6">
-                <div className="flex flex-col gap-4">
-                  <p className="font-book italic text-brand-dark">
-                    "{item.quote}"
-                  </p>
-                  <div className="font-brand-heading text-brand-dark">
-                    {item.client}
+                <div className="flex flex-col">
+                  <div className="flex gap-5 mb-[30px]">
+                    {item.avatar && (
+                      <img
+                        src={item.avatar.src}
+                        alt="Avatar"
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                    )}
+                    {item.logo && (
+                      <img
+                        src={item.logo.src}
+                        alt="Client Logo"
+                        className="h-16 w-auto object-contain"
+                      />
+                    )}
                   </div>
+                  <div className="mb-[30px]">
+                    <div
+                      className="font-book italic text-brand-dark"
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                    />
+                  </div>
+                  {item.name && (
+                    <div className="font-bold text-brand-dark">{item.name}</div>
+                  )}
+                  {item.role && (
+                    <div className="text-brand-dark">{item.role}</div>
+                  )}
                 </div>
               </div>
             </div>

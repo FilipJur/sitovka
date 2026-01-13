@@ -122,9 +122,11 @@ const testimonials = defineCollection({
   loader: glob({ pattern: "**/*.json", base: "./src/content/testimonials" }),
   schema: ({ image }) =>
     z.object({
-      client: z.string(),
-      quote: z.string(),
       logo: image().optional(),
+      content: z.string(),
+      avatar: image().optional(),
+      name: z.string().optional().default(""),
+      role: z.string().optional().default(""),
     }),
 });
 

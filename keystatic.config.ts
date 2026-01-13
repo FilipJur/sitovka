@@ -204,16 +204,29 @@ export default config({
     // Testimonials (Repeatable items)
     testimonials: collection({
       label: "Testimonials",
-      slugField: "client",
+      slugField: "name",
       path: "src/content/testimonials/*",
       format: { data: "json" },
       schema: {
-        client: fields.text({ label: "Client Name" }),
-        quote: fields.text({ label: "Quote", multiline: true }),
         logo: fields.image({
           label: "Client Logo",
           directory: "src/assets/clients",
           publicPath: "@/assets/clients/",
+        }),
+        content: fields.markdoc.inline({ label: "Content (Rich Text)" }),
+        avatar: fields.image({
+          label: "Avatar (Person)",
+          directory: "src/assets/clients",
+          publicPath: "@/assets/clients/",
+          validation: { isRequired: false },
+        }),
+        name: fields.text({
+          label: "Name",
+          validation: { isRequired: false },
+        }),
+        role: fields.text({
+          label: "Role",
+          validation: { isRequired: false },
         }),
       },
     }),
