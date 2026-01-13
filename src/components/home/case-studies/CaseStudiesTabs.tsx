@@ -47,15 +47,9 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
   const defaultTab = studies.length > 0 ? studies[0].tabLabel : "reference";
   const [activeTab, setActiveTab] = useState(defaultTab);
   const carouselRef = useRef<TestimonialsCarouselRef>(null);
-  const [showCarouselNav, setShowCarouselNav] = useState(false);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    if (value === "reference") {
-      setTimeout(() => {
-        setShowCarouselNav(testimonials.length > 4);
-      }, 300);
-    }
   };
 
   return (
@@ -78,7 +72,7 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
       <motion.div
         layout
         transition={{ type: "spring", bounce: 0, duration: 0.3, mass: 0.7 }}
-        className={`bg-brand-green rounded-b-[60px] text-brand-dark min-h-[500px] ${
+        className={`bg-brand-green rounded-b-[60px] text-brand-dark min-h-[450px] ${
           activeTab === "reference" ? "py-8 md:py-12" : "p-8 md:p-12"
         }`}
       >
@@ -134,11 +128,6 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
               variants={contentVariants}
               initial="hidden"
               animate={activeTab === "reference" ? "visible" : "hidden"}
-              onAnimationComplete={() => {
-                if (activeTab === "reference" && carouselRef.current) {
-                  carouselRef.current.reInit();
-                }
-              }}
               className="w-full"
             >
               <TestimonialsCarousel

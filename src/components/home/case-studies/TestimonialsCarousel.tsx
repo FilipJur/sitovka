@@ -33,11 +33,18 @@ export const itemVariants = {
 
 const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
   ({ items, showNavButtons = true }, ref) => {
+    const [canScroll, setCanScroll] = useState({ prev: false, next: false });
+
     const [emblaRef, emblaApi] = useEmblaCarousel({
       align: "start",
       loop: true,
+      dragFree: false,
+      skipSnaps: false,
+      dragThreshold: 20,
+      duration: 30,
+      containScroll: "trimSnaps",
+      slidesToScroll: 1,
     });
-    const [canScroll, setCanScroll] = useState({ prev: false, next: false });
 
     const onSelect = React.useCallback(() => {
       if (!emblaApi) return;
@@ -83,71 +90,81 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
           </button>
         )}
         {showNavButtons && items.length <= 4 && <div />}
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {items.map((item, idx) => (
-              <motion.div
-                key={idx}
-                className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0 px-2.5"
-                variants={itemVariants}
-              >
-                <div className="flex flex-col text-sm">
+        <div className="embla">
+          <div className="embla__viewport overflow-hidden" ref={emblaRef}>
+            <div className="embla__container flex">
+              {items.map((item, idx) => (
+                <div
+                  key={item.name || idx}
+                  className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] xl:flex-[0_0_25%] min-w-0 px-2.5"
+                >
                   <motion.div
-                    className="flex gap-5 mb-[30px] items-center"
                     variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
                   >
-                    {item.avatar && (
-                      <img
-                        src={item.avatar.src}
-                        alt="Avatar"
-                        className="w-16 h-16 rounded-full object-cover"
-                      />
-                    )}
-                    {item.logo && (
-                      <img
-                        src={item.logo.src}
-                        alt="Client Logo"
-                        className="w-24 h-10 object-contain"
-                      />
-                    )}
+                    <div className="flex flex-col text-sm">
+                      <motion.div
+                        className="flex gap-5 mb-[30px] items-center"
+                        variants={itemVariants}
+                      >
+                        {item.avatar && (
+                          <img
+                            src={item.avatar.src}
+                            alt="Avatar"
+                            className="w-16 h-16 rounded-full object-cover"
+                          />
+                        )}
+                        {item.logo && (
+                          <img
+                            src={item.logo.src}
+                            alt="Client Logo"
+                            className="w-24 h-10 object-contain"
+                          />
+                        )}
+                      </motion.div>
+                      <motion.div className="mb-[30px]" variants={itemVariants}>
+                        <div
+                          className="font-book italic text-brand-dark"
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
+                      </motion.div>
+                      {item.name && (
+                        <motion.div
+                          className="font-bold text-brand-dark"
+                          variants={itemVariants}
+                        >
+                          {item.name}
+                        </motion.div>
+                      )}
+                      {item.role && (
+                        <motion.div
+                          className="font-book text-brand-dark"
+                          variants={itemVariants}
+                        >
+                          {item.role}
+                        </motion.div>
+                      )}
+                    </div>
                   </motion.div>
-                  <motion.div className="mb-[30px]" variants={itemVariants}>
-                    <div
-                      className="font-book italic text-brand-dark"
-                      dangerouslySetInnerHTML={{ __html: item.content }}
-                    />
+                </div>
+              ))}
+              {items.length === 0 && (
+                <div className="embla__slide flex-[0_0_100%] min-w-0">
+                  <motion.div
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <div className="p-6 bg-white/10 rounded-3xl">
+                      <p className="font-book italic text-brand-dark">
+                        Žádné reference k dispozici.
+                      </p>
+                    </div>
                   </motion.div>
-                  {item.name && (
-                    <motion.div
-                      className="font-bold text-brand-dark"
-                      variants={itemVariants}
-                    >
-                      {item.name}
-                    </motion.div>
-                  )}
-                  {item.role && (
-                    <motion.div
-                      className="font-book text-brand-dark"
-                      variants={itemVariants}
-                    >
-                      {item.role}
-                    </motion.div>
-                  )}
                 </div>
-              </motion.div>
-            ))}
-            {items.length === 0 && (
-              <motion.div
-                className="flex-[0_0_100%] min-w-0"
-                variants={itemVariants}
-              >
-                <div className="p-6 bg-white/10 rounded-3xl">
-                  <p className="font-book italic text-brand-dark">
-                    Žádné reference k dispozici.
-                  </p>
-                </div>
-              </motion.div>
-            )}
+              )}
+            </div>
           </div>
         </div>
         {showNavButtons && items.length > 4 && (
