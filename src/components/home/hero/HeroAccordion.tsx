@@ -35,7 +35,6 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               opacity: 1,
               y: 0,
               width: targetWidth,
-              scale: isActive && isDesktop ? 1.02 : 1,
               boxShadow:
                 isActive && isDesktop
                   ? "0 15px 30px -5px rgba(0, 0, 0, 0.15)"
@@ -46,19 +45,18 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               opacity: { duration: 0.5, delay: index * 0.1 },
               y: {
                 type: "spring",
-                stiffness: 100,
-                damping: 15,
-                mass: 0.8,
+                stiffness: 60,
+                damping: 8,
+                mass: 0.6,
                 delay: index * 0.1,
               },
-              width: { type: "spring", stiffness: 100, damping: 15, mass: 0.8 },
-              scale: { type: "spring", stiffness: 200, damping: 20 },
+              width: { type: "spring", stiffness: 60, damping: 8, mass: 0.6 },
               boxShadow: { duration: 0.3 },
             }}
             onClick={() => setActiveIndex(index)}
             whileHover={{
-              scale: isDesktop ? 1.01 : 1,
-              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15)",
+              filter: "brightness(0.9)",
             }}
             style={{
               backgroundImage: card.image ? `url(${card.image.src})` : "none",
@@ -66,11 +64,11 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               backgroundPosition: "center",
             }}
             className={cn(
-              "relative rounded-[60px] overflow-hidden cursor-pointer transition-colors duration-500",
+              "relative rounded-[60px] overflow-hidden cursor-pointer",
               "w-full h-[400px] lg:h-[400px] lg:w-auto",
               !card.image &&
                 (card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]"),
-              isActive && isDesktop ? "z-10" : "hover:brightness-95",
+              isActive && isDesktop ? "z-10" : "",
             )}
           >
             <div
