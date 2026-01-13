@@ -113,6 +113,20 @@ export default config({
       },
     }),
 
+    // Prefooter Section (6. Prefooter) - Only image is configurable
+    prefooter: singleton({
+      label: "6. Prefooter",
+      path: "src/content/sections/prefooter",
+      format: { data: "json" },
+      schema: {
+        image: fields.image({
+          label: "Left Image",
+          directory: "src/assets/images/prefooter",
+          publicPath: "@/assets/images/prefooter/",
+        }),
+      },
+    }),
+
     // Global Footer Configuration
     footer: singleton({
       label: "Patička",

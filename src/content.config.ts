@@ -62,6 +62,14 @@ const contacts = defineCollection({
     }),
 });
 
+const prefooter = defineCollection({
+  loader: glob({ pattern: "prefooter.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      image: image().optional(),
+    }),
+});
+
 const footer = defineCollection({
   loader: glob({ pattern: "footer.json", base: "./src/content/global" }),
   schema: z.object({
@@ -102,4 +110,11 @@ const testimonials = defineCollection({
     }),
 });
 
-export const collections = { about, services, contacts, footer, testimonials };
+export const collections = {
+  about,
+  services,
+  contacts,
+  prefooter,
+  footer,
+  testimonials,
+};
