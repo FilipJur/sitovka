@@ -16,7 +16,7 @@ export default config({
             headline: fields.text({ label: "Headline (e.g. který zraje)" }),
             description: fields.text({ label: "Description", multiline: true }),
             image: fields.image({
-              label: "Cutout Image",
+              label: "Background Image",
               directory: "src/assets/images/hero",
               publicPath: "@/assets/images/hero/",
             }),

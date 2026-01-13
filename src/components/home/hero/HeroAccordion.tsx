@@ -41,10 +41,16 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               mass: 1,
             }}
             onClick={() => setActiveIndex(index)}
+            style={{
+              backgroundImage: card.image ? `url(${card.image.src})` : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
             className={cn(
               "relative rounded-[60px] overflow-hidden cursor-pointer transition-colors duration-500",
               "w-full h-[400px] lg:h-[400px] lg:w-auto",
-              card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]",
+              !card.image &&
+                (card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]"),
               isActive && isDesktop ? "shadow-2xl z-10" : "hover:brightness-95",
             )}
           >
@@ -67,7 +73,9 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                 >
                   <span
                     className={
-                      card.theme === "green" ? "text-white" : "text-brand-dark"
+                      card.theme === "green" || card.image
+                        ? "text-white"
+                        : "text-brand-dark"
                     }
                   >
                     {card.highlight}
@@ -75,7 +83,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   <br />
                   <span
                     className={
-                      card.theme === "green"
+                      card.theme === "green" || card.image
                         ? "text-brand-dark"
                         : "text-brand-green"
                     }
@@ -97,20 +105,6 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                 </p>
               </motion.div>
             </div>
-
-            {card.image && (
-              <motion.img
-                src={card.image.src}
-                alt=""
-                layoutId={`hero-img-${index}`}
-                className={cn(
-                  "absolute bottom-0 right-0 object-contain origin-bottom-right transition-all duration-500 pointer-events-none",
-                  isDesktop && !isActive
-                    ? "w-[120%] h-[60%] grayscale opacity-50"
-                    : "w-[90%] h-[80%] grayscale-0 opacity-100",
-                )}
-              />
-            )}
           </motion.div>
         );
       })}

@@ -4,30 +4,35 @@
       "highlight": "#brand",
       "headline": "a kreativa co nese ovoce",
       "description": "Tvoříme značky, které si lidé zapamatují.",
+      "image": "@/assets/images/hero/cards/0/image.png",
       "theme": "green"
     },
     {
       "highlight": "#marketing,",
       "headline": "který zraje",
       "description": "Strategie, které fungují dlouhodobě.",
-      "theme": "white"
+      "image": "@/assets/images/hero/cards/1/image.png",
+      "theme": "green"
     },
     {
       "highlight": "#výkon,",
       "headline": "který přináší zásah",
       "description": "Kampaně s měřitelnými výsledky.",
+      "image": "@/assets/images/hero/cards/2/image.png",
       "theme": "green"
     },
     {
       "highlight": "#kampaně,",
       "headline": "co nakopnou výsledky",
       "description": "Kreativita spojená s daty.",
-      "theme": "grey"
+      "image": "@/assets/images/hero/cards/3/image.png",
+      "theme": "green"
     },
     {
       "highlight": "#obsah,",
       "headline": "co zvedá dosah",
       "description": "Příběhy, které lidé sdílejí.",
+      "image": "@/assets/images/hero/cards/4/image.png",
       "theme": "green"
     }
   ]
