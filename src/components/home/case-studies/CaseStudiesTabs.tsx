@@ -25,12 +25,12 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
         <Trigger value="reference" label="Reference" />
       </Tabs.List>
 
-      <div className="bg-brand-green rounded-b-[60px] p-8 md:p-12 text-brand-dark min-h-[500px]">
+      <div className="bg-brand-green rounded-b-[60px] py-8 md:py-12 text-brand-dark min-h-[500px]">
         {studies.map((study) => (
           <Tabs.Content
             key={study.tabLabel}
             value={study.tabLabel}
-            className="outline-none animate-in fade-in duration-300 h-full"
+            className="outline-none animate-in fade-in duration-300 h-full px-8 md:px-12"
           >
             <CaseStudyPanel study={study} />
           </Tabs.Content>

@@ -65,7 +65,3 @@
     font-weight: var(--font-weight-book);
   }
 }
-::selection {
-  background-color: var(--color-brand-green);
-  color: var(--color-brand-dark);
-}
