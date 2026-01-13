@@ -1,80 +1,170 @@
-import React from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useEffect,
+} from "react";
+import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
   items: any[];
+  showNavButtons?: boolean;
 }
 
-export const TestimonialsCarousel = ({ items }: Props) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true });
+export interface TestimonialsCarouselRef {
+  reInit: () => void;
+  canScrollPrev: () => boolean;
+  canScrollNext: () => boolean;
+}
 
-  return (
-    <div className="grid grid-cols-[auto_1fr_auto] items-center">
-      <button
-        onClick={() => emblaApi?.scrollPrev()}
-        className="p-3 rounded-full hover:bg-primary transition-colors"
-        aria-label="Předchozí reference"
-      >
-        <ChevronLeft className="w-8 h-8 text-white" />
-      </button>
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
-          {items.map((item, idx) => (
-            <div
-              key={idx}
-              className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0 px-2.5"
-            >
-              <div className="flex flex-col text-sm">
-                <div className="flex gap-5 mb-[30px] items-center">
-                  {item.avatar && (
-                    <img
-                      src={item.avatar.src}
-                      alt="Avatar"
-                      className="w-16 h-16 rounded-full object-cover"
-                    />
-                  )}
-                  {item.logo && (
-                    <img
-                      src={item.logo.src}
-                      alt="Client Logo"
-                      className="w-24 h-10 object-contain"
-                    />
-                  )}
-                </div>
-                <div className="mb-[30px] ">
-                  <div
-                    className="font-book italic text-brand-dark"
-                    dangerouslySetInnerHTML={{ __html: item.content }}
-                  />
-                </div>
-                {item.name && (
-                  <div className="font-bold text-brand-dark">{item.name}</div>
-                )}
-                {item.role && (
-                  <div className="font-book text-brand-dark">{item.role}</div>
-                )}
-              </div>
-            </div>
-          ))}
-          {items.length === 0 && (
-            <div className="flex-[0_0_100%] min-w-0">
-              <div className="p-6 bg-white/10 rounded-3xl">
-                <p className="font-book italic text-brand-dark">
-                  Žádné reference k dispozici.
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-      <button
-        onClick={() => emblaApi?.scrollNext()}
-        className="p-3 rounded-full hover:bg-white/10 transition-colors"
-        aria-label="Další reference"
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button>
-    </div>
-  );
+export const itemVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut" as any,
+    },
+  },
 };
+
+const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
+  ({ items, showNavButtons = true }, ref) => {
+    const [emblaRef, emblaApi] = useEmblaCarousel({
+      align: "start",
+      loop: true,
+    });
+    const [canScroll, setCanScroll] = useState({ prev: false, next: false });
+
+    const onSelect = React.useCallback(() => {
+      if (!emblaApi) return;
+      setCanScroll({
+        prev: emblaApi.canScrollPrev(),
+        next: emblaApi.canScrollNext(),
+      });
+    }, [emblaApi]);
+
+    useEffect(() => {
+      if (!emblaApi) return;
+      onSelect();
+      emblaApi.on("select", onSelect);
+      return () => {
+        emblaApi.off("select", onSelect);
+      };
+    }, [emblaApi, onSelect]);
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        reInit: () => {
+          if (emblaApi) {
+            emblaApi.reInit();
+            onSelect();
+          }
+        },
+        canScrollPrev: () => emblaApi?.canScrollPrev() ?? false,
+        canScrollNext: () => emblaApi?.canScrollNext() ?? false,
+      }),
+      [emblaApi, onSelect],
+    );
+
+    return (
+      <div className="grid grid-cols-[auto_1fr_auto] items-center">
+        {showNavButtons && items.length > 4 && (
+          <button
+            onClick={() => emblaApi?.scrollPrev()}
+            className="p-3 rounded-full hover:bg-primary transition-colors"
+            aria-label="Předchozí reference"
+          >
+            <ChevronLeft className="w-8 h-8 text-white" />
+          </button>
+        )}
+        {showNavButtons && items.length <= 4 && <div />}
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {items.map((item, idx) => (
+              <motion.div
+                key={idx}
+                className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0 px-2.5"
+                variants={itemVariants}
+              >
+                <div className="flex flex-col text-sm">
+                  <motion.div
+                    className="flex gap-5 mb-[30px] items-center"
+                    variants={itemVariants}
+                  >
+                    {item.avatar && (
+                      <img
+                        src={item.avatar.src}
+                        alt="Avatar"
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                    )}
+                    {item.logo && (
+                      <img
+                        src={item.logo.src}
+                        alt="Client Logo"
+                        className="w-24 h-10 object-contain"
+                      />
+                    )}
+                  </motion.div>
+                  <motion.div className="mb-[30px]" variants={itemVariants}>
+                    <div
+                      className="font-book italic text-brand-dark"
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                    />
+                  </motion.div>
+                  {item.name && (
+                    <motion.div
+                      className="font-bold text-brand-dark"
+                      variants={itemVariants}
+                    >
+                      {item.name}
+                    </motion.div>
+                  )}
+                  {item.role && (
+                    <motion.div
+                      className="font-book text-brand-dark"
+                      variants={itemVariants}
+                    >
+                      {item.role}
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+            {items.length === 0 && (
+              <motion.div
+                className="flex-[0_0_100%] min-w-0"
+                variants={itemVariants}
+              >
+                <div className="p-6 bg-white/10 rounded-3xl">
+                  <p className="font-book italic text-brand-dark">
+                    Žádné reference k dispozici.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </div>
+        {showNavButtons && items.length > 4 && (
+          <button
+            onClick={() => emblaApi?.scrollNext()}
+            className="p-3 rounded-full hover:bg-white/10 transition-colors"
+            aria-label="Další reference"
+          >
+            <ChevronRight className="w-6 h-6 text-white" />
+          </button>
+        )}
+        {showNavButtons && items.length <= 4 && <div />}
+      </div>
+    );
+  },
+);
+
+TestimonialsCarousel.displayName = "TestimonialsCarousel";
+
+export default TestimonialsCarousel;

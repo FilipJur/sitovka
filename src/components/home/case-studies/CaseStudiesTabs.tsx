@@ -1,20 +1,70 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils/cn";
-import { CaseStudyPanel } from "./CaseStudyPanel";
-import { TestimonialsCarousel } from "./TestimonialsCarousel";
+import TestimonialsCarousel, {
+  type TestimonialsCarouselRef,
+} from "./TestimonialsCarousel";
 
 interface Props {
   studies: any[];
   testimonials: any[];
 }
 
+const contentVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut" as any,
+      staggerChildren: 0.06,
+      delayChildren: 0.03,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.15,
+      ease: "easeIn" as any,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut" as any,
+    },
+  },
+};
+
 export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
   const defaultTab = studies.length > 0 ? studies[0].tabLabel : "reference";
+  const [activeTab, setActiveTab] = useState(defaultTab);
+  const carouselRef = useRef<TestimonialsCarouselRef>(null);
+  const [showCarouselNav, setShowCarouselNav] = useState(false);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    if (value === "reference") {
+      setTimeout(() => {
+        setShowCarouselNav(testimonials.length > 4);
+      }, 300);
+    }
+  };
 
   return (
-    <Tabs.Root defaultValue={defaultTab} className="flex flex-col">
-      <Tabs.List className="flex flex-wrap w-full gap-2.5">
+    <Tabs.Root
+      value={activeTab}
+      onValueChange={setActiveTab}
+      className="flex flex-col"
+    >
+      <Tabs.List className="flex flex-wrap w-full gap-2.5 mb-0 z-10 relative">
         {studies.map((study) => (
           <Trigger
             key={study.tabLabel}
@@ -25,26 +75,81 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
         <Trigger value="reference" label="Reference" />
       </Tabs.List>
 
-      <div className="bg-brand-green rounded-b-[60px] py-8 md:py-12 text-brand-dark min-h-[500px]">
-        {studies.map((study) => (
-          <Tabs.Content
-            key={study.tabLabel}
-            value={study.tabLabel}
-            className="outline-none animate-in fade-in duration-300 h-full px-8 md:px-12"
-          >
-            <CaseStudyPanel study={study} />
-          </Tabs.Content>
-        ))}
+      <motion.div
+        layout
+        transition={{ type: "spring", bounce: 0, duration: 0.3, mass: 0.7 }}
+        className={`bg-brand-green rounded-b-[60px] text-brand-dark min-h-[500px] ${
+          activeTab === "reference" ? "py-8 md:py-12" : "p-8 md:p-12"
+        }`}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          {studies.map((study) => (
+            <Tabs.Content
+              key={study.tabLabel}
+              value={study.tabLabel}
+              forceMount
+              className="outline-none h-full data-[state=inactive]:absolute data-[state=inactive]:inset-0"
+            >
+              <motion.div
+                variants={contentVariants}
+                initial="hidden"
+                animate={activeTab === study.tabLabel ? "visible" : "hidden"}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center h-full"
+              >
+                <motion.div className="space-y-6" variants={itemVariants}>
+                  <motion.h3
+                    className="text-3xl font-brand-heading"
+                    variants={itemVariants}
+                  >
+                    {study.heading}
+                  </motion.h3>
+                  <motion.div
+                    className="text-base font-book leading-relaxed"
+                    variants={itemVariants}
+                    dangerouslySetInnerHTML={{ __html: study.descriptionHtml }}
+                  />
+                </motion.div>
+                {study.image && (
+                  <motion.div
+                    className="relative h-64 lg:h-[400px] rounded-3xl overflow-hidden bg-white/10"
+                    variants={itemVariants}
+                  >
+                    <img
+                      src={study.image.src}
+                      alt={study.heading}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            </Tabs.Content>
+          ))}
 
-        <Tabs.Content
-          value="reference"
-          className="outline-none animate-in fade-in duration-300 h-full flex items-center"
-        >
-          <div className="w-full">
-            <TestimonialsCarousel items={testimonials} />
-          </div>
-        </Tabs.Content>
-      </div>
+          <Tabs.Content
+            value="reference"
+            forceMount
+            className="outline-none h-full flex items-center data-[state=inactive]:absolute data-[state=inactive]:inset-0"
+          >
+            <motion.div
+              variants={contentVariants}
+              initial="hidden"
+              animate={activeTab === "reference" ? "visible" : "hidden"}
+              onAnimationComplete={() => {
+                if (activeTab === "reference" && carouselRef.current) {
+                  carouselRef.current.reInit();
+                }
+              }}
+              className="w-full"
+            >
+              <TestimonialsCarousel
+                ref={carouselRef}
+                items={testimonials}
+                showNavButtons={testimonials.length > 4}
+              />
+            </motion.div>
+          </Tabs.Content>
+        </AnimatePresence>
+      </motion.div>
     </Tabs.Root>
   );
 };
