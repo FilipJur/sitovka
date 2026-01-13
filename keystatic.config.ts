@@ -4,6 +4,41 @@ export default config({
   storage: { kind: "local" },
 
   singletons: {
+    // Hero Section (1. Hero Accordion)
+    hero: singleton({
+      label: "1. Hero Section",
+      path: "src/content/sections/hero",
+      format: { data: "json" },
+      schema: {
+        cards: fields.array(
+          fields.object({
+            highlight: fields.text({ label: "Highlight (e.g. #marketing)" }),
+            headline: fields.text({ label: "Headline (e.g. který zraje)" }),
+            description: fields.text({ label: "Description", multiline: true }),
+            image: fields.image({
+              label: "Cutout Image",
+              directory: "src/assets/images/hero",
+              publicPath: "@/assets/images/hero/",
+            }),
+            theme: fields.select({
+              label: "Theme",
+              options: [
+                { label: "Green (Brand)", value: "green" },
+                { label: "White", value: "white" },
+                { label: "Grey", value: "grey" },
+              ],
+              defaultValue: "green",
+            }),
+          }),
+          {
+            label: "Accordion Cards (Must be exactly 5)",
+            itemLabel: (props) =>
+              `${props.fields.highlight.value} ${props.fields.headline.value}`,
+          },
+        ),
+      },
+    }),
+
     // About Us Section (Benefits + Bio)
     about: singleton({
       label: "2. O Nás",

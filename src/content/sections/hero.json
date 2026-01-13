@@ -1,0 +1,34 @@
+{
+  "cards": [
+    {
+      "highlight": "#brand",
+      "headline": "a kreativa co nese ovoce",
+      "description": "Tvoříme značky, které si lidé zapamatují.",
+      "theme": "green"
+    },
+    {
+      "highlight": "#marketing,",
+      "headline": "který zraje",
+      "description": "Strategie, které fungují dlouhodobě.",
+      "theme": "white"
+    },
+    {
+      "highlight": "#výkon,",
+      "headline": "který přináší zásah",
+      "description": "Kampaně s měřitelnými výsledky.",
+      "theme": "green"
+    },
+    {
+      "highlight": "#kampaně,",
+      "headline": "co nakopnou výsledky",
+      "description": "Kreativita spojená s daty.",
+      "theme": "grey"
+    },
+    {
+      "highlight": "#obsah,",
+      "headline": "co zvedá dosah",
+      "description": "Příběhy, které lidé sdílejí.",
+      "theme": "green"
+    }
+  ]
+}

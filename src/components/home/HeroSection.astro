@@ -1,0 +1,26 @@
+---
+import { getEntry } from "astro:content";
+import { HeroAccordion } from "./hero/HeroAccordion";
+import type { CollectionEntry } from "astro:content";
+
+// @ts-ignore - Will be resolved after build regenerates types
+const entry = (await getEntry(
+  "hero",
+  "hero",
+)) as CollectionEntry<"hero"> | null;
+
+// @ts-ignore - Will be resolved after build regenerates types
+if (!entry || !entry.data) {
+  console.warn("Hero data missing");
+  return null;
+}
+
+// @ts-ignore - Will be resolved after build regenerates types
+const { cards = [] } = entry.data;
+---
+
+<section class="w-full bg-white relative pb-12 overflow-hidden z-30">
+  <div class="mx-auto px-6 h-full">
+    <HeroAccordion client:load cards={cards} />
+  </div>
+</section>

@@ -1,6 +1,22 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const hero = defineCollection({
+  loader: glob({ pattern: "hero.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      cards: z.array(
+        z.object({
+          highlight: z.string(),
+          headline: z.string(),
+          description: z.string(),
+          image: image().optional(),
+          theme: z.enum(["green", "white", "grey"]),
+        }),
+      ),
+    }),
+});
+
 const about = defineCollection({
   loader: glob({ pattern: "about.json", base: "src/content/sections" }),
   schema: ({ image }) =>
@@ -131,6 +147,7 @@ const testimonials = defineCollection({
 });
 
 export const collections = {
+  hero,
   about,
   services,
   contacts,
