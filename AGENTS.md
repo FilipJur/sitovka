@@ -1,238 +1,250 @@
 # AGENTS.md - Development Guidelines for Sitovka
 
+## ⚠️ Development Protocol
+
+**IMPORTANT: AI agents should NEVER run `npm run dev`.** Development servers run in background. Use build/preview commands only.
+
 ## Build & Development Commands
 
 ### Core Commands
 
-- `npm run dev` - Start development server at localhost:4321 (⚠️ **NEVER run this command - dev server runs in background**)
-- `npm run build` - Build production site to ./dist/
+- `npm run dev` - **NEVER USE** - Dev server runs in background
+- `npm run build` - Build production static site to `./dist/`
 - `npm run preview` - Preview production build locally
 - `npm run astro -- --help` - Get Astro CLI help
+- `npm run cleanup:images` - List unused image assets
+- `npm run cleanup:images:delete` - Delete unused image assets
 
 ### Testing & Quality
 
-- No test framework configured - add tests as needed
-- No linting/formatting configured - consider adding ESLint/Prettier
-- Use `astro check` for TypeScript and Astro component validation
+- `astro check` - TypeScript and Astro component validation
+- Prettier + Prettier plugin for Astro are configured (prettier.config.cjs)
 
 ## Technology Stack
 
 ### Core Framework
 
-- **Astro** - Static site generator with component islands
-- **React** - Interactive components (v19.2.3)
+- **Astro v5.16.6** - Static site generator with component islands
+- **React v18.3.1** - Interactive components
 - **TypeScript** - Strict mode enabled via astro/tsconfigs/strict
-- **Tailwind CSS** - Utility-first CSS framework (v4.1.18)
+- **Tailwind CSS v4.1.18** - Utility-first CSS framework
 
 ### Key Dependencies
 
 - **Keystatic** - Headless CMS integration
+- **Markdoc** - Rich text processing (manual parsing required)
 - **Framer Motion** - Animation library
 - **Embla Carousel** - Carousel component
-- **Radix UI** - Headless UI components
+- **Radix UI** - Headless UI components (@radix-ui/react-tabs)
+- **class-variance-authority** - Component variant utility
+- **tailwind-merge** - Tailwind class merging utility
+- **@astrojs/netlify** - Netlify adapter (required for Keystatic API routes)
+- **vite-plugin-svgr** - SVG to React component transform
 
-## Design Tokens
+### Critical Infrastructure
 
-### Color Palette
+**Netlify Adapter (astro.config.mjs)**
 
-- `--color-brand-green`: #00FF80 - Primary neon green for accents, highlights, emphasis
-- `--color-brand-dark`: #2D3143 - Dark blue/charcoal for text and dark backgrounds
-- `--color-brand-surface`: #F5F5F5 - Light gray for section backgrounds
+- Required for Keystatic's API routes to function on Netlify
+- Static output with adapter support
 
-### Typography Scale
+**SVG Transform**
 
-- `--text-xs`: 12px - Copyright text, metadata
-- `--text-sm`: 14px - Body text
-- `--text-base`: 16px - Navigation, buttons, tags
-- `--text-lg`: 18px - Lead paragraphs
-- `--text-2xl`: 28px - Section headers
-- `--text-display`: 120px - Hero headlines
+- Import pattern: `import Icon from "@/assets/icons/icon.svg?react"`
+- Components receive React props (className, etc.)
+- See footer component for social icons example
 
-### Typography Weights
+**Path Alias**
 
-- `--font-weight-book`: 400 - Regular body text
-- `--font-weight-bold`: 700 - Headlines and emphasis
+- `@/*` maps to `./src/*` (tsconfig.json)
+- Use for all internal imports
 
-### Utility Classes
+## 🧠 Content Architecture (CRITICAL)
 
-- `.font-brand-heading` - Bold + italic combination for headers
+### 1. Storage Pattern: "Unified JSON"
 
-### Font Family
+We use **Section-Based Singletons**. Each landing page section has one JSON file containing all its data.
 
-- Primary: "gotham" (via Adobe Fonts/Typekit)
-- Fallback: sans-serif
-- Available variants: Book, Book Italic, Bold, Bold Italic
+- Location: `src/content/sections/*.json`
+- Loader: `glob` pattern in `src/content.config.ts`
+- Collections: `about`, `services`, `footer`, `testimonials`
 
-## Code Style Guidelines
+### 2. Rich Text Strategy: "Inline Markdoc Strings"
 
-### Astro Components (.astro files)
+To keep data in single JSON files, we use Keystatic's **Inline Markdoc** mode.
+
+**
+Keystatic Config:**
+
+```typescript
+// keystatic.config.ts
+fields.markdoc.inline({ label: "Content" });
+```
+
+**Storage:**
+
+- Saved as raw Markdoc/Markdown strings inside JSON
+- Astro schema: `z.string()`
+
+### 3. Image Strategy: "Asset References"
+
+Images use Keystatic's image fields with specific directory structure.
+
+**Keystatic Config:**
+
+```typescript
+fields.image({
+  label: "Service Image",
+  directory: "src/assets/images/services",
+  publicPath: "@/assets/images/services/",
+});
+```
+
+**Usage in Components:**
 
 ```astro
 ---
-// Component Script (TypeScript)
-import Layout from "../layouts/Layout.astro";
-const { title } = Astro.props;
+const { item } = Astro.props;
+// Image is already processed by Astro
 ---
 
-<!-- Component Template (HTML + JSX-like syntax) -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>
+{item.image && <img src={item.image.src} alt={item.title} />}
 ```
 
-### React Components (.tsx files)
+### 4. Rendering Strategy: "Manual Parsing"
 
-```tsx
-import React from "react";
-import { clsx } from "clsx";
+**CRITICAL: DO NOT USE DocumentRenderer**
 
-interface ButtonProps {
-  variant?: "primary" | "secondary";
-  children: React.ReactNode;
-  onClick?: () => void;
-}
+We parse Markdoc strings manually because they are NOT AST objects.
 
-export const Button: React.FC<ButtonProps> = ({
-  variant = "primary",
-  children,
-  onClick,
-}) => {
-  return (
-    <button
-      className={clsx(
-        "px-4 py-2 rounded-md",
-        variant === "primary" && "bg-blue-500 text-white",
-        variant === "secondary" && "bg-gray-200 text-gray-800",
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-};
+**Correct Implementation:**
+
+```astro
+---
+import Markdoc from "@markdoc/markdoc";
+
+const contentString = "Your **markdoc** string";
+const html = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(contentString)),
+);
+---
+
+<div set:html={html} />
 ```
 
-### Import Conventions
+**Real Example (from AboutBio.astro):**
 
-- **Absolute imports**: Use `@/` prefix for src directory imports
-- **Component imports**: Group by type (React, Astro, utilities)
-- **CSS imports**: Import global styles in layout components only
-- **Type imports**: Use `import type` for TypeScript types
+```astro
+---
+const col1Html = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(bio.col1)),
+);
+---
 
-### Naming Conventions
+<div set:html={col1Html} />
+```
 
-- **Components**: PascalCase (e.g., `Navigation.astro`, `Button.tsx`)
-- **Utilities**: camelCase (e.g., `formatDate.ts`, `cn.ts`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `API_ENDPOINTS`)
-- **Files**: Match component name (e.g., `components/Header.astro`)
+### 5. Icon Strategy: "SVGR Mapping"
 
-### Error Handling
+Icons are SVG files transformed to React components.
+
+**File Location:** `src/assets/icons/*.svg`
+
+**Import Pattern:**
 
 ```typescript
-// Always handle errors explicitly
-try {
-  const data = await fetchData();
-  return { data };
-} catch (error) {
-  console.error("Failed to fetch data:", error);
-  // Return appropriate fallback or error state
-  return { data: null, error: "Failed to load data" };
-}
+import TargetIcon from "@/assets/icons/target.svg?react";
 ```
 
-### TypeScript Configuration
+**Component Usage:**
 
-- Strict mode enabled via `astro/tsconfigs/strict`
-- JSX configured for React (`react-jsx`)
-- Include all files except `dist/`
+```astro
+---
+const Icons = {
+  target: TargetIcon,
+  board: BoardIcon,
+  light: LightIcon,
+};
+const IconComponent = Icons[iconId];
+---
+
+<IconComponent className="w-12 h-12 text-brand-green" />
+```
+
+## Design Tokens (Tailwind v4)
+
+### Colors
+
+- `text-brand-green`, `bg-brand-green` - #00FF80
+- `text-brand-dark`, `bg-brand-dark` - #2D3143
+- `bg-brand-surface` - #F5F5F5
+
+### Typography
+
+- `font-brand-heading` - Bold + Italic (700)
+- `font-book` - Regular (400)
+- `font-bold` - Bold (700)
+- `text-display` - 120px (hero headlines)
+- `text-2xl` - 28px (section headers)
+- `text-base` - 16px
+- `text-sm` - 14px
+- `text-xs` - 12px
+
+### Layout
+
+- `container` - Custom 1140px max-width
+- `@` path alias to `src/`
 
 ## Project Structure
 
 ```
 src/
-├── pages/          # Astro pages (file-based routing)
-├── components/     # Reusable Astro/React components
-├── layouts/        # Page layout templates
-├── styles/         # Global styles and Tailwind config
-├── utils/          # Utility functions and helpers
-└── content/        # CMS content (Keystatic)
-    ├── global/     # Site-wide data
-    ├── pages/      # Page-specific content
-    └── testimonials/ # Collections
-
-public/             # Static assets (images, fonts, etc.)
+├── assets/
+│   ├── icons/          # SVG icons (transformed to React)
+│   ├── images/         # Images organized by section
+│   │   ├── about/
+│   │   └── services/
+│   └── *.svg           # Logo files
+├── components/
+│   ├── home/           # Homepage section components
+│   ├── layout/         # Header, Footer, Layout
+│   └── ui/             # Reusable UI components
+├── content/
+│   ├── global/         # Site-wide settings (footer.json)
+│   └── sections/       # Section data (about.json, services.json)
+├── layouts/            # Page layout templates
+├── styles/             # Global styles, Tailwind config
+└── utils/              # Utility functions
+tests/                  # Future test location
+scripts/                # Build scripts
+dist/                   # Build output
 ```
 
-## Key Considerations
+## Code Patterns
 
-1. **Static Output**: Project configured for static site generation (`output: "static"`)
-2. **Tailwind Integration**: Custom theme variables defined in `global.css`
-3. **Keystatic CMS**: Headless CMS integration for content management
-4. **No Build Tools**: Uses Astro's built-in tooling, no separate bundler config
+### TypeScript Configuration
 
-## Content Management (Keystatic CMS)
+- Strict mode via `astro/tsconfigs/strict`
+- JSX: `react-jsx` with React 18
+- Path aliases: `@/*` → `./src/*`
+- SVG types: `vite-plugin-svgr/client`
 
-### Content Structure
+### Utility Functions
 
-```
-src/content/
-├── global/           # Site-wide data (Header, Footer, SEO)
-│   └── footer.json   # Address, Bank, Legal info
-├── pages/            # Content specific to a URL
-│   └── home.json     # Hero slides, "About" text, CTA text
-└── testimonials/     # Repeatable content (Collections)
-    ├── seva.json
-    ├── bigmat.json
-    └── ...
+**cn.ts** - Tailwind class merging
+
+```typescript
+import { cn } from "@/utils/cn";
+// Combines clsx and tailwind-merge for conditional classes
 ```
 
-### CMS Configuration Files
+### Component Variants
 
-- `keystatic.config.ts` - Keystatic admin UI schema definition
-- `src/content.config.ts` - Astro content collection schemas with Zod validation
+**Button.tsx** - Uses class-variance-authority
 
-### Content Access Pattern
-
-```astro
----
-import { getEntry } from "astro:content";
-const footerData = await getEntry("footer", "footer");
-const { company, legal, bank } = footerData.data;
----
-```
-
-### CMS Access
-
-- Local development: `/keystatic` route for content editing
-- Production: Switch `storage.kind` from `'local'` to `'github'` in `keystatic.config.ts`
-
-## Development Workflow
-
-1. Start development server: `npm run dev`
-2. Check for TypeScript errors: `astro check`
-3. Build for production: `npm run build`
-4. Preview production build: `npm run preview`
-
-**Note:** Use `glob` loader for content collections (not `file` loader) to avoid build issues
-
-## Common Issues & Solutions
-
-### DocumentRenderer Error: "Cannot read properties of undefined (reading 'map')"
-
-**Cause:** Mixing Markdoc parsing with DocumentRenderer. DocumentRenderer expects Keystatic's document structure, not Markdoc AST.
-**Solution:** Use `Markdoc.renderers.html()` instead of DocumentRenderer for Markdoc strings:
-
-```astro
-const ast = Markdoc.parse(markdocString); const content =
-Markdoc.transform(ast); const html = Markdoc.renderers.html(content); // Then
-use: <div set:html={html} />
-```
+- Variants: primary, outline, dark
+- Sizes: default, sm, lg
+- Supports both `<button>` and `<a>` elements
 
 ## Security Notes
 
@@ -240,3 +252,11 @@ use: <div set:html={html} />
 - Validate all external inputs and API responses
 - Use Astro's built-in XSS protection for user content
 - Keep dependencies updated regularly
+- Keystatic uses local storage in dev, GitHub storage in production
+
+## Development Workflow
+
+1. Check for TypeScript errors: `astro check`
+2. Build for production: `npm run build`
+3. Preview production build: `npm run preview`
+4. Clean up unused assets: `npm run cleanup:images:delete`
