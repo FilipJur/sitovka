@@ -1,0 +1,38 @@
+---
+import { getEntry, getCollection } from "astro:content";
+import Markdoc from "@markdoc/markdoc";
+import { CaseStudiesTabs } from "./case-studies/CaseStudiesTabs";
+
+// 1. Fetch Data
+const entry = await getEntry("caseStudies", "case-studies");
+if (!entry) return null;
+
+const { heading, items = [] } = entry.data;
+
+// 2. Process Case Studies (Parse Markdoc on Server)
+const processedStudies = items.map((study) => {
+  const ast = Markdoc.parse(study.description);
+  const content = Markdoc.transform(ast);
+  const html = Markdoc.renderers.html(content);
+
+  return {
+    ...study,
+    descriptionHtml: html, // Pass HTML string to React
+  };
+});
+
+// 3. Fetch Testimonials
+const testimonials = await getCollection("testimonials");
+const processedTestimonials = testimonials.map((t) => t.data);
+---
+
+<section class="bg-white py-24">
+  <div class="container mx-auto px-6">
+    <h2 class="text-2xl font-brand-heading text-brand-dark text-center mb-12">
+      {heading}
+    </h2>
+
+    <!-- Mount React Island -->
+    <CaseStudiesTabs client:visible studies={processedStudies} testimonials={processedTestimonials} />
+  </div>
+</section>

@@ -113,6 +113,35 @@ export default config({
       },
     }),
 
+    // Case Studies Section (4. Case Studies)
+    caseStudies: singleton({
+      label: "4. Case Studies",
+      path: "src/content/sections/case-studies",
+      format: { data: "json" },
+      schema: {
+        heading: fields.text({
+          label: "Heading",
+          defaultValue: "Případové studie",
+        }),
+        items: fields.array(
+          fields.object({
+            tabLabel: fields.text({ label: "Tab Label (e.g. SEVA)" }),
+            heading: fields.text({ label: "Content Heading" }),
+            description: fields.markdoc.inline({ label: "Description" }),
+            image: fields.image({
+              label: "Case Study Image",
+              directory: "src/assets/images/case-studies",
+              publicPath: "@/assets/images/case-studies/",
+            }),
+          }),
+          {
+            label: "Studies",
+            itemLabel: (props) => props.fields.tabLabel.value,
+          },
+        ),
+      },
+    }),
+
     // Prefooter Section (6. Prefooter) - Only image is configurable
     prefooter: singleton({
       label: "6. Prefooter",
