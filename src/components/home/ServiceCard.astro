@@ -16,10 +16,12 @@ interface Props {
 
 const { item } = Astro.props;
 
-// Render Markdoc description to HTML
-const descriptionHtml = Markdoc.renderers.html(
-  Markdoc.transform(Markdoc.parse(item.description))
-);
+// Parse Markdoc string to HTML instead of AST for DocumentRenderer
+const source = item.description || "";
+const ast = Markdoc.parse(source);
+const content = Markdoc.transform(ast);
+const html = Markdoc.renderers.html(content);
+
 ---
 
 <div class="flex flex-col space-y-5">
@@ -39,8 +41,8 @@ const descriptionHtml = Markdoc.renderers.html(
   <div class="space-y-3">
     <h3 class="text-2xl font-brand-heading text-brand-dark">{item.title}</h3>
     <div 
-      class="text-sm font-book text-brand-dark leading-relaxed"
-      set:html={descriptionHtml}
+      class="text-sm font-book text-brand-dark leading-relaxed" 
+      set:html={html}
     />
   </div>
 </div>

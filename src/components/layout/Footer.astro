@@ -13,12 +13,25 @@ import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 // 3. Fetch footer data from CMS
 import { getEntry } from "astro:content";
 const footerEntry = await getEntry("footer", "footer");
-const {
-  company = {},
-  legal = {},
-  bank = {},
-  socials = {},
-} = footerEntry?.data || {};
+
+type FooterData = {
+  company: { name: string; street: string; city: string };
+  legal: { ico: string; dic: string; court: string };
+  bank: { accountNumber: string; swift: string; iban?: string };
+  socials?: {
+    facebook?: string | null;
+    instagram?: string | null;
+    x?: string | null;
+    linkedin?: string | null;
+    youtube?: string | null;
+  };
+};
+
+const { company, legal, bank, socials } = (footerEntry?.data as FooterData) || {
+  company: { name: "", street: "", city: "" },
+  legal: { ico: "", dic: "", court: "" },
+  bank: { accountNumber: "", swift: "" },
+};
 
 // Social links data array
 const socialLinksData = [
