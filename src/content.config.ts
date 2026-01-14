@@ -134,6 +134,22 @@ const caseStudies = defineCollection({
     }),
 });
 
+const clients = defineCollection({
+  loader: glob({ pattern: "clients.json", base: "src/content/sections" }),
+  schema: ({ image }) =>
+    z.object({
+      logos: z
+        .array(
+          z.object({
+            name: z.string().optional().default(""),
+            href: z.string().url().optional().or(z.literal("")),
+            logo: image(),
+          }),
+        )
+        .default([]),
+    }),
+});
+
 const testimonials = defineCollection({
   loader: glob({ pattern: "**/*.json", base: "./src/content/testimonials" }),
   schema: ({ image }) =>
@@ -155,4 +171,5 @@ export const collections = {
   footer,
   caseStudies,
   testimonials,
+  clients,
 };

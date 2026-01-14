@@ -1,0 +1,36 @@
+---
+import { getEntry } from "astro:content";
+import { LogoCarousel } from "./logo-slider/LogoCarousel";
+import HashtagIcon from "@/assets/icons/hashtag.svg?react";
+import { PositionOverlay } from "@/components/ui/PositionOverlay";
+
+const entry = await getEntry("clients", "clients");
+
+if (!entry || !entry.data || !entry.data.logos || entry.data.logos.length === 0) {
+  console.warn("Clients section: No logos data found or empty array.");
+  return null;
+}
+
+const { logos } = entry.data;
+
+const reactLogos = logos.map((item: any) => ({
+  src: item.logo.src,
+  alt: item.name || "",
+  name: item.name || "",
+  href: item.href || "",
+  width: item.logo.width,
+  height: item.logo.height,
+}));
+---
+
+<section
+  class="bg-white rounded-[60px] py-15 relative overflow-hidden mb-24"
+>
+  <div class="container mx-auto px-6">
+    <LogoCarousel client:visible logos={reactLogos} />
+  </div>
+
+  <PositionOverlay bottom="-10px">
+    <HashtagIcon className="w-21 h-auto text-brand-green" />
+  </PositionOverlay>
+</section>

@@ -191,6 +191,36 @@ export default config({
       },
     }),
 
+    // Clients Section (7. Logo Carousel)
+    clients: singleton({
+      label: "7. Clients (Logo Slider)",
+      path: "src/content/sections/clients",
+      format: { data: "json" },
+      schema: {
+        logos: fields.array(
+          fields.object({
+            name: fields.text({
+              label: "Client Name (Optional)",
+              validation: { isRequired: false },
+            }),
+            href: fields.url({
+              label: "Client Link (Optional)",
+              validation: { isRequired: false },
+            }),
+            logo: fields.image({
+              label: "Logo (Required)",
+              directory: "src/assets/images/clients",
+              publicPath: "@/assets/images/clients/",
+            }),
+          }),
+          {
+            label: "Client Logos",
+            itemLabel: (props) => props.fields.name.value || "Unnamed Client",
+          },
+        ),
+      },
+    }),
+
     // Global Footer Configuration
     footer: singleton({
       label: "Patička",
