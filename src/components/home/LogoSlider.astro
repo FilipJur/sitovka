@@ -1,6 +1,7 @@
 ---
 import { getEntry } from "astro:content";
 import { LogoCarousel } from "./logo-slider/LogoCarousel";
+import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
@@ -30,11 +31,13 @@ const reactLogos = logos.map((item: any) => ({
 
 <section
   class="bg-white rounded-[60px] relative overflow-visible reveal-card"
-  data-delay="250"
+  data-delay="100"
 >
-  <div class="container mx-auto px-6 z-1 relative bg-white">
-    <LogoCarousel client:visible logos={reactLogos} />
-  </div>
+  <MotionLayoutWrapper>
+    <div class="container mx-auto px-6 z-1 relative bg-white">
+      <LogoCarousel client:visible logos={reactLogos} />
+    </div>
+  </MotionLayoutWrapper>
 
   <PositionOverlay bottom="-45px" className="z-0">
     <HashtagIcon className="w-21 h-auto text-brand-green" />

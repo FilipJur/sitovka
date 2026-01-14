@@ -2,6 +2,7 @@
 import { getEntry, getCollection } from "astro:content";
 import Markdoc from "@markdoc/markdoc";
 import { CaseStudiesTabs } from "./case-studies/CaseStudiesTabs";
+import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
 
 // 1. Fetch Data
 const entry = await getEntry("caseStudies", "case-studies");
@@ -35,13 +36,15 @@ const processedTestimonials = testimonials.map((t) => t.data);
       {heading}
     </h2>
 
-    <!-- Mount React Island -->
+    <!-- Mount React Island with layout animation -->
     <div class="reveal-card" data-delay="100">
-      <CaseStudiesTabs
-        client:visible
-        studies={processedStudies}
-        testimonials={processedTestimonials}
-      />
+      <MotionLayoutWrapper>
+        <CaseStudiesTabs
+          client:visible
+          studies={processedStudies}
+          testimonials={processedTestimonials}
+        />
+      </MotionLayoutWrapper>
     </div>
   </div>
 </section>
