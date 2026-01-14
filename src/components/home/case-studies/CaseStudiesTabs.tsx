@@ -77,12 +77,13 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
         }`}
       >
         <AnimatePresence mode="wait" initial={false}>
-          {studies.map((study) => (
+          {studies.map((study, index) => (
             <Tabs.Content
               key={study.tabLabel}
               value={study.tabLabel}
               forceMount
-              className="outline-none h-full data-[state=inactive]:absolute data-[state=inactive]:inset-0"
+              className="outline-none h-full data-[state=inactive]:absolute data-[state=inactive]:inset-0 reveal-card"
+              data-delay={`${index * 100}`}
             >
               <motion.div
                 variants={contentVariants}
@@ -122,7 +123,8 @@ export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
           <Tabs.Content
             value="reference"
             forceMount
-            className="outline-none h-full flex items-center data-[state=inactive]:absolute data-[state=inactive]:inset-0"
+            className="outline-none h-full flex items-center data-[state=inactive]:absolute data-[state=inactive]:inset-0 reveal-card"
+            data-delay="400"
           >
             <motion.div
               variants={contentVariants}

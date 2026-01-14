@@ -39,5 +39,51 @@ const {
 
     <!-- 4. Mount the Footer -->
     <Footer />
+
+    <!-- INTERSECTION OBSERVER SCRIPT -->
+    <script>
+      const ANIMATIONS_ENABLED = true;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!ANIMATIONS_ENABLED) {
+          document
+            .querySelectorAll(".reveal-text, .reveal-card, .reveal-img")
+            .forEach((el) => {
+              el.classList.add("active");
+            });
+          return;
+        }
+
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px 0px -50px 0px",
+          threshold: 0.15,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (entry.target instanceof HTMLElement) {
+                const el = entry.target;
+                const delay = el.dataset.delay || "0";
+
+                el.style.transitionDelay = `${delay}ms`;
+
+                requestAnimationFrame(() => {
+                  el.classList.add("active");
+                });
+
+                observer.unobserve(el);
+              }
+            }
+          });
+        }, observerOptions);
+
+        const targets = document.querySelectorAll(
+          ".reveal-text, .reveal-card, .reveal-img",
+        );
+        targets.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

@@ -13,7 +13,7 @@ const { image } = entry.data;
     <!-- Image: Anchored to bottom-left, z-index: 0 -->
     {
       image && (
-        <div class="hidden lg:block absolute left-0 bottom-0 z-0 w-[40%] max-w-[600px]">
+        <div class="hidden lg:block absolute left-0 bottom-0 z-0 w-[40%] max-w-[600px] reveal-img" data-delay="0">
           <Image
             src={image}
             alt=""
@@ -26,7 +26,7 @@ const { image } = entry.data;
     <!-- Content: Z-index: 10, aligned to right -->
     <div class="relative z-10 flex justify-end items-center">
       <!-- Text Constraint: 840px -->
-      <div class="max-w-[840px] w-full text-right lg:text-left">
+      <div class="max-w-[840px] w-full text-right lg:text-left reveal-text" data-delay="200">
         <h2 class="font-brand-heading text-brand-dark text-end pb-16">
           <span
             class="text-5xl md:text-7xl lg:text-display text-brand-green block mb-2"

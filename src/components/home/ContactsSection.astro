@@ -14,7 +14,7 @@ const introHtml = Markdoc.renderers.html(
 
 <section id="kontakty" class="bg-white py-24">
   <div class="container mx-auto px-6">
-    <div class="text-center mb-24 space-y-6 max-w-[980px] mx-auto">
+    <div class="text-center mb-24 space-y-6 max-w-[980px] mx-auto reveal-text" data-delay="0">
       <h2 class="text-2xl font-brand-heading text-brand-dark uppercase">
         {heading}
       </h2>
@@ -30,7 +30,11 @@ const introHtml = Markdoc.renderers.html(
       {
         team
           .filter((p: any) => p.name && p.name.trim() !== "")
-          .map((person: any) => <ContactCard person={person} />)
+          .map((person: any, index: number) => (
+            <div class="reveal-card" data-delay={`${index * 100}`}>
+              <ContactCard person={person} />
+            </div>
+          ))
       }
     </div>
   </div>

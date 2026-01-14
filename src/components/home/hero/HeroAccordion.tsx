@@ -21,7 +21,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
   const currentLayout = LAYOUT_CONFIG[activeIndex] || LAYOUT_CONFIG[0];
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-5 h-auto lg:h-[400px] select-none">
+    <div className="w-full flex flex-col lg:flex-row md:gap-2.5 xl:gap-5 h-auto lg:h-[400px] select-none">
       {cards.map((card, index) => {
         const isActive = index === activeIndex;
         const targetWidth = isDesktop ? `${currentLayout[index]}%` : "100%";
