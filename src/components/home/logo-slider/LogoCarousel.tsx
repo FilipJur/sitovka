@@ -146,7 +146,7 @@ export const LogoCarousel = ({ logos }: Props) => {
               <img
                 src={logo.src}
                 alt={logo.alt || logo.name || "Client logo"}
-                className="max-h-20 w-auto object-contain"
+                className="max-h-20 w-auto object-contain py-4"
               />
             </div>
           );
