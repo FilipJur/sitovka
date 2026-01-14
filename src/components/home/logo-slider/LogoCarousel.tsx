@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -28,6 +28,9 @@ export const LogoCarousel = ({ logos }: Props) => {
       ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
       : false;
 
+  const [isHovered, setIsHovered] = useState(false);
+  const resumeTimeoutRef = useRef<number | null>(null);
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       align: "start",
@@ -39,7 +42,7 @@ export const LogoCarousel = ({ logos }: Props) => {
     },
     [
       Autoplay({
-        delay: 3000,
+        delay: 2000,
         stopOnInteraction: true, // ✅ Stop on drag for accessibility
         stopOnMouseEnter: true,
         playOnInit: !prefersReducedMotion,
@@ -47,14 +50,51 @@ export const LogoCarousel = ({ logos }: Props) => {
     ],
   );
 
+  const scheduleResume = () => {
+    if (resumeTimeoutRef.current) {
+      window.clearTimeout(resumeTimeoutRef.current);
+    }
+
+    resumeTimeoutRef.current = window.setTimeout(() => {
+      if (emblaApi && emblaApi.plugins()?.autoplay) {
+        emblaApi.plugins().autoplay.play();
+      }
+    }, 1);
+  };
+
   // Fix memory leaks - cleanup carousel instance
   useEffect(() => {
     return () => {
+      if (resumeTimeoutRef.current) {
+        window.clearTimeout(resumeTimeoutRef.current);
+      }
       if (emblaApi) {
         emblaApi.destroy();
       }
     };
   }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onAutoplayStop = () => {
+      if (isHovered) {
+        scheduleResume();
+      }
+    };
+
+    const onSettle = () => {
+      scheduleResume();
+    };
+
+    emblaApi.on("autoplay:stop", onAutoplayStop);
+    emblaApi.on("settle", onSettle);
+
+    return () => {
+      emblaApi.off("autoplay:stop", onAutoplayStop);
+      emblaApi.off("settle", onSettle);
+    };
+  }, [emblaApi, isHovered]);
 
   if (!logos || logos.length === 0) {
     if (process.env.NODE_ENV === "development") {
@@ -67,12 +107,29 @@ export const LogoCarousel = ({ logos }: Props) => {
     return null;
   }
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (
+      emblaApi &&
+      emblaApi.plugins()?.autoplay &&
+      !emblaApi.plugins().autoplay.isPlaying()
+    ) {
+      scheduleResume();
+    }
+  };
+
   return (
     <div
       className="overflow-hidden"
       ref={emblaRef}
       role="region"
       aria-label={`Client logos carousel, showing ${logos.length} logos for infinite scroll effect`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="flex touch-pan-y gap-2.5" aria-roledescription="carousel">
         {duplicatedLogos.map((logo, index) => {
