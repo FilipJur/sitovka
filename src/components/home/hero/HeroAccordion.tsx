@@ -21,7 +21,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
   const currentLayout = LAYOUT_CONFIG[activeIndex] || LAYOUT_CONFIG[0];
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-5 h-auto lg:h-[400px]">
+    <div className="w-full flex flex-col lg:flex-row gap-5 h-auto lg:h-[400px] select-none">
       {cards.map((card, index) => {
         const isActive = index === activeIndex;
         const targetWidth = isDesktop ? `${currentLayout[index]}%` : "100%";
@@ -62,6 +62,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
               backgroundImage: card.image ? `url(${card.image.src})` : "none",
               backgroundSize: "cover",
               backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
             className={cn(
               "relative rounded-[60px] overflow-hidden cursor-pointer",
@@ -84,7 +85,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   className={cn(
                     "font-brand-heading leading-[0.9] transition-all duration-500",
                     isDesktop && isActive
-                      ? "text-[80px] xl:text-[120px]"
+                      ? "text-[80px] xl:text-display leading-30"
                       : "text-4xl lg:text-3xl whitespace-nowrap",
                   )}
                 >
