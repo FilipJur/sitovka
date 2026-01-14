@@ -26,15 +26,22 @@ const testimonials = await getCollection("testimonials");
 const processedTestimonials = testimonials.map((t) => t.data);
 ---
 
-<section class="bg-white py-24">
+<section class="bg-white pt-24 pb-2.5">
   <div class="container mx-auto px-6">
-    <h2 class="text-2xl font-brand-heading text-brand-dark text-center mb-12 reveal-text" data-delay="0">
+    <h2
+      class="text-2xl font-brand-heading text-brand-dark text-center mb-12 reveal-text"
+      data-delay="0"
+    >
       {heading}
     </h2>
 
     <!-- Mount React Island -->
     <div class="reveal-card" data-delay="100">
-      <CaseStudiesTabs client:visible studies={processedStudies} testimonials={processedTestimonials} />
+      <CaseStudiesTabs
+        client:visible
+        studies={processedStudies}
+        testimonials={processedTestimonials}
+      />
     </div>
   </div>
 </section>

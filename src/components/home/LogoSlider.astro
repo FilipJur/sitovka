@@ -6,7 +6,12 @@ import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
 const entry = await getEntry("clients", "clients");
 
-if (!entry || !entry.data || !entry.data.logos || entry.data.logos.length === 0) {
+if (
+  !entry ||
+  !entry.data ||
+  !entry.data.logos ||
+  entry.data.logos.length === 0
+) {
   console.warn("Clients section: No logos data found or empty array.");
   return null;
 }
@@ -23,14 +28,12 @@ const reactLogos = logos.map((item: any) => ({
 }));
 ---
 
-<section
-  class="bg-white rounded-[60px] py-15 relative overflow-hidden mb-24"
->
-  <div class="container mx-auto px-6">
+<section class="bg-white rounded-[60px] relative overflow-visible">
+  <div class="container mx-auto px-6 z-1 relative">
     <LogoCarousel client:visible logos={reactLogos} />
   </div>
 
-  <PositionOverlay bottom="-10px">
+  <PositionOverlay bottom="-45px" className="z-0">
     <HashtagIcon className="w-21 h-auto text-brand-green" />
   </PositionOverlay>
 </section>
