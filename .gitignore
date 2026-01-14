@@ -28,3 +28,11 @@ pnpm-debug.log*
 
 # AI context/output files
 repomix-output.md
+
+agent-skills-react-best-practices/
+
+# OpenCode IDE
+.opencode/
+
+# Implementation docs
+IMPLEMENTATION_SUMMARY.md
