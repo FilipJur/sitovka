@@ -75,7 +75,7 @@
     opacity: 0;
     filter: blur(4px); /* Reduced from 12px for better mobile perf */
     transform: translateY(20px) scale(0.98);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: opacity, transform, filter;
   }
 
@@ -127,4 +127,7 @@
       transition: none !important;
     }
   }
+}
+img {
+  user-select: none;
 }

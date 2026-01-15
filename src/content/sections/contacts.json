@@ -8,7 +8,7 @@
       "email": "jana@sitovka.net",
       "phone": "+420 725 554 418",
       "avatar": "@/assets/images/team/team/0/avatar.jpg",
-      "isFeatured": true
+      "isFeatured": false
     },
     {
       "name": "Petr HRUŠKA",
@@ -16,7 +16,7 @@
       "email": "petr@sitovka.net",
       "phone": "+420 603 289 747",
       "avatar": "@/assets/images/team/team/1/avatar.jpg",
-      "isFeatured": false
+      "isFeatured": true
     },
     {
       "name": "Stanislav JULÍČEK",
@@ -24,7 +24,7 @@
       "email": "standa@sitovka.net",
       "phone": "+420 777 756 772",
       "avatar": "@/assets/images/team/team/2/avatar.jpg",
-      "isFeatured": false
+      "isFeatured": true
     },
     {
       "name": "Jaroslav MAŠEK",

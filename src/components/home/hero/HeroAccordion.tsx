@@ -42,15 +42,15 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
             }}
             exit={{ opacity: 0, y: -20 }}
             transition={{
-              opacity: { duration: 0.5, delay: index * 0.1 },
+              opacity: { duration: 0.6, delay: index * 0.15 },
               y: {
                 type: "spring",
-                stiffness: 60,
-                damping: 10,
-                mass: 0.6,
-                delay: index * 0.1,
+                stiffness: 50,
+                damping: 12,
+                mass: 0.8,
+                delay: index * 0.15,
               },
-              width: { type: "spring", stiffness: 60, damping: 10, mass: 0.6 },
+              width: { type: "spring", stiffness: 50, damping: 12, mass: 0.8 },
               boxShadow: { duration: 0.3 },
             }}
             onClick={() => setActiveIndex(index)}
