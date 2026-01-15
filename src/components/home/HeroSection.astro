@@ -19,7 +19,9 @@ if (!entry || !entry.data) {
 const { cards = [] } = entry.data;
 ---
 
-<section class="w-full bg-white relative pb-12 overflow-hidden z-30">
+<section
+  class="w-full bg-white relative pb-12 overflow-hidden z-30 mx-6 sm:mx-0"
+>
   <div class="mx-autoh-full">
     <HeroAccordion client:load cards={cards} />
   </div>
