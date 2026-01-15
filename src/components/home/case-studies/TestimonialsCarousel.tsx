@@ -115,7 +115,7 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
                     className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] xl:flex-[0_0_25%] min-w-0 px-2.5"
                   >
                     <div className="flex flex-col text-sm">
-                      <div className="flex gap-5 mb-[30px] items-center">
+                      <div className="flex gap-5 mb-[30px] items-center flex-wrap">
                         {item.avatar && (
                           <img
                             src={item.avatar.src}

@@ -132,7 +132,7 @@ export const CaseStudiesTabs = ({
         layout
         transition={{ type: "spring", bounce: 0, duration: 0.3, mass: 0.7 }}
         className={`bg-brand-green rounded-b-[60px] text-brand-dark min-h-[450px] ${
-          activeTab === "reference" ? "py-8 md:py-12" : "p-8 md:p-12"
+          activeTab === "reference" ? "p-8 md:py-12 md:px-0" : "p-8 md:p-12"
         }`}
       >
         <AnimatePresence mode="wait" initial={false}>

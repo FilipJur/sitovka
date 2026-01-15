@@ -7,7 +7,10 @@ import ReactModalProvider from "@/components/home/ContactModalProvider";
 
 // 1. Fetch contacts data
 const contactsEntry = await getEntry("contacts", "contacts");
-const featuredPeople = contactsEntry?.data?.team?.filter((p: any) => p.isFeatured) || contactsEntry?.data?.team?.slice(0, 1) || [];
+const featuredPeople =
+  contactsEntry?.data?.team?.filter((p: any) => p.isFeatured) ||
+  contactsEntry?.data?.team?.slice(0, 1) ||
+  [];
 
 interface Props {
   title?: string;
@@ -33,7 +36,7 @@ const {
 
     <title>{title}</title>
   </head>
-  <body class="bg-white text-brand-dark antialiased mx-5 mb-5">
+  <body class="bg-white text-brand-dark antialiased mx-0 sm:mx-5 mb-5">
     <!-- Header -->
     <Header />
 
@@ -46,16 +49,21 @@ const {
     <Footer />
 
     <!-- Contact Modal Provider (React Island) -->
-    {featuredPeople.length > 0 && (
-      <ReactModalProvider
-        client:load
-        featuredPeople={featuredPeople}
-        contactsSectionId="kontakty"
-      />
-    )}
+    {
+      featuredPeople.length > 0 && (
+        <ReactModalProvider
+          client:load
+          featuredPeople={featuredPeople}
+          contactsSectionId="kontakty"
+        />
+      )
+    }
 
     <!-- INTERSECTION OBSERVER SCRIPT -->
-    <script is:inline define:vars={{ featuredPeopleCount: featuredPeople.length }}>
+    <script
+      is:inline
+      define:vars={{ featuredPeopleCount: featuredPeople.length }}
+    >
       const ANIMATIONS_ENABLED = true;
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -103,7 +111,7 @@ const {
       const handlePoptavkaClick = (e) => {
         const target = e.target;
         const anchor = target.closest('a[href="#poptavka"]');
-        
+
         if (!anchor) return;
 
         e.preventDefault();
@@ -122,47 +130,48 @@ const {
         if (!anchor) return;
 
         e.preventDefault();
-        
+
         const href = anchor.getAttribute("href") || "";
         const hash = href.split("?")[0];
         const params = new URLSearchParams(href.split("?")[1] || "");
         const tab = params.get("tab");
-        
+
         // Update URL without triggering hashchange immediately
         window.history.pushState(null, "", href);
-        
+
         // Scroll to section with offset for fixed header
         const section = document.querySelector(hash);
         if (section) {
           const headerHeight = 144; // h-36 = 144px
-          const elementPosition = section.getBoundingClientRect().top + window.pageYOffset;
+          const elementPosition =
+            section.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight;
-          
+
           window.scrollTo({
             top: offsetPosition,
             behavior: "smooth",
           });
         }
-        
+
         // Dispatch event for tab change if tab is specified
         if (tab) {
           const event = new CustomEvent("pripadove-studie-tab-change", {
-            detail: { tab }
+            detail: { tab },
           });
           document.dispatchEvent(event);
         }
       });
-      
+
       // Listen for hash changes (e.g., back/forward buttons)
       window.addEventListener("hashchange", () => {
         const hash = window.location.hash;
         if (hash.startsWith("#pripadove-studie")) {
           const params = new URLSearchParams(hash.split("?")[1] || "");
           const tab = params.get("tab");
-          
+
           if (tab) {
             const event = new CustomEvent("pripadove-studie-tab-change", {
-              detail: { tab }
+              detail: { tab },
             });
             document.dispatchEvent(event);
           }
@@ -172,12 +181,14 @@ const {
       // Handle initial page load with hash
       if (window.location.hash.startsWith("#pripadove-studie")) {
         setTimeout(() => {
-          const params = new URLSearchParams(window.location.hash.split("?")[1] || "");
+          const params = new URLSearchParams(
+            window.location.hash.split("?")[1] || "",
+          );
           const tab = params.get("tab");
-          
+
           if (tab) {
             const event = new CustomEvent("pripadove-studie-tab-change", {
-              detail: { tab }
+              detail: { tab },
             });
             document.dispatchEvent(event);
           }
