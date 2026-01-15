@@ -4,6 +4,22 @@ import Markdoc from "@markdoc/markdoc";
 import { CaseStudiesTabs } from "./case-studies/CaseStudiesTabs";
 import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
 
+// Extract tab from URL hash if present
+function getInitialTabFromURL(url: string) {
+  try {
+    if (url && url.includes("#pripadove-studie")) {
+      const hashPart = url.split("#pripadove-studie")[1] || "";
+      if (hashPart.includes("?tab=")) {
+        const params = new URLSearchParams(hashPart.split("?")[1] || "");
+        return params.get("tab");
+      }
+    }
+  } catch (e) {
+    // Ignore URL parsing errors
+  }
+  return null;
+}
+
 // 1. Fetch Data
 const entry = await getEntry("caseStudies", "case-studies");
 if (!entry) return null;
@@ -25,9 +41,12 @@ const processedStudies = items.map((study) => {
 // 3. Fetch Testimonials
 const testimonials = await getCollection("testimonials");
 const processedTestimonials = testimonials.map((t) => t.data);
+
+// 4. Get initial tab from URL
+const initialTab = getInitialTabFromURL(Astro.url.href);
 ---
 
-<section class="bg-white pt-24 pb-2.5">
+<section id="pripadove-studie" class="bg-white pt-24 pb-2.5">
   <div class="container mx-auto px-6">
     <h2
       class="text-2xl font-brand-heading text-brand-dark text-center mb-12 reveal-text"
@@ -43,6 +62,7 @@ const processedTestimonials = testimonials.map((t) => t.data);
           client:visible
           studies={processedStudies}
           testimonials={processedTestimonials}
+          initialTab={initialTab}
         />
       </MotionLayoutWrapper>
     </div>

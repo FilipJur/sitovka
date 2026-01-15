@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils/cn";
@@ -43,19 +43,78 @@ const itemVariants = {
   },
 };
 
-export const CaseStudiesTabs = ({ studies, testimonials }: Props) => {
+export const CaseStudiesTabs = ({
+  studies,
+  testimonials,
+  initialTab,
+}: Props & {
+  initialTab?: string | null;
+}) => {
   const defaultTab = studies.length > 0 ? studies[0].tabLabel : "reference";
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState(initialTab || defaultTab);
   const carouselRef = useRef<TestimonialsCarouselRef>(null);
+
+  // Listen for custom tab change events
+  useEffect(() => {
+    const handleTabChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ tab: string }>;
+      setActiveTab(customEvent.detail.tab);
+    };
+
+    document.addEventListener(
+      "pripadove-studie-tab-change",
+      handleTabChange as EventListener,
+    );
+
+    // Check initial hash on mount
+    const hash = window.location.hash;
+    if (hash.startsWith("#pripadove-studie")) {
+      const params = new URLSearchParams(hash.split("?")[1] || "");
+      const tab = params.get("tab");
+      if (tab) {
+        setActiveTab(tab);
+      }
+    }
+
+    return () => {
+      document.removeEventListener(
+        "pripadove-studie-tab-change",
+        handleTabChange as EventListener,
+      );
+    };
+  }, []);
+
+  // Listen for URL hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith("#case-studies")) {
+        const params = new URLSearchParams(hash.split("?")[1] || "");
+        const tab = params.get("tab");
+        if (tab) {
+          setActiveTab(tab);
+        }
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+
+    // Update URL hash when tab changes
+    const newHash = `#pripadove-studie?tab=${value}`;
+    window.history.replaceState(null, "", newHash);
   };
 
   return (
     <Tabs.Root
       value={activeTab}
-      onValueChange={setActiveTab}
+      onValueChange={handleTabChange}
       className="flex flex-col"
     >
       <Tabs.List className="flex flex-wrap w-full gap-2.5 mb-0 z-10 relative">

@@ -115,6 +115,74 @@ const {
 
       // Attach event listeners to all #poptavka links
       document.addEventListener("click", handlePoptavkaClick);
+
+      // Handle hash-based navigation for #pripadove-studie?tab=reference links
+      document.addEventListener("click", (e) => {
+        const anchor = e.target.closest('a[href^="#pripadove-studie"]');
+        if (!anchor) return;
+
+        e.preventDefault();
+        
+        const href = anchor.getAttribute("href") || "";
+        const hash = href.split("?")[0];
+        const params = new URLSearchParams(href.split("?")[1] || "");
+        const tab = params.get("tab");
+        
+        // Update URL without triggering hashchange immediately
+        window.history.pushState(null, "", href);
+        
+        // Scroll to section with offset for fixed header
+        const section = document.querySelector(hash);
+        if (section) {
+          const headerHeight = 144; // h-36 = 144px
+          const elementPosition = section.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerHeight;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+        
+        // Dispatch event for tab change if tab is specified
+        if (tab) {
+          const event = new CustomEvent("pripadove-studie-tab-change", {
+            detail: { tab }
+          });
+          document.dispatchEvent(event);
+        }
+      });
+      
+      // Listen for hash changes (e.g., back/forward buttons)
+      window.addEventListener("hashchange", () => {
+        const hash = window.location.hash;
+        if (hash.startsWith("#pripadove-studie")) {
+          const params = new URLSearchParams(hash.split("?")[1] || "");
+          const tab = params.get("tab");
+          
+          if (tab) {
+            const event = new CustomEvent("pripadove-studie-tab-change", {
+              detail: { tab }
+            });
+            document.dispatchEvent(event);
+          }
+        }
+      });
+
+      // Handle initial page load with hash
+      if (window.location.hash.startsWith("#pripadove-studie")) {
+        setTimeout(() => {
+          const params = new URLSearchParams(window.location.hash.split("?")[1] || "");
+          const tab = params.get("tab");
+          
+          if (tab) {
+            const event = new CustomEvent("pripadove-studie-tab-change", {
+              detail: { tab }
+            });
+            document.dispatchEvent(event);
+          }
+        }, 100);
+      }
     </script>
   </body>
 </html>
