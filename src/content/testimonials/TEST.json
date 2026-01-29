@@ -1,6 +1,6 @@
 {
-  "logo": "@/assets/clients/TEST/logo.png",
+  "logo": "@/assets/clients/Test/logo.png",
   "content": "TEST\n",
-  "avatar": "@/assets/clients/TEST/avatar.jpg",
+  "avatar": "@/assets/clients/Test/avatar.jpg",
   "role": "TEST"
 }
