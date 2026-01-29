@@ -8,7 +8,7 @@ export default defineStackbitConfig({
 
   // Astro dev server inside Visual Editor containers
   devCommand:
-    "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts true",
+    "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts devserver-preview--sitovka.netlify.app",
 
   // Critical for Astro/Vite compatibility
   experimental: {
