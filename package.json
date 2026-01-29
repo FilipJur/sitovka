@@ -40,5 +40,8 @@
     "@stackbit/types": "^2.1.15",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1"
+  },
+  "overrides": {
+    "vite": "6.0.8"
   }
 }
