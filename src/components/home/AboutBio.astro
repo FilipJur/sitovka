@@ -19,13 +19,16 @@ const col2Html = Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(bio.col2
 // Determine layout based on image availability
 const hasImage = bio.image && bio.image !== null;
 
+// Handle both string path and object with src property
+const imageSrc = typeof bio.image === 'string' ? bio.image : bio.image?.src;
+
 // Create unified content array
 const contentItems = [
   { type: 'text' as const, html: col1Html },
   { type: 'text' as const, html: col2Html },
-  ...(hasImage ? [{
+  ...(hasImage && imageSrc ? [{
     type: 'image' as const,
-    src: bio.image.src,
+    src: imageSrc,
     alt: ''
   }] : [])
 ];
@@ -53,7 +56,6 @@ const contentItems = [
                 src={item.src}
                 alt={item.alt}
                 class="w-full h-auto object-contain -mb-24 lg:-mb-32 scale-110 origin-bottom"
-                data-sb-field-path="about.image"
               />
             </div>
           ) : (
