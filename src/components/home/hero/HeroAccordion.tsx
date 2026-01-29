@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -17,7 +18,7 @@ const LAYOUT_CONFIG = [
 ];
 
 export const HeroAccordion = ({ cards }: HeroProps) => {
-  const isDesktop = true;
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const [activeIndex, setActiveIndex] = useState(0);
   const currentLayout = LAYOUT_CONFIG[activeIndex] || LAYOUT_CONFIG[0];
 
@@ -58,8 +59,20 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-0">
             {cards.map((card, index) => (
-              <div
+              <motion.div
                 key={`mobile-${index}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  opacity: { duration: 0.6, delay: index * 0.15 },
+                  y: {
+                    type: "spring",
+                    stiffness: 50,
+                    damping: 12,
+                    mass: 0.8,
+                    delay: index * 0.15,
+                  },
+                }}
                 className={cn(
                   "flex-[0_0_100%] min-w-0 mr-4 relative rounded-[40px] overflow-hidden",
                   card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]",
@@ -105,7 +118,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -125,33 +138,61 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
         </div>
       </div>
 
-      <div className="hidden lg:flex w-full gap-5 h-[400px]">
+      <div className="hidden lg:flex w-full flex-col lg:flex-row md:gap-2.5 xl:gap-5 h-auto lg:h-[400px] select-none">
         {cards.map((card, index) => {
           const isActive = index === activeIndex;
+          const targetWidth = isDesktop ? `${currentLayout[index]}%` : "100%";
+
           return (
             <motion.div
-              key={`desktop-${index}`}
-              layout
-              initial={false}
-              animate={{ width: `${currentLayout[index]}%` }}
+              key={index}
+              layout={isDesktop}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                width: targetWidth,
+                boxShadow:
+                  isActive && isDesktop
+                    ? "0 15px 30px -5px rgba(0, 0, 0, 0.15)"
+                    : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+              }}
+              exit={{ opacity: 0, y: -20 }}
               transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 30,
-                mass: 1,
+                opacity: { duration: 0.6, delay: index * 0.15 },
+                y: {
+                  type: "spring",
+                  stiffness: 50,
+                  damping: 12,
+                  mass: 0.8,
+                  delay: index * 0.15,
+                },
+                width: {
+                  type: "spring",
+                  stiffness: 50,
+                  damping: 12,
+                  mass: 0.8,
+                },
+                boxShadow: { duration: 0.3 },
               }}
               onClick={() => setActiveIndex(index)}
-              className={cn(
-                "relative rounded-[60px] overflow-hidden cursor-pointer transition-colors duration-500 h-full",
-                card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]",
-                isActive ? "z-10" : "hover:brightness-95",
-              )}
+              whileHover={{
+                boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15)",
+                filter: "brightness(0.9)",
+              }}
               style={{
                 backgroundImage: card.image ? `url(${card.image.src})` : "none",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
               }}
+              className={cn(
+                "relative rounded-[60px] overflow-hidden cursor-pointer",
+                "w-full h-[400px] lg:h-[400px] lg:w-auto",
+                !card.image &&
+                  (card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]"),
+                isActive && isDesktop ? "z-10" : "",
+              )}
             >
               <div
                 className={cn(
