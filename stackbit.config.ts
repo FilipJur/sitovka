@@ -15,7 +15,7 @@ export default defineStackbitConfig({
     ssg: {
       name: "Astro",
       logPatterns: {
-        up: ["is ready", "astro"],
+        up: ["Server started", "astro"],
       },
       directRoutes: {
         "socket.io": "socket.io",
@@ -29,24 +29,38 @@ export default defineStackbitConfig({
     // Filter all page models
     const pageModels = models.filter((m) => m.type === "page");
 
-    return (
-      documents
-        // Filter all documents which are of a page model
-        .filter((d) => pageModels.some((m) => m.name === d.modelName))
-        // Map each document to a SiteMapEntry
-        .map((document) => {
-          const model = pageModels.find((m) => m.name === document.modelName);
-          if (!model) return null;
-
-          return {
-            stableId: document.id,
-            urlPath: model.urlPath || "/",
-            document,
-            isHomePage: document.modelName === "Homepage",
-          };
-        })
-        .filter(Boolean) as SiteMapEntry[]
+    console.log(
+      "siteMap called, documents:",
+      documents.length,
+      "pageModels:",
+      pageModels.length,
     );
+    console.log(
+      "Document IDs:",
+      documents.map((d) => ({ id: d.id, model: d.modelName })),
+    );
+
+    const entries = documents
+      // Filter all documents which are of a page model
+      .filter((d) => pageModels.some((m) => m.name === d.modelName))
+      // Map each document to a SiteMapEntry
+      .map((document) => {
+        const model = pageModels.find((m) => m.name === document.modelName);
+        if (!model) return null;
+
+        console.log("Mapping document:", document.id, "to URL:", model.urlPath);
+
+        return {
+          stableId: document.id,
+          urlPath: model.urlPath || "/",
+          document,
+          isHomePage: document.modelName === "Homepage",
+        };
+      })
+      .filter(Boolean) as SiteMapEntry[];
+
+    console.log("Returning siteMap entries:", entries.length);
+    return entries;
   },
 
   contentSources: [
