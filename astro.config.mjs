@@ -9,8 +9,9 @@ export default defineConfig({
   adapter: netlify(),
   integrations: [react()],
   server: {
-    host: "0.0.0.0",
-    allowedHosts: true,
+    port: 4321,
+    host: true, // Listens on all addresses (0.0.0.0)
+    allowedHosts: true, // Allows all hosts (Required for dynamic preview URLs)
     hmr: {
       path: "/vite-hmr",
     },
