@@ -15,7 +15,7 @@ export default defineStackbitConfig({
     ssg: {
       name: "Astro",
       logPatterns: {
-        up: ["Server started", "astro"],
+        up: ["ready in", "astro"],
       },
       directRoutes: {
         "socket.io": "socket.io",
