@@ -7,7 +7,8 @@ export default defineStackbitConfig({
   nodeVersion: "18",
 
   // Astro dev server inside Visual Editor containers
-  devCommand: "node_modules/.bin/astro dev --port {PORT} --host",
+  devCommand:
+    "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts true",
 
   // Critical for Astro/Vite compatibility
   experimental: {
