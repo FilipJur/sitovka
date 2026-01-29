@@ -37,7 +37,7 @@ const contentItems = [
   <h2
     class="text-2xl font-brand-heading text-brand-dark uppercase mb-6 text-center reveal-text"
     data-delay="0"
-    data-sb-field-path="bio.heading"
+    data-sb-field-path="about.heading"
   >
     {bio.heading}
   </h2>
@@ -53,7 +53,7 @@ const contentItems = [
                 src={item.src}
                 alt={item.alt}
                 class="w-full h-auto object-contain -mb-24 lg:-mb-32 scale-110 origin-bottom"
-                data-sb-field-path="bio.image"
+                data-sb-field-path="about.image"
               />
             </div>
           ) : (
@@ -61,7 +61,7 @@ const contentItems = [
               class="text-sm font-book text-brand-dark leading-relaxed reveal-text" 
               data-delay={`${(index + 1) * 100}`} 
               set:html={item.html}
-              data-sb-field-path={`bio.col${index + 1}`}
+data-sb-field-path={`about.col${index + 1}`}
             />
           )
         ))}
