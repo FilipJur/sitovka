@@ -25,6 +25,7 @@ export default defineConfig({
       hmr: {
         path: "/vite-hmr",
       },
+      allowedHosts: [".netlify.app", ".stackbit.app", "localhost"],
     },
   },
 });
