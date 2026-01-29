@@ -5,15 +5,15 @@ import svgr from "vite-plugin-svgr";
 import netlify from "@astrojs/netlify";
 
 export default defineConfig({
+  output: "static",
+  adapter: netlify(),
+  integrations: [react()],
   server: {
     host: "0.0.0.0",
     allowedHosts: true,
     hmr: {
       path: "/vite-hmr",
     },
-    output: "static",
-    adapter: netlify(),
-    integrations: [react()],
   },
   vite: {
     plugins: [
