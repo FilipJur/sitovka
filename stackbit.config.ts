@@ -7,9 +7,7 @@ export default defineStackbitConfig({
   nodeVersion: "18",
 
   // Astro dev server inside Visual Editor container
-  // Using env var for allowedHosts and binding to all interfaces
-  devCommand:
-    "__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=devserver-preview--sitovka.netlify.app,.netlify.app,.stackbit.app,localhost node_modules/.bin/astro dev --port {PORT} --host 0.0.0.0",
+  devCommand: "node_modules/.bin/astro dev --port {PORT} --host 0.0.0.0",
 
   // Critical for Astro/Vite compatibility
   experimental: {
