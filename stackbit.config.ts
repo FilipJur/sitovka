@@ -1,4 +1,4 @@
-import { defineStackbitConfig } from "@stackbit/types";
+import { defineStackbitConfig, type SiteMapEntry } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
@@ -24,15 +24,61 @@ export default defineStackbitConfig({
     },
   },
 
+  // Site map for Visual Editor navigation
+  siteMap: ({ documents, models }) => {
+    // Filter all page models
+    const pageModels = models.filter((m) => m.type === "page");
+
+    return (
+      documents
+        // Filter all documents which are of a page model
+        .filter((d) => pageModels.some((m) => m.name === d.modelName))
+        // Map each document to a SiteMapEntry
+        .map((document) => {
+          const model = pageModels.find((m) => m.name === document.modelName);
+          if (!model) return null;
+
+          return {
+            stableId: document.id,
+            urlPath: model.urlPath || "/",
+            document,
+            isHomePage: document.modelName === "Homepage",
+          };
+        })
+        .filter(Boolean) as SiteMapEntry[]
+    );
+  },
+
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
       contentDirs: [
+        "src/content/pages",
         "src/content/sections",
         "src/content/global",
         "src/content/testimonials",
       ],
       models: [
+        // Homepage - Single page model for the home page
+        {
+          name: "Homepage",
+          type: "page",
+          urlPath: "/",
+          filePath: "src/content/pages/homepage.json",
+          fields: [
+            {
+              name: "about",
+              type: "object",
+              fields: [
+                { name: "heading", type: "string", default: "O nás" },
+                { name: "col1", type: "markdown" },
+                { name: "col2", type: "markdown" },
+                { name: "image", type: "image" },
+              ],
+            },
+          ],
+        },
+
         // Hero Section
         {
           name: "Hero",
@@ -61,7 +107,7 @@ export default defineStackbitConfig({
           ],
         },
 
-        // About Section
+        // About Section (legacy - keeping for compatibility)
         {
           name: "About",
           type: "data",
@@ -247,11 +293,10 @@ export default defineStackbitConfig({
           ],
         },
 
-        // Testimonials (as pages since they're individual files)
+        // Testimonials (as data since they're referenced from case studies)
         {
           name: "Testimonial",
-          type: "page",
-          urlPath: "/testimonials/{slug}",
+          type: "data",
           filePath: "src/content/testimonials/{slug}.json",
           fields: [
             { name: "logo", type: "image" },

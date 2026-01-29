@@ -1,4 +1,5 @@
 ---
+import { getEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import HeroSection from "../components/home/HeroSection.astro";
 import LogoSlider from "../components/home/LogoSlider.astro";
@@ -7,13 +8,17 @@ import ServicesSection from "../components/home/ServicesSection.astro";
 import CaseStudiesSection from "../components/home/CaseStudiesSection.astro";
 import ContactsSection from "../components/home/ContactsSection.astro";
 import Prefooter from "../components/home/Prefooter.astro";
+
+// Fetch homepage data for Visual Editor integration
+const homepageEntry = await getEntry("pages", "homepage");
+const about = homepageEntry?.data?.about;
 ---
 
 <Layout title="Sítovka.net | Marketingová Agentura">
   <!-- Hero Section (Top) -->
   <HeroSection />
   <!-- About Us Section (Benefits + Bio) -->
-  <AboutUs />
+  {about && <AboutUs about={about} />}
 
   <!-- Services Section (Co umíme) -->
   <ServicesSection />

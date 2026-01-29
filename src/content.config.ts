@@ -1,6 +1,22 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+// Pages collection for Visual Editor (Homepage and future pages)
+const pages = defineCollection({
+  loader: glob({ pattern: "*.json", base: "src/content/pages" }),
+  schema: ({ image }) =>
+    z.object({
+      about: z
+        .object({
+          heading: z.string().default("O nás"),
+          col1: z.string().default(""),
+          col2: z.string().default(""),
+          image: image().optional(),
+        })
+        .optional(),
+    }),
+});
+
 const hero = defineCollection({
   loader: glob({ pattern: "hero.json", base: "src/content/sections" }),
   schema: ({ image }) =>
@@ -163,6 +179,7 @@ const testimonials = defineCollection({
 });
 
 export const collections = {
+  pages,
   hero,
   about,
   services,

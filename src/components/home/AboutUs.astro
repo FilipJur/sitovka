@@ -5,15 +5,26 @@ import AboutBio from "./AboutBio.astro";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
-const entry = await getEntry("about", "about");
+interface Props {
+  about?: {
+    heading: string;
+    col1: string;
+    col2: string;
+    image?: any;
+  };
+}
+
+const { about } = Astro.props;
+
+// Fetch benefits from legacy about.json (for now)
+const aboutEntry = await getEntry("about", "about");
+const benefits = aboutEntry?.data?.benefits || [];
 
 // Robust defensive guard
-if (!entry || !entry.data) {
+if (!about) {
   console.warn("About section data missing or corrupted.");
   return null;
 }
-
-const { benefits = [], bio } = entry.data;
 ---
 
 <section class="bg-white rounded-[60px] relative overflow-hidden">
@@ -25,7 +36,7 @@ const { benefits = [], bio } = entry.data;
     <div class="h-24 lg:h-32"></div>
 
     <!-- Row 2: Bio -->
-    <AboutBio bio={bio} />
+    <AboutBio bio={about} />
   </div>
 
   <!-- Decorative hashtag glued to bottom center -->
