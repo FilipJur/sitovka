@@ -13,11 +13,15 @@ export default defineConfig({
     port: 4321,
     host: true, // Listens on all addresses (0.0.0.0)
     allowedHosts: true, // Allows all hosts (Required for dynamic preview URLs)
-    hmr: {
-      path: "/vite-hmr",
-    },
   },
   vite: {
+    server: {
+      // Fix for CORS/WebSocket errors in Netlify Visual Editor
+      hmr: {
+        protocol: "wss", // Force secure web sockets
+        clientPort: 443, // The public port Netlify uses
+      },
+    },
     plugins: [
       tailwindcss(),
       svgr({

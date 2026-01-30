@@ -15,7 +15,6 @@ export default defineStackbitConfig({
       logPatterns: {
         up: ["ready in", "astro"],
       },
-      passthrough: ["/vite-hmr/**"],
     },
   },
 
