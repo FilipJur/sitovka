@@ -1,41 +1,62 @@
 ---
-import { getEntry } from "astro:content";
 import { Image } from "astro:assets";
+import Markdoc from "@markdoc/markdoc";
 
-const entry = await getEntry("prefooter", "prefooter");
-if (!entry) return null;
+interface Props {
+  data: {
+    image?: any;
+    headingHighlight: string;
+    headingRemainder: string;
+  };
+}
 
-const { image } = entry.data;
+const { data } = Astro.props;
+
+// Default values handling if needed
+const highlight = data.headingHighlight || "#chcete, aby";
+const remainder = data.headingRemainder || "váš obsah<br />fungoval?";
+
+// Render markdown/HTML for the remainder (allows <br/>)
+const remainderHtml = Markdoc.renderers.html(
+  Markdoc.transform(Markdoc.parse(remainder)),
+);
 ---
 
-<section class="bg-white pt-24 relative overflow-hidden">
+<section
+  class="bg-white pt-24 relative overflow-hidden"
+  data-sb-object-id="src/content/pages/homepage.json"
+>
   <div class="container mx-auto px-6 relative">
-    <!-- Image: Anchored to bottom-left, z-index: 0 -->
     {
-      image && (
+      data.image && (
         <div class="hidden lg:block absolute left-0 bottom-0 z-0 w-[40%] max-w-[600px] reveal-img" data-delay="0">
           <Image
-            src={image}
+            src={data.image}
             alt=""
             class="w-full h-auto object-contain origin-bottom-left scale-110"
+            data-sb-field-path="prefooter.image"
           />
         </div>
       )
     }
 
-    <!-- Content: Z-index: 10, aligned to right -->
     <div class="relative z-10 flex justify-end items-center">
-      <!-- Text Constraint: 840px -->
-      <div class="max-w-[840px] w-full text-right lg:text-left reveal-text" data-delay="200">
+      <div
+        class="max-w-[840px] w-full text-right lg:text-left reveal-text"
+        data-delay="200"
+      >
         <h2 class="font-brand-heading text-brand-dark text-end pb-16">
           <span
             class="text-5xl md:text-7xl lg:text-display text-brand-green block mb-2"
+            data-sb-field-path="prefooter.headingHighlight"
           >
-            #chcete, aby
+            {highlight}
           </span>
-          <span class="text-5xl md:text-7xl lg:text-display block">
-            váš obsah<br />fungoval?
-          </span>
+          <span
+            class="text-5xl md:text-7xl lg:text-display block"
+            set:html={remainderHtml}
+            data-sb-field-path="prefooter.headingRemainder"
+          />
         </h2>
       </div>
     </div>

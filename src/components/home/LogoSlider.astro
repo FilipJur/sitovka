@@ -1,25 +1,22 @@
 ---
-import { getEntry } from "astro:content";
 import { LogoCarousel } from "./logo-slider/LogoCarousel";
 import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
-const entry = await getEntry("clients", "clients");
+interface Props {
+  data: {
+    logos: any[];
+  };
+}
 
-if (
-  !entry ||
-  !entry.data ||
-  !entry.data.logos ||
-  entry.data.logos.length === 0
-) {
-  console.warn("Clients section: No logos data found or empty array.");
+const { data } = Astro.props;
+
+if (!data || !data.logos || data.logos.length === 0) {
   return null;
 }
 
-const { logos } = entry.data;
-
-const reactLogos = logos.map((item: any) => ({
+const reactLogos = data.logos.map((item: any) => ({
   src: item.logo.src,
   alt: item.name || "",
   name: item.name || "",
@@ -32,6 +29,7 @@ const reactLogos = logos.map((item: any) => ({
 <section
   class="bg-white rounded-[60px] relative overflow-visible reveal-card"
   data-delay="100"
+  data-sb-object-id="src/content/pages/homepage.json"
 >
   <MotionLayoutWrapper>
     <div class="container mx-auto px-6 z-1 relative bg-white">

@@ -23,19 +23,28 @@ const { person } = Astro.props;
         width={180}
         height={180}
         class="rounded-full w-45 h-45 object-cover mb-[30px] bg-brand-surface"
+        data-sb-field-path=".avatar"
       />
     ) : (
       <div class="rounded-full w-45 h-45 bg-brand-surface mb-[30px]" />
     )
   }
 
-  <h3 class="text-lg font-brand-heading text-brand-dark mb-2 uppercase">
+  <h3
+    class="text-lg font-brand-heading text-brand-dark mb-2 uppercase"
+    data-sb-field-path=".name"
+  >
     {person.name}
   </h3>
 
   {
     person.role && person.role.trim() !== "" && (
-      <p class="text-sm font-book text-brand-dark mb-2">{person.role}</p>
+      <p
+        class="text-sm font-book text-brand-dark mb-2"
+        data-sb-field-path=".role"
+      >
+        {person.role}
+      </p>
     )
   }
 
@@ -46,6 +55,7 @@ const { person } = Astro.props;
           <a
             href={`mailto:${person.email}`}
             class="block hover:text-brand-green transition-colors"
+            data-sb-field-path=".email"
           >
             {person.email}
           </a>
@@ -54,6 +64,7 @@ const { person } = Astro.props;
           <a
             href={`tel:${person.phone.replace(/\s/g, "")}`}
             class="block hover:text-brand-green transition-colors"
+            data-sb-field-path=".phone"
           >
             {person.phone}
           </a>

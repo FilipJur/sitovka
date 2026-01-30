@@ -1,42 +1,40 @@
 ---
-import { getEntry } from "astro:content";
 import BenefitsRow from "./BenefitsRow.astro";
 import AboutBio from "./AboutBio.astro";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
 
 interface Props {
-  about?: {
+  data: {
     heading: string;
     col1: string;
     col2: string;
     image?: any;
+    benefits: any[];
   };
 }
 
-const { about } = Astro.props;
+const { data } = Astro.props;
 
-// Fetch benefits from legacy about.json (for now)
-const aboutEntry = await getEntry("about", "about");
-const benefits = aboutEntry?.data?.benefits || [];
-
-// Robust defensive guard
-if (!about) {
-  console.warn("About section data missing or corrupted.");
+if (!data) {
+  console.warn("About section data missing.");
   return null;
 }
 ---
 
-<section class="bg-white rounded-[60px] relative overflow-hidden">
+<section
+  class="bg-white rounded-[60px] relative overflow-hidden"
+  data-sb-object-id="src/content/pages/homepage.json"
+>
   <div class="container mx-auto px-6 pb-24">
     <!-- Row 1: Benefits -->
-    <BenefitsRow benefits={benefits} />
+    <BenefitsRow benefits={data.benefits} />
 
     <!-- Spacer -->
     <div class="h-24 lg:h-32"></div>
 
     <!-- Row 2: Bio -->
-    <AboutBio bio={about} />
+    <AboutBio bio={data} />
   </div>
 
   <!-- Decorative hashtag glued to bottom center -->

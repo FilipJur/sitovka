@@ -143,6 +143,7 @@ export const CaseStudiesTabs = ({
               forceMount
               className="outline-none h-full data-[state=inactive]:absolute data-[state=inactive]:inset-0 reveal-card"
               data-delay={`${index * 100}`}
+              data-sb-field-path={`caseStudies.items.${index}`}
             >
               <motion.div
                 variants={contentVariants}
@@ -154,6 +155,7 @@ export const CaseStudiesTabs = ({
                   <motion.h3
                     className="text-3xl font-brand-heading"
                     variants={itemVariants}
+                    data-sb-field-path=".heading"
                   >
                     {study.heading}
                   </motion.h3>
@@ -161,12 +163,14 @@ export const CaseStudiesTabs = ({
                     className="text-base font-book leading-relaxed"
                     variants={itemVariants}
                     dangerouslySetInnerHTML={{ __html: study.descriptionHtml }}
+                    data-sb-field-path=".description"
                   />
                 </motion.div>
                 {study.image && (
                   <motion.div
                     className="relative h-64 lg:h-[400px] rounded-3xl overflow-hidden bg-white/10"
                     variants={itemVariants}
+                    data-sb-field-path=".image"
                   >
                     <img
                       src={study.image.src}

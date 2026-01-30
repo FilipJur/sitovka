@@ -9,29 +9,31 @@ import CaseStudiesSection from "../components/home/CaseStudiesSection.astro";
 import ContactsSection from "../components/home/ContactsSection.astro";
 import Prefooter from "../components/home/Prefooter.astro";
 
-// Fetch homepage data for Visual Editor integration
+// 1. Fetch ALL homepage content in one go
 const homepageEntry = await getEntry("pages", "homepage");
-const about = homepageEntry?.data?.about;
+const data = homepageEntry?.data;
+
+// Robust check
+if (!data) {
+  throw new Error("Homepage data missing. Please check src/content/pages/homepage.json");
+}
+
+// Destructure for cleaner template
+const { hero, about, services, caseStudies, clients, contacts, prefooter } = data;
 ---
 
 <Layout title="Sítovka.net | Marketingová Agentura">
-  <!-- Hero Section (Top) -->
-  <HeroSection />
-  <!-- About Us Section (Benefits + Bio) -->
-  {about && <AboutUs about={about} />}
+  {hero && <HeroSection data={hero} />}
+  
+  {about && <AboutUs data={about} />}
 
-  <!-- Services Section (Co umíme) -->
-  <ServicesSection />
+  {services && <ServicesSection data={services} />}
 
-  <!-- Case Studies Section (4. Případové studie) -->
-  <CaseStudiesSection />
+  {caseStudies && <CaseStudiesSection data={caseStudies} />}
 
-  <!-- Clients Logo Carousel -->
-  <LogoSlider />
+  {clients && <LogoSlider data={clients} />}
 
-  <!-- Contacts Section (5. Kontakty) -->
-  <ContactsSection />
+  {contacts && <ContactsSection data={contacts} />}
 
-  <!-- Prefooter Section -->
-  <Prefooter />
+  {prefooter && <Prefooter data={prefooter} />}
 </Layout>

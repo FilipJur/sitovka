@@ -85,6 +85,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                 }}
+                data-sb-field-path={`hero.cards.${index}`}
               >
                 <div className="aspect-square" />
                 <div className="absolute inset-0 p-8 flex flex-col justify-between z-20">
@@ -96,6 +97,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                             ? "text-white"
                             : "text-brand-dark"
                         }
+                        data-sb-field-path=".highlight"
                       >
                         {card.highlight}
                       </span>
@@ -106,6 +108,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                             ? "text-brand-dark"
                             : "text-brand-green"
                         }
+                        data-sb-field-path=".headline"
                       >
                         {card.headline}
                       </span>
@@ -113,7 +116,10 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   </div>
 
                   <div className="max-w-xs relative z-10">
-                    <p className="text-base font-book text-brand-dark">
+                    <p
+                      className="text-base font-book text-brand-dark"
+                      data-sb-field-path=".description"
+                    >
                       {card.description}
                     </p>
                   </div>
@@ -193,6 +199,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   (card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]"),
                 isActive && isDesktop ? "z-10" : "",
               )}
+              data-sb-field-path={`hero.cards.${index}`}
             >
               <div
                 className={cn(
@@ -217,6 +224,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                           ? "text-white"
                           : "text-brand-dark"
                       }
+                      data-sb-field-path=".highlight"
                     >
                       {card.highlight}
                     </span>
@@ -227,6 +235,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                           ? "text-brand-dark"
                           : "text-brand-green"
                       }
+                      data-sb-field-path=".headline"
                     >
                       {card.headline}
                     </span>
@@ -240,7 +249,10 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                   }}
                   className="max-w-md relative z-10 pointer-events-none"
                 >
-                  <p className="text-lg font-book text-brand-dark">
+                  <p
+                    className="text-lg font-book text-brand-dark"
+                    data-sb-field-path=".description"
+                  >
                     {card.description}
                   </p>
                 </motion.div>

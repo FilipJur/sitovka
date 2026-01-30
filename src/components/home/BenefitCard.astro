@@ -31,12 +31,15 @@ const IconComponent = Icons[iconId];
   <div class="space-y-5">
     <!-- H2: 28px (text-2xl) Bold Italic -->
     <h2 class="text-2xl font-brand-heading leading-tight text-brand-dark">
-      <span class="text-brand-green">{hashtag}</span>
-      {title}
+      <span class="text-brand-green" data-sb-field-path=".titleHashtag">{hashtag}</span>
+      <span data-sb-field-path=".titleRemainder">{title}</span>
     </h2>
 
     <!-- H3: 14px (text-sm) Book weight -->
-    <h3 class="text-sm font-book text-brand-dark leading-relaxed">
+    <h3
+      class="text-sm font-book text-brand-dark leading-relaxed"
+      data-sb-field-path=".description"
+    >
       {description}
     </h3>
   </div>

@@ -1,27 +1,12 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-// Pages collection for Visual Editor (Homepage and future pages)
-const pages = defineCollection({
-  loader: glob({ pattern: "*.json", base: "src/content/pages" }),
-  schema: ({ image }) =>
-    z.object({
-      about: z
-        .object({
-          heading: z.string().default("O nás"),
-          col1: z.string().default(""),
-          col2: z.string().default(""),
-          image: image().optional(),
-        })
-        .optional(),
-    }),
-});
+// --- SUB-SCHEMAS ---
 
-const hero = defineCollection({
-  loader: glob({ pattern: "hero.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      cards: z.array(
+const heroSchema = (image: any) =>
+  z.object({
+    cards: z
+      .array(
         z.object({
           highlight: z.string(),
           headline: z.string(),
@@ -29,76 +14,110 @@ const hero = defineCollection({
           image: image().optional(),
           theme: z.enum(["green", "white", "grey"]),
         }),
-      ),
-    }),
-});
+      )
+      .default([]),
+  });
 
-const about = defineCollection({
-  loader: glob({ pattern: "about.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      benefits: z.array(
+const aboutSchema = (image: any) =>
+  z.object({
+    heading: z.string().default("O nás"),
+    col1: z.string().default(""),
+    col2: z.string().default(""),
+    image: image().optional(),
+    benefits: z
+      .array(
         z.object({
           iconId: z.enum(["target", "board", "light"]),
           titleHashtag: z.string(),
           titleRemainder: z.string(),
           description: z.string(),
         }),
-      ),
-      bio: z.object({
-        heading: z.string(),
-        col1: z.string(),
-        col2: z.string(),
-        image: image().optional(),
-      }),
-    }),
-});
+      )
+      .default([]),
+  });
 
-const services = defineCollection({
-  loader: glob({ pattern: "services.json", base: "src/content/sections" }),
+const servicesSchema = (image: any) =>
+  z.object({
+    headingHighlight: z.string().default(""),
+    headingRemainder: z.string().default(""),
+    introText: z.string().default(""),
+    items: z
+      .array(
+        z.object({
+          image: image().optional(),
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .default([]),
+  });
+
+const caseStudiesSchema = (image: any) =>
+  z.object({
+    heading: z.string().default("Případové studie"),
+    items: z
+      .array(
+        z.object({
+          tabLabel: z.string(),
+          heading: z.string(),
+          description: z.string(),
+          image: image().optional(),
+        }),
+      )
+      .default([]),
+  });
+
+const clientsSchema = (image: any) =>
+  z.object({
+    logos: z
+      .array(
+        z.object({
+          name: z.string().optional().default(""),
+          href: z.string().url().optional().or(z.literal("")),
+          logo: image(),
+        }),
+      )
+      .default([]),
+  });
+
+const contactsSchema = (image: any) =>
+  z.object({
+    heading: z.string().default("Kontakty"),
+    introText: z.string().default(""),
+    team: z
+      .array(
+        z.object({
+          name: z.string(),
+          role: z.string().optional().default(""),
+          email: z.string().optional().default(""),
+          phone: z.string().optional().default(""),
+          avatar: image().optional(),
+          isFeatured: z.boolean().optional().default(false),
+        }),
+      )
+      .default([]),
+  });
+
+const prefooterSchema = (image: any) =>
+  z.object({
+    image: image().optional(),
+    headingHighlight: z.string().default("#chcete, aby"),
+    headingRemainder: z.string().default("váš obsah<br />fungoval?"),
+  });
+
+// --- COLLECTIONS ---
+
+const pages = defineCollection({
+  loader: glob({ pattern: "*.json", base: "src/content/pages" }),
   schema: ({ image }) =>
     z.object({
-      headingHighlight: z.string().default(""),
-      headingRemainder: z.string().default(""),
-      introText: z.string().default(""),
-      items: z
-        .array(
-          z.object({
-            image: image().optional(),
-            title: z.string(),
-            description: z.string(),
-          }),
-        )
-        .default([]),
-    }),
-});
-
-const contacts = defineCollection({
-  loader: glob({ pattern: "contacts.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      heading: z.string(),
-      introText: z.string(),
-      team: z
-        .array(
-          z.object({
-            name: z.string(),
-            role: z.string().optional().default(""),
-            email: z.string().optional().default(""),
-            phone: z.string().optional().default(""),
-            avatar: image().optional(),
-            isFeatured: z.boolean().optional().default(false),
-          }),
-        )
-        .default([]),
-    }),
-});
-
-const prefooter = defineCollection({
-  loader: glob({ pattern: "prefooter.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      image: image().optional(),
+      hero: heroSchema(image).optional(),
+      about: aboutSchema(image).optional(),
+      services: servicesSchema(image).optional(),
+      caseStudies: caseStudiesSchema(image).optional(),
+      clients: clientsSchema(image).optional(),
+      contacts: contactsSchema(image).optional(),
+      prefooter: prefooterSchema(image).optional(),
     }),
 });
 
@@ -132,40 +151,6 @@ const footer = defineCollection({
   }),
 });
 
-const caseStudies = defineCollection({
-  loader: glob({ pattern: "case-studies.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      heading: z.string(),
-      items: z
-        .array(
-          z.object({
-            tabLabel: z.string(),
-            heading: z.string(),
-            description: z.string(),
-            image: image().optional(),
-          }),
-        )
-        .default([]),
-    }),
-});
-
-const clients = defineCollection({
-  loader: glob({ pattern: "clients.json", base: "src/content/sections" }),
-  schema: ({ image }) =>
-    z.object({
-      logos: z
-        .array(
-          z.object({
-            name: z.string().optional().default(""),
-            href: z.string().url().optional().or(z.literal("")),
-            logo: image(),
-          }),
-        )
-        .default([]),
-    }),
-});
-
 const testimonials = defineCollection({
   loader: glob({ pattern: "**/*.json", base: "./src/content/testimonials" }),
   schema: ({ image }) =>
@@ -180,13 +165,6 @@ const testimonials = defineCollection({
 
 export const collections = {
   pages,
-  hero,
-  about,
-  services,
-  contacts,
-  prefooter,
   footer,
-  caseStudies,
   testimonials,
-  clients,
 };

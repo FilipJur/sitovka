@@ -24,18 +24,18 @@ const imageSrc = typeof bio.image === 'string' ? bio.image : bio.image?.src;
 
 // Create unified content array
 const contentItems = [
-  { type: 'text' as const, html: col1Html },
-  { type: 'text' as const, html: col2Html },
+  { type: 'text' as const, html: col1Html, field: 'about.col1' },
+  { type: 'text' as const, html: col2Html, field: 'about.col2' },
   ...(hasImage && imageSrc ? [{
     type: 'image' as const,
     src: imageSrc,
-    alt: ''
+    alt: '',
+    field: 'about.image'
   }] : [])
 ];
 ---
 
-<!-- Main container with object ID for Visual Editor -->
-<div data-sb-object-id="src/content/pages/homepage.json">
+<div>
   <!-- Heading extracted from grid -->
   <h2
     class="text-2xl font-brand-heading text-brand-dark uppercase mb-6 text-center reveal-text"
@@ -51,7 +51,7 @@ const contentItems = [
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
         {contentItems.map((item, index) => (
           item.type === 'image' ? (
-            <div class="relative flex items-end h-full reveal-img" data-delay="300">
+            <div class="relative flex items-end h-full reveal-img" data-delay="300" data-sb-field-path={item.field}>
               <img
                 src={item.src}
                 alt={item.alt}
@@ -63,7 +63,7 @@ const contentItems = [
               class="text-sm font-book text-brand-dark leading-relaxed reveal-text" 
               data-delay={`${(index + 1) * 100}`} 
               set:html={item.html}
-data-sb-field-path={`about.col${index + 1}`}
+              data-sb-field-path={item.field}
             />
           )
         ))}
@@ -76,7 +76,7 @@ data-sb-field-path={`about.col${index + 1}`}
             class="text-sm font-book text-brand-dark leading-relaxed reveal-text" 
             data-delay={`${(index + 1) * 100}`} 
             set:html={item.html}
-            data-sb-field-path={`about.col${index + 1}`}
+            data-sb-field-path={item.field}
           />
         ))}
       </div>

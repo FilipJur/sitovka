@@ -5,11 +5,14 @@ import Footer from "@/components/layout/Footer.astro";
 import { getEntry } from "astro:content";
 import ReactModalProvider from "@/components/home/ContactModalProvider";
 
-// 1. Fetch contacts data
-const contactsEntry = await getEntry("contacts", "contacts");
+// 1. Fetch homepage data for contacts
+const homepage = await getEntry("pages", "homepage");
+const team = homepage?.data?.contacts?.team || [];
+
+// 2. Filter featured people
 const featuredPeople =
-  contactsEntry?.data?.team?.filter((p: any) => p.isFeatured) ||
-  contactsEntry?.data?.team?.slice(0, 1) ||
+  team.filter((p: any) => p.isFeatured) ||
+  team.slice(0, 1) ||
   [];
 
 interface Props {

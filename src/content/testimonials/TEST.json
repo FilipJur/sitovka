@@ -1,4 +1,5 @@
 {
+  "type": "Testimonial",
   "logo": "@/assets/clients/Test/logo.png",
   "content": "TEST\n",
   "avatar": "@/assets/clients/Test/avatar.jpg",

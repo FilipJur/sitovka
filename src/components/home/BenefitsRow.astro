@@ -16,7 +16,11 @@ const { benefits } = Astro.props;
 <div class="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-22.5">
   {
     benefits.map((benefit: any, index: number) => (
-      <div class="reveal-card" data-delay={`${index * 150}`}>
+      <div
+        class="reveal-card"
+        data-delay={`${index * 150}`}
+        data-sb-field-path={`about.benefits.${index}`}
+      >
         <BenefitCard
           iconId={benefit.iconId}
           hashtag={benefit.titleHashtag}

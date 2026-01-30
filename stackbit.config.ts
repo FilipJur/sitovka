@@ -6,11 +6,9 @@ export default defineStackbitConfig({
   ssgName: "custom",
   nodeVersion: "18",
 
-  // Astro dev server inside Visual Editor containers
   devCommand:
     "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts devserver-preview--sitovka.netlify.app",
 
-  // Critical for Astro/Vite compatibility
   experimental: {
     ssg: {
       name: "Astro",
@@ -24,32 +22,13 @@ export default defineStackbitConfig({
     },
   },
 
-  // Site map for Visual Editor navigation
   siteMap: ({ documents, models }) => {
-    // Filter all page models
     const pageModels = models.filter((m) => m.type === "page");
-
-    console.log(
-      "siteMap called, documents:",
-      documents.length,
-      "pageModels:",
-      pageModels.length,
-    );
-    console.log(
-      "Document IDs:",
-      documents.map((d) => ({ id: d.id, model: d.modelName })),
-    );
-
-    const entries = documents
-      // Filter all documents which are of a page model
+    return documents
       .filter((d) => pageModels.some((m) => m.name === d.modelName))
-      // Map each document to a SiteMapEntry
       .map((document) => {
         const model = pageModels.find((m) => m.name === document.modelName);
         if (!model) return null;
-
-        console.log("Mapping document:", document.id, "to URL:", model.urlPath);
-
         return {
           stableId: document.id,
           urlPath: model.urlPath || "/",
@@ -58,9 +37,6 @@ export default defineStackbitConfig({
         };
       })
       .filter(Boolean) as SiteMapEntry[];
-
-    console.log("Returning siteMap entries:", entries.length);
-    return entries;
   },
 
   contentSources: [
@@ -68,234 +44,249 @@ export default defineStackbitConfig({
       rootPath: __dirname,
       contentDirs: [
         "src/content/pages",
-        "src/content/sections",
         "src/content/global",
         "src/content/testimonials",
       ],
       models: [
-        // Homepage - Single page model for the home page
+        // HOMEPAGE MODEL
         {
           name: "Homepage",
           type: "page",
           urlPath: "/",
           filePath: "src/content/pages/homepage.json",
           fields: [
+            // HERO
+            {
+              name: "hero",
+              type: "object",
+              label: "Hero Section",
+              fields: [
+                {
+                  name: "cards",
+                  type: "list",
+                  label: "Hero Cards",
+                  items: {
+                    type: "object",
+                    labelField: "headline",
+                    fields: [
+                      { name: "highlight", type: "string", required: true },
+                      { name: "headline", type: "string", required: true },
+                      { name: "description", type: "string", required: true },
+                      { name: "image", type: "image" },
+                      {
+                        name: "theme",
+                        type: "enum",
+                        options: ["green", "white", "grey"],
+                        default: "green",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            // ABOUT
             {
               name: "about",
               type: "object",
+              label: "About Section",
               fields: [
                 { name: "heading", type: "string", default: "O nás" },
-                { name: "col1", type: "markdown" },
-                { name: "col2", type: "markdown" },
+                { name: "col1", type: "markdown", label: "Left Column" },
+                { name: "col2", type: "markdown", label: "Right Column" },
                 { name: "image", type: "image" },
+                {
+                  name: "benefits",
+                  type: "list",
+                  label: "Benefits",
+                  items: {
+                    type: "object",
+                    labelField: "titleRemainder",
+                    fields: [
+                      {
+                        name: "iconId",
+                        type: "enum",
+                        options: ["target", "board", "light"],
+                        default: "target",
+                      },
+                      { name: "titleHashtag", type: "string", required: true },
+                      {
+                        name: "titleRemainder",
+                        type: "string",
+                        required: true,
+                      },
+                      { name: "description", type: "string", required: true },
+                    ],
+                  },
+                },
               ],
             },
-          ],
-        },
-
-        // Hero Section
-        {
-          name: "Hero",
-          type: "data",
-          filePath: "src/content/sections/hero.json",
-          fields: [
+            // SERVICES
             {
-              name: "cards",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  { name: "highlight", type: "string", required: true },
-                  { name: "headline", type: "string", required: true },
-                  { name: "description", type: "string", required: true },
-                  { name: "image", type: "image" },
-                  {
-                    name: "theme",
-                    type: "enum",
-                    options: ["green", "white", "grey"],
-                    default: "green",
-                  },
-                ],
-              },
-            },
-          ],
-        },
-
-        // About Section (legacy - keeping for compatibility)
-        {
-          name: "About",
-          type: "data",
-          filePath: "src/content/sections/about.json",
-          fields: [
-            {
-              name: "benefits",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  {
-                    name: "iconId",
-                    type: "enum",
-                    options: ["target", "board", "light"],
-                    default: "target",
-                  },
-                  { name: "titleHashtag", type: "string", required: true },
-                  { name: "titleRemainder", type: "string", required: true },
-                  { name: "description", type: "string", required: true },
-                ],
-              },
-            },
-            {
-              name: "bio",
+              name: "services",
               type: "object",
+              label: "Services Section",
               fields: [
-                { name: "heading", type: "string", default: "O nás" },
-                { name: "col1", type: "markdown" },
-                { name: "col2", type: "markdown" },
+                {
+                  name: "headingHighlight",
+                  type: "string",
+                  default: "Co umíme?",
+                },
+                { name: "headingRemainder", type: "string" },
+                { name: "introText", type: "markdown" },
+                {
+                  name: "items",
+                  type: "list",
+                  label: "Service Cards",
+                  items: {
+                    type: "object",
+                    labelField: "title",
+                    fields: [
+                      { name: "image", type: "image" },
+                      { name: "title", type: "string", required: true },
+                      { name: "description", type: "markdown" },
+                    ],
+                  },
+                },
+              ],
+            },
+            // CASE STUDIES
+            {
+              name: "caseStudies",
+              type: "object",
+              label: "Case Studies Section",
+              fields: [
+                {
+                  name: "heading",
+                  type: "string",
+                  default: "Případové studie",
+                },
+                {
+                  name: "items",
+                  type: "list",
+                  label: "Case Studies",
+                  items: {
+                    type: "object",
+                    labelField: "tabLabel",
+                    fields: [
+                      { name: "tabLabel", type: "string", required: true },
+                      { name: "heading", type: "string", required: true },
+                      { name: "description", type: "markdown" },
+                      { name: "image", type: "image" },
+                    ],
+                  },
+                },
+              ],
+            },
+            // CLIENTS
+            {
+              name: "clients",
+              type: "object",
+              label: "Clients Section",
+              fields: [
+                {
+                  name: "logos",
+                  type: "list",
+                  label: "Client Logos",
+                  items: {
+                    type: "object",
+                    fields: [
+                      { name: "name", type: "string" },
+                      { name: "href", type: "string" },
+                      { name: "logo", type: "image", required: true },
+                    ],
+                  },
+                },
+              ],
+            },
+            // CONTACTS
+            {
+              name: "contacts",
+              type: "object",
+              label: "Contacts Section",
+              fields: [
+                { name: "heading", type: "string", default: "Kontakty" },
+                { name: "introText", type: "markdown" },
+                {
+                  name: "team",
+                  type: "list",
+                  label: "Team Members",
+                  items: {
+                    type: "object",
+                    labelField: "name",
+                    fields: [
+                      { name: "name", type: "string", required: true },
+                      { name: "role", type: "string" },
+                      { name: "email", type: "string" },
+                      { name: "phone", type: "string" },
+                      { name: "avatar", type: "image" },
+                      { name: "isFeatured", type: "boolean", default: false },
+                    ],
+                  },
+                },
+              ],
+            },
+            // PREFOOTER
+            {
+              name: "prefooter",
+              type: "object",
+              label: "Prefooter Section",
+              fields: [
                 { name: "image", type: "image" },
+                {
+                  name: "headingHighlight",
+                  type: "string",
+                  default: "#chcete, aby",
+                },
+                {
+                  name: "headingRemainder",
+                  type: "string",
+                  default: "váš obsah<br />fungoval?",
+                },
               ],
             },
           ],
         },
-
-        // Services Section
-        {
-          name: "Services",
-          type: "data",
-          filePath: "src/content/sections/services.json",
-          fields: [
-            { name: "headingHighlight", type: "string", default: "Co umíme?" },
-            { name: "headingRemainder", type: "string" },
-            { name: "introText", type: "markdown" },
-            {
-              name: "items",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  { name: "image", type: "image" },
-                  { name: "title", type: "string", required: true },
-                  { name: "description", type: "markdown" },
-                ],
-              },
-            },
-          ],
-        },
-
-        // Contacts Section
-        {
-          name: "Contacts",
-          type: "data",
-          filePath: "src/content/sections/contacts.json",
-          fields: [
-            { name: "heading", type: "string", default: "Kontakty" },
-            { name: "introText", type: "markdown" },
-            {
-              name: "team",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  { name: "name", type: "string", required: true },
-                  { name: "role", type: "string" },
-                  { name: "email", type: "string" },
-                  { name: "phone", type: "string" },
-                  { name: "avatar", type: "image" },
-                  { name: "isFeatured", type: "boolean", default: false },
-                ],
-              },
-            },
-          ],
-        },
-
-        // Case Studies Section
-        {
-          name: "CaseStudies",
-          type: "data",
-          filePath: "src/content/sections/case-studies.json",
-          fields: [
-            { name: "heading", type: "string", default: "Případové studie" },
-            {
-              name: "items",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  { name: "tabLabel", type: "string", required: true },
-                  { name: "heading", type: "string", required: true },
-                  { name: "description", type: "markdown" },
-                  { name: "image", type: "image" },
-                ],
-              },
-            },
-          ],
-        },
-
-        // Prefooter Section
-        {
-          name: "Prefooter",
-          type: "data",
-          filePath: "src/content/sections/prefooter.json",
-          fields: [{ name: "image", type: "image" }],
-        },
-
-        // Clients Section
-        {
-          name: "Clients",
-          type: "data",
-          filePath: "src/content/sections/clients.json",
-          fields: [
-            {
-              name: "logos",
-              type: "list",
-              items: {
-                type: "object",
-                fields: [
-                  { name: "name", type: "string" },
-                  { name: "href", type: "string" },
-                  { name: "logo", type: "image", required: true },
-                ],
-              },
-            },
-          ],
-        },
-
-        // Footer Configuration
+        // Footer Config
         {
           name: "Footer",
           type: "data",
+          label: "Footer Configuration",
           filePath: "src/content/global/footer.json",
           fields: [
             {
               name: "company",
               type: "object",
+              label: "Company Info",
               fields: [
-                { name: "name", type: "string", required: true },
-                { name: "street", type: "string", required: true },
-                { name: "city", type: "string", required: true },
+                { name: "name", type: "string" },
+                { name: "street", type: "string" },
+                { name: "city", type: "string" },
               ],
             },
             {
               name: "legal",
               type: "object",
+              label: "Legal Info",
               fields: [
-                { name: "ico", type: "string", required: true },
-                { name: "dic", type: "string", required: true },
-                { name: "court", type: "string", required: true },
+                { name: "ico", type: "string" },
+                { name: "dic", type: "string" },
+                { name: "court", type: "string" },
               ],
             },
             {
               name: "bank",
               type: "object",
+              label: "Bank Details",
               fields: [
-                { name: "accountNumber", type: "string", required: true },
-                { name: "swift", type: "string", required: true },
+                { name: "accountNumber", type: "string" },
+                { name: "swift", type: "string" },
                 { name: "iban", type: "string" },
               ],
             },
             {
               name: "socials",
               type: "object",
+              label: "Social Media Links",
               fields: [
                 { name: "facebook", type: "string" },
                 { name: "instagram", type: "string" },
@@ -306,12 +297,12 @@ export default defineStackbitConfig({
             },
           ],
         },
-
-        // Testimonials (as data since they're referenced from case studies)
+        // Testimonials
         {
           name: "Testimonial",
           type: "data",
           filePath: "src/content/testimonials/{slug}.json",
+          labelField: "name",
           fields: [
             { name: "logo", type: "image" },
             { name: "content", type: "markdown", required: true },
