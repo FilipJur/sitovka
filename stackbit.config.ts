@@ -7,7 +7,7 @@ export default defineStackbitConfig({
   nodeVersion: "18",
 
   devCommand:
-    "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts devserver-preview--sitovka.netlify.app",
+    "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts all",
 
   experimental: {
     ssg: {
