@@ -15,16 +15,19 @@ const data = homepageEntry?.data;
 
 // Robust check
 if (!data) {
-  throw new Error("Homepage data missing. Please check src/content/pages/homepage.json");
+  throw new Error(
+    "Homepage data missing. Please check src/content/pages/homepage.json",
+  );
 }
 
 // Destructure for cleaner template
-const { hero, about, services, caseStudies, clients, contacts, prefooter } = data;
+const { hero, about, services, caseStudies, clients, contacts, prefooter } =
+  data;
 ---
 
 <Layout title="Sítovka.net | Marketingová Agentura">
   {hero && <HeroSection data={hero} />}
-  
+
   {about && <AboutUs data={about} />}
 
   {services && <ServicesSection data={services} />}
