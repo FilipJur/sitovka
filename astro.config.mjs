@@ -12,14 +12,18 @@ export default defineConfig({
   server: {
     port: 4321,
     host: true, // Listens on all addresses (0.0.0.0)
-    allowedHosts: true, // Allows all hosts (Required for dynamic preview URLs)
+    allowedHosts: [
+      "localhost",
+      "*.localhost",
+      ".netlify.app",
+      ".netlify.com",
+      "sitovka.net",
+    ],
   },
   vite: {
     server: {
-      // Fix for CORS/WebSocket errors in Netlify Visual Editor
       hmr: {
-        protocol: "wss", // Force secure web sockets
-        clientPort: 443, // The public port Netlify uses
+        path: "/vite-hmr",
       },
     },
     plugins: [

@@ -5,7 +5,6 @@ export default defineStackbitConfig({
   stackbitVersion: "~0.6.0",
   ssgName: "custom",
   nodeVersion: "18",
-  customContentReload: true,
 
   devCommand:
     "node_modules/.bin/astro dev --port {PORT} --host --allowed-hosts all",
@@ -16,7 +15,10 @@ export default defineStackbitConfig({
       logPatterns: {
         up: ["ready in", "astro"],
       },
-      passthrough: ["/@vite/**", "/.vite/**", "/@fs/**"],
+      passthrough: ["/vite-hmr/**"],
+      directRoutes: {
+        "socket.io": "socket.io",
+      },
     },
   },
 
