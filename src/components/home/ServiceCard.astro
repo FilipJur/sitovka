@@ -1,5 +1,5 @@
 ---
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 
 interface Props {
   item: {
@@ -16,11 +16,8 @@ interface Props {
 
 const { item } = Astro.props;
 
-// Parse Markdoc string to HTML instead of AST for DocumentRenderer
-const source = item.description || "";
-const ast = Markdoc.parse(source);
-const content = Markdoc.transform(ast);
-const html = Markdoc.renderers.html(content);
+// Render markdown to HTML
+const html = mdToHtml(item.description);
 
 ---
 

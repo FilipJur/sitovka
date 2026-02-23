@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 
 interface Props {
   data: {
@@ -16,10 +16,8 @@ const { data } = Astro.props;
 const highlight = data.headingHighlight || "#chcete, aby";
 const remainder = data.headingRemainder || "váš obsah<br />fungoval?";
 
-// Render markdown/HTML for the remainder (allows <br/>)
-const remainderHtml = Markdoc.renderers.html(
-  Markdoc.transform(Markdoc.parse(remainder)),
-);
+// Render markdown to HTML
+const remainderHtml = mdToHtml(remainder);
 ---
 
 <section

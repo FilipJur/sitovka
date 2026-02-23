@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 import { CaseStudiesTabs } from "./case-studies/CaseStudiesTabs";
 import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
 
@@ -31,9 +31,7 @@ function getInitialTabFromURL(url: string) {
 
 // Process Case Studies
 const processedStudies = data.items.map((study) => {
-  const ast = Markdoc.parse(study.description);
-  const content = Markdoc.transform(ast);
-  const html = Markdoc.renderers.html(content);
+  const html = mdToHtml(study.description);
 
   return {
     ...study,
@@ -43,7 +41,10 @@ const processedStudies = data.items.map((study) => {
 
 // Fetch Testimonials (Still separate collection)
 const testimonials = await getCollection("testimonials");
-const processedTestimonials = testimonials.map((t) => t.data);
+const processedTestimonials = testimonials.map((t) => ({
+  ...t.data,
+  content: mdToHtml(t.data.content),
+}));
 
 const initialTab = getInitialTabFromURL(Astro.url.href);
 ---

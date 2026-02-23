@@ -1,5 +1,5 @@
 ---
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 
 interface Props {
   bio: {
@@ -12,9 +12,9 @@ interface Props {
 
 const { bio } = Astro.props;
 
-// Render Markdoc strings to HTML
-const col1Html = Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(bio.col1)));
-const col2Html = Markdoc.renderers.html(Markdoc.transform(Markdoc.parse(bio.col2)));
+// Render markdown to HTML
+const col1Html = mdToHtml(bio.col1);
+const col2Html = mdToHtml(bio.col2);
 
 // Determine layout based on image availability
 const hasImage = bio.image && bio.image !== null;

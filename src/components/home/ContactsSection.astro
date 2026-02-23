@@ -1,5 +1,5 @@
 ---
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 import ContactCard from "./ContactCard.astro";
 
 interface Props {
@@ -11,9 +11,7 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const introHtml = Markdoc.renderers.html(
-  Markdoc.transform(Markdoc.parse(data.introText)),
-);
+const introHtml = mdToHtml(data.introText);
 ---
 
 <section

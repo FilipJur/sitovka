@@ -1,5 +1,5 @@
 ---
-import Markdoc from "@markdoc/markdoc";
+import { mdToHtml } from "@/utils/markdown";
 import ServiceCard from "./ServiceCard.astro";
 import HashtagIcon from "@/assets/icons/hashtag.svg?react";
 import { PositionOverlay } from "@/components/ui/PositionOverlay";
@@ -14,9 +14,7 @@ interface Props {
 }
 
 const { data } = Astro.props;
-const introHtml = Markdoc.renderers.html(
-  Markdoc.transform(Markdoc.parse(data.introText)),
-);
+const introHtml = mdToHtml(data.introText);
 ---
 
 <section
