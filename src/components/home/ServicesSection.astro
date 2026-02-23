@@ -15,6 +15,7 @@ interface Props {
 
 const { data } = Astro.props;
 const introHtml = mdToHtml(data.introText);
+const gridColsClass = `lg:grid-cols-${Math.min(data.items?.length || 1, 4)}`;
 ---
 
 <section
@@ -35,7 +36,7 @@ const introHtml = mdToHtml(data.introText);
       />
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class={`grid grid-cols-1 md:grid-cols-2 ${gridColsClass} gap-5`}>
       {data.items?.map((item: any, index: number) => (
         <div class="reveal-card" data-delay={`${index * 100}`} data-sb-field-path={`services.items.${index}`}>
           <ServiceCard item={item} />

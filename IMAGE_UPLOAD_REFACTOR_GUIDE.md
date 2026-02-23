@@ -186,7 +186,7 @@ const { item } = Astro.props;
   <Image
     {...item.image}
     alt={item.title}
-    class="w-full h-full rounded-[60px] max-h-[330px]"
+    class="w-full h-full rounded-[60px] max-h-[500px]"
   />
 ) : (
   <div class="w-full h-64 bg-gray-200 rounded-2xl flex items-center justify-center">

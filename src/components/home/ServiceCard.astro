@@ -18,7 +18,6 @@ const { item } = Astro.props;
 
 // Render markdown to HTML
 const html = mdToHtml(item.description);
-
 ---
 
 <div class="flex flex-col space-y-5">
@@ -27,7 +26,7 @@ const html = mdToHtml(item.description);
       <img
         src={item.image.src}
         alt={item.title}
-        class="w-full h-full rounded-[60px] max-h-[330px]"
+        class="w-full h-full rounded-[60px] max-h-[500px]"
         data-sb-field-path=".image"
       />
     ) : (
@@ -37,9 +36,14 @@ const html = mdToHtml(item.description);
     )
   }
   <div class="space-y-3">
-    <h3 class="text-2xl font-brand-heading text-brand-dark" data-sb-field-path=".title">{item.title}</h3>
-    <div 
-      class="text-sm font-book text-brand-dark leading-relaxed" 
+    <h3
+      class="text-2xl font-brand-heading text-brand-dark"
+      data-sb-field-path=".title"
+    >
+      {item.title}
+    </h3>
+    <div
+      class="text-sm font-book text-brand-dark leading-relaxed"
       set:html={html}
       data-sb-field-path=".description"
     />
