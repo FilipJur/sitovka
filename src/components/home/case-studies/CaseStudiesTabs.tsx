@@ -1,47 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
 import TestimonialsCarousel, {
   type TestimonialsCarouselRef,
 } from "./TestimonialsCarousel";
+import { CaseStudyPanel } from "./CaseStudyPanel";
 
 interface Props {
   studies: any[];
   testimonials: any[];
 }
-
-const contentVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut" as any,
-      staggerChildren: 0.06,
-      delayChildren: 0.03,
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.15,
-      ease: "easeIn" as any,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.2,
-      ease: "easeOut" as any,
-    },
-  },
-};
 
 export const CaseStudiesTabs = ({
   studies,
@@ -135,74 +104,31 @@ export const CaseStudiesTabs = ({
           activeTab === "reference" ? "p-8 md:py-12 md:px-0" : "p-8 md:p-12"
         }`}
       >
-        <AnimatePresence mode="wait" initial={false}>
-          {studies.map((study, index) => (
-            <Tabs.Content
-              key={study.tabLabel}
-              value={study.tabLabel}
-              forceMount
-              className="outline-none h-full data-[state=inactive]:absolute data-[state=inactive]:inset-0 reveal-card"
-              data-delay={`${index * 100}`}
-              data-sb-field-path={`caseStudies.items.${index}`}
-            >
-              <motion.div
-                variants={contentVariants}
-                initial="hidden"
-                animate={activeTab === study.tabLabel ? "visible" : "hidden"}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center h-full"
-              >
-                <motion.div className="space-y-6" variants={itemVariants}>
-                  <motion.h3
-                    className="text-3xl font-brand-heading"
-                    variants={itemVariants}
-                    data-sb-field-path=".heading"
-                  >
-                    {study.heading}
-                  </motion.h3>
-                  <motion.div
-                    className="text-base font-book leading-relaxed"
-                    variants={itemVariants}
-                    dangerouslySetInnerHTML={{ __html: study.descriptionHtml }}
-                    data-sb-field-path=".description"
-                  />
-                </motion.div>
-                {study.image && (
-                  <motion.div
-                    className="relative h-64 lg:h-[400px] rounded-3xl overflow-hidden bg-white/10"
-                    variants={itemVariants}
-                    data-sb-field-path=".image"
-                  >
-                    <img
-                      src={study.image.src}
-                      alt={study.heading}
-                      className="w-full h-full object-cover"
-                    />
-                  </motion.div>
-                )}
-              </motion.div>
-            </Tabs.Content>
-          ))}
-
+        {studies.map((study, index) => (
           <Tabs.Content
-            value="reference"
-            forceMount
-            className="outline-none h-full flex items-center data-[state=inactive]:absolute data-[state=inactive]:inset-0 reveal-card"
-            data-delay="400"
+            key={study.tabLabel}
+            value={study.tabLabel}
+            className="outline-none h-full data-[state=inactive]:hidden"
+            data-delay={`${index * 100}`}
+            data-sb-field-path={`caseStudies.items.${index}`}
           >
-            <motion.div
-              variants={contentVariants}
-              initial="hidden"
-              animate={activeTab === "reference" ? "visible" : "hidden"}
-              className="w-full"
-            >
-              <TestimonialsCarousel
-                ref={carouselRef}
-                items={testimonials}
-                showNavButtons={testimonials.length > 4}
-              />
-            </motion.div>
+            <CaseStudyPanel study={study} className="h-full" />
           </Tabs.Content>
-        </AnimatePresence>
+        ))}
+
+        <Tabs.Content
+          value="reference"
+          className="outline-none h-full flex items-center data-[state=inactive]:hidden"
+          data-delay="400"
+        >
+          <div className="flex flex-col w-full">
+            <TestimonialsCarousel
+              ref={carouselRef}
+              items={testimonials}
+              showNavButtons={testimonials.length > 4}
+            />
+          </div>
+        </Tabs.Content>
       </motion.div>
     </Tabs.Root>
   );
