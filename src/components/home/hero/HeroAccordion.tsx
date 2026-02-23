@@ -214,7 +214,7 @@ export const HeroAccordion = ({ cards }: HeroProps) => {
                     className={cn(
                       "font-brand-heading leading-[0.9] transition-all duration-500",
                       isDesktop && isActive
-                        ? "text-[80px] xl:text-display leading-30 whitespace-nowrap"
+                        ? "text-[80px] xl:text-display leading-30"
                         : "text-[80px] xl:text-display leading-30 whitespace-nowrap",
                     )}
                   >
