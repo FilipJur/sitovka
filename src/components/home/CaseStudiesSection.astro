@@ -29,15 +29,10 @@ function getInitialTabFromURL(url: string) {
   return null;
 }
 
-// Process Case Studies
-const processedStudies = data.items.map((study) => {
-  const html = mdToHtml(study.description);
-
-  return {
-    ...study,
-    descriptionHtml: html,
-  };
-});
+// Process Case Studies - pass raw data, markdown conversion happens in components
+const processedStudies = data.items.map((study) => ({
+  ...study,
+}));
 
 // Fetch Testimonials (Still separate collection)
 const testimonials = await getCollection("testimonials");
@@ -54,7 +49,7 @@ const initialTab = getInitialTabFromURL(Astro.url.href);
   class="bg-white pt-24 pb-2.5"
   data-sb-object-id="src/content/pages/homepage.json"
 >
-  <div class="container mx-auto px-6">
+  <div class="container">
     <h2
       class="text-2xl font-brand-heading text-brand-dark text-center mb-12 reveal-text"
       data-delay="0"

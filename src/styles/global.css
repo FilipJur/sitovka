@@ -27,7 +27,8 @@
 }
 
 /* --- CUSTOM CONTAINER UTILITY --- */
-/* Override default container to use 1140px (71.25rem) as the default max-width */
+/* Override default container to use 1140px content width */
+/* Max-width includes padding: 1140px + 32px*2 padding = 1204px (75.25rem) */
 @utility container {
   width: 100%;
   margin-inline: auto;
@@ -42,10 +43,10 @@
     max-width: 64rem;
   }
   @media (width >= 80rem) {
-    max-width: 71.75rem; /* 1140px - Custom default width */
+    max-width: 75.25rem; /* 1204px = 1140px content + 64px padding */
   }
   @media (width >= 96rem) {
-    max-width: 71.75rem; /* 1140px - Keep consistent at larger breakpoints */
+    max-width: 75.25rem; /* Keep consistent at larger breakpoints */
   }
 }
 
