@@ -41,54 +41,54 @@
     },
     "about": {
         "heading": "O nás",
-        "col1": "Jsme Síťovka – obsahová agentura, která věří, že dobrý obsah dokáže víc než reklama. Pomáháme značkám i jednotlivcům **zviditelnit se v digitálním světě** – mluvit jasně, autenticky a s dlouhodobým efektem.\\nNevyrábíme instantní posty ani prázdné kampaně. Tvoříme **obsah, který dává smysl – baví, vzdělává nebo prodává.** Každý příspěvek, článek i video má svůj účel, strategii a přidanou hodnotu. test\n\n",
-        "col2": "Zaměřujeme se hlavně na **LinkedIn**, kde pomáháme budovat **osobní i firemní značky**. Spravujeme profily, píšeme texty, vymýšlíme strategie a kampaně, které fungují. Umíme ale i další sociální sítě, blogy, články a spolupráce s influencery či UGC tvůrci. Od prvního nápadu až po publikaci se **postaráme o to, aby váš obsah byl vidět, slyšet a měl výsledky.**\n",
+        "col1": "Jsme Síťovka – obsahová agentura, která věří, že dobrý obsah dokáže víc než reklama. Pomáháme značkám i jednotlivcům **zviditelnit se v digitálním světě** – mluvit jasně, autenticky a s dlouhodobým efektem. Nevyrábíme instantní posty ani prázdné kampaně. Tvoříme **obsah, který dává smysl – baví, vzdělává nebo prodává.** Každý příspěvek, článek i video má svůj účel, strategii a přidanou hodnotu.\n",
+        "col2": "Zaměřujeme se na **LinkedIn**, kde pomáháme budovat **osobní i firemní značky.** Spravujeme profily, píšeme texty, vymýšlíme strategie a kampaně, které fungují. Umíme ale i další sociální sítě, blogy, články a spolupráce s influencery či UGC tvůrci. Od prvního nápadu až po publikaci se **postaráme o to, aby váš obsah byl vidět a slyšet** na těch správných místech.\n\n\n\nNavrhujeme strategie a připravujeme **výkonnostní kampaně**, které přivádí nové návštěvníky, objednávky i reálný zisk a nasměrují váš e-shop k lepším výsledkům.\n",
         "image": "../../assets/images/about/bio/image.png",
         "benefits": [
             {
                 "iconId": "board",
                 "titleHashtag": "#děláme",
                 "titleRemainder": "obsah, který funguje",
-                "description": "Spravujeme sociální sítě, tvoříme texty, fotky i videa, které baví lidi  a podporují značku."
+                "description": "Spravujeme sociální sítě, tvoříme texty, fotky i videa, které baví lidi, podporují značku i prodávají"
             },
             {
                 "iconId": "target",
                 "titleHashtag": "#umíme",
                 "titleRemainder": " zacílit správně",
-                "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých ti opravdu záleží — bez plýtvání rozpočtem."
+                "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých vám opravdu záleží — bez plýtvání rozpočtem."
             },
             {
                 "iconId": "light",
                 "titleHashtag": "#jsme",
-                "titleRemainder": "kreativní  a féroví",
-                "description": "Kombinujeme nápady s daty, držíme krok s trendy a mluvíme  s tebou lidsky, ne agenturně."
+                "titleRemainder": "kreativní a féroví",
+                "description": "Kombinujeme nápady s daty, držíme krok s trendy a mluvíme s vámi lidsky, ne agenturně."
             }
         ]
     },
     "services": {
         "headingHighlight": "Co umíme?",
         "headingRemainder": "Tvoříme obsah, který zaujme, vzdělává nebo prodává.",
-        "introText": "Od nápadu po publikaci tvoříme obsah, který dává smysl lidem i algoritmům. Specializujeme se na LinkedIn – budujeme autentické **osobní i firemní značky**, připravujeme texty, vizuály, strategie a kampaně s výsledky. Zvládáme i další sítě, blogy, články a spolupráce s influencery či UGC tvůrci, každý formát využíváme  k zapamatovatelnému vyprávění vašeho příběhu.\n",
+        "introText": "Od nápadu po publikaci tvoříme obsah, který dává smysl lidem i algoritmům. Budujeme autentické osobní i firemní značky, připravujeme texty, vizuály, strategie a kampaně s výsledky. Zvládáme i další sítě, blogy, články a spolupráce s influencery či UGC tvůrci, každý formát využíváme  k zapamatovatelnému vyprávění vašeho příběhu. \n",
         "items": [
-            {
-                "title": "#v čem jsme jiní",
-                "description": "Specializujeme se na **LinkedIn** – tvoříme obsah na míru podle cílové skupiny a tone of voice, propojujeme kreativitu s daty a strategickým myšlením. Jsme lidský partner vaší značky, ne jen dodavatel.\n",
-                "image": "../../assets/images/services/items/0/image.png"
-            },
             {
                 "image": "../../assets/images/services/items/1/image.jpg",
                 "title": "#obsah",
-                "description": "**Obsah je král** – od storytellingu a strategií po vizuální identitu. Tvoříme smysluplný obsah s viditelnými výsledky: správa sítí, webové texty, newslettery, krizová komunikace i kompletní copywriting.\n"
+                "description": "**Obsah je král** – správa sítí, webové texty, newslettery, krizová komunikace i kompletní copywriting. Tvoříme obsah na míru podle cílové skupiny a tone of voice, propojujeme kreativitu s daty a strategickým myšlením.\n"
             },
             {
                 "image": "../../assets/images/services/items/2/image.png",
                 "title": "#cílení",
-                "description": "Máte skvělý obsah? My ho **přesně zacílíme** – připravíme obsah na míru, nastavíme KPI a kampaně tak, aby dorazil k těm správným lidem a přinesl reálné výsledky.\n"
+                "description": "Máte skvělý obsah, službu nebo produkt? My ho **přesně zacílíme** – připravíme obsah na míru, společně si stanovíme KPI, navrhneme strategii a připravíme kampaně tak, aby dorazily k těm správným lidem a doručily výsledky –  ať už se jedná o interakce, leady nebo prodeje. \n"
             },
             {
                 "image": "../../assets/images/services/items/3/image.jpg",
                 "title": "#technologie",
                 "description": "**Sledujeme trendy** a testujeme nové platformy, aby vaše značka byla vidět. Postaráme se o web, UX, SEO, grafiku, brand building a kompletní vizuální identitu s moderními technologiemi  a novými přístupy.\n"
+            },
+            {
+                "title": "#tým",
+                "description": "**Nejsme korporát** ani anonymní agentura. Jsme tým lidí, kteří s vámi komunikují napřímo, lidsky a na rovinu. Nasloucháme vašim potřebám, ptáme se a hledáme řešení, která dávají smysl – pro vás, váš byznys i vaše zákazníky. \n",
+                "image": "../../assets/images/Frame 19.png"
             }
         ]
     },
@@ -164,10 +164,6 @@
                 "phone": "+420 603 289 747",
                 "avatar": "../../assets/images/team/team/1/avatar.jpg",
                 "isFeatured": true
-            },
-            {
-                "name": "test",
-                "isFeatured": false
             },
             {
                 "name": "Stanislav JULÍČEK",
