@@ -97,51 +97,153 @@
         "items": [
             {
                 "tabLabel": "SEVA",
-                "heading": "SEVA",
-                "description": ""
+                "heading": "Změny výsledků Seva po navázání spolupráce s námi",
+                "description": "**Změny výsledků Seva po navázání spolupráce s námi**\n\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                "metrics": [
+                    {
+                        "label": "Nárůst čistého počtu sledujících FB stránky o téměř",
+                        "value": "100 %",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Nárůst čistého počtu sledujících FB stránky o téměř. Lorem Ipsum has been the industry's standard dummy text ever:",
+                        "value": "25 000",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Nárůst čistého počtu sledujících FB stránky o téměř. Lorem Ipsum has been the industry's standard dummy text ever:",
+                        "value": "488 000",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Nárůst čistého počtu sledujících FB stránky o téměř",
+                        "value": "100 %",
+                        "showCheckmark": true
+                    }
+                ],
+                "testimonial": {
+                    "quote": "S Janou a jejím týmem ze Síťovky.net konzultujeme naše aktivity, příspěvky a statistiky sledovanosti na sociálních sítích už několik let a jsme z naší spolupráce doslova nadšeni. Jana je profesionální, vše si předem nastuduje, navíc aktivně vyhledává nové možnosti a příležitosti.",
+                    "avatar": "../../assets/clients/Lucie Kuchtová/avatar.jpg",
+                    "clientLogo": "../../assets/images/Frame 19.png",
+                    "name": "Lucie Kuchtová",
+                    "role": "marketingový manažer, P-LAB"
+                }
             },
             {
                 "tabLabel": "BigMat",
-                "heading": "BigMat",
-                "description": ""
+                "heading": "BigMat - Strategický obsah pro stavebnictví",
+                "description": "**BigMat - Strategický obsah pro stavebnictví**\n\nKomplexní správa sociálních sítí a tvorba obsahu pro stavební materiály.",
+                "metrics": [
+                    {
+                        "label": "Nárůst organického dosahu",
+                        "value": "150 %",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Noví sledující",
+                        "value": "12 500",
+                        "showCheckmark": true
+                    }
+                ],
+                "testimonial": {
+                    "quote": "Spolupráce se Síťovkou nám přinesla skvělé výsledky. Profesionální přístup a kreativní řešení.",
+                    "avatar": "../../assets/images/team/team/2/avatar.jpg",
+                    "clientLogo": "../../assets/images/clients/logos/1/logo.png",
+                    "name": "Petr Novák",
+                    "role": "marketingový ředitel, BigMat"
+                }
             },
             {
                 "tabLabel": "P-LAB",
-                "heading": "P-LAB",
-                "description": ""
+                "heading": "P-LAB - Komunikace vědy",
+                "description": "**P-LAB - Komunikace vědy**\n\nPopularizace vědy a laboratorních služeb na sociálních sítích.",
+                "metrics": [
+                    {
+                        "label": "Zvýšení engagement rate",
+                        "value": "300 %",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Vytvořených příspěvků",
+                        "value": "500+",
+                        "showCheckmark": false
+                    },
+                    {
+                        "label": "Dosažených lidí",
+                        "value": "2M+",
+                        "showCheckmark": true
+                    }
+                ],
+                "testimonial": {
+                    "quote": "Díky Síťovce jsme dokázali přiblížit vědu široké veřejnosti. Skvělá spolupráce!",
+                    "avatar": "../../assets/images/team/team/1/avatar.jpg",
+                    "clientLogo": "../../assets/images/clients/logos/2/logo.svg",
+                    "name": "Anna Svobodová",
+                    "role": "CEO, P-LAB"
+                }
             },
             {
                 "tabLabel": "Galerie Butovice",
-                "heading": "Galerie Butovice",
-                "description": ""
+                "heading": "Galerie Butovice - Lifestyle obsah",
+                "description": "**Galerie Butovice - Lifestyle obsah**\n\nBudování komunity a brand awareness pro nákupní centrum.",
+                "metrics": [
+                    {
+                        "label": "Růst komunity",
+                        "value": "85 %",
+                        "showCheckmark": true
+                    }
+                ],
+                "testimonial": {
+                    "quote": "Síťovka nám pomohla najít náš hlas na sociálních sítích. Doporučuji!",
+                    "avatar": "../../assets/images/team/team/3/avatar.jpg",
+                    "clientLogo": "../../assets/images/clients/logos/3/logo.png",
+                    "name": "Martin Dvořák",
+                    "role": "marketing manager, Galerie Butovice"
+                }
             }
         ]
     },
     "clients": {
         "logos": [
             {
-                "logo": "../../assets/images/clients/logos/0/logo.png"
+                "name": "P-LAB",
+                "href": "https://www.p-lab.cz",
+                "logo": "../../assets/images/clients/logos/0/logo.svg"
             },
             {
+                "name": "Syntea",
+                "href": "https://www.syntea.cz",
                 "logo": "../../assets/images/clients/logos/1/logo.png"
             },
             {
-                "logo": "../../assets/images/clients/logos/2/logo.png"
+                "name": "ROCKWOOL",
+                "href": "https://www.rockwool.com/cz/",
+                "logo": "../../assets/images/ROCKWOOL Logo.png"
             },
             {
+                "name": "Renards",
+                "href": "https://www.renards.cz",
                 "logo": "../../assets/images/clients/logos/3/logo.png"
             },
             {
-                "logo": "../../assets/images/clients/logos/4/logo.png"
+                "name": "Zdravé ořechy",
+                "href": "https://www.zdraveorechy.cz",
+                "logo": "../../assets/images/clients/logos/4/logo.svg"
             },
             {
-                "logo": "../../assets/images/clients/logos/5/logo.png"
+                "name": "Hefaistos Praha",
+                "href": "https://www.hefaistospraha.cz",
+                "logo": "../../assets/images/clients/logos/5/logo.svg"
             },
             {
-                "logo": "../../assets/images/clients/logos/6/logo.png"
+                "name": "Haas+Sohn Rukov",
+                "href": "https://www.haassohn-rukov.cz",
+                "logo": "../../assets/images/clients/logos/6/logo.svg"
             },
             {
-                "logo": "../../assets/images/Frame 19.png"
+                "name": "Beneš a Lát",
+                "href": "https://www.benesalat.cz",
+                "logo": "../../assets/images/clients/logos/7/logo.png"
             }
         ]
     },

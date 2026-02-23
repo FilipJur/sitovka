@@ -60,8 +60,26 @@ const caseStudiesSchema = (image: any) =>
         z.object({
           tabLabel: z.string(),
           heading: z.string(),
-          description: z.string(),
-          image: image().optional(),
+          description: z.string().optional(),
+          metrics: z
+            .array(
+              z.object({
+                label: z.string(),
+                value: z.string(),
+                showCheckmark: z.boolean().optional().default(true),
+              }),
+            )
+            .optional()
+            .default([]),
+          testimonial: z
+            .object({
+              quote: z.string(),
+              avatar: image().optional(),
+              clientLogo: image().optional(),
+              name: z.string().optional().default(""),
+              role: z.string().optional().default(""),
+            })
+            .optional(),
         }),
       )
       .default([]),

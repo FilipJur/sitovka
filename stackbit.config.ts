@@ -171,7 +171,58 @@ export default defineStackbitConfig({
                       { name: "tabLabel", type: "string", required: true },
                       { name: "heading", type: "string", required: true },
                       { name: "description", type: "markdown" },
-                      { name: "image", type: "image" },
+                      {
+                        name: "metrics",
+                        type: "list",
+                        label: "Metrics (1-4 items)",
+                        items: {
+                          type: "object",
+                          labelField: "label",
+                          fields: [
+                            { name: "label", type: "string", required: true },
+                            { name: "value", type: "string", required: true },
+                            {
+                              name: "showCheckmark",
+                              type: "boolean",
+                              default: true,
+                              label: "Show checkmark after value",
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        name: "testimonial",
+                        type: "object",
+                        label: "Client Testimonial (optional)",
+                        fields: [
+                          {
+                            name: "quote",
+                            type: "markdown",
+                            required: true,
+                            label: "Quote text",
+                          },
+                          {
+                            name: "avatar",
+                            type: "image",
+                            label: "Person avatar",
+                          },
+                          {
+                            name: "clientLogo",
+                            type: "image",
+                            label: "Client company logo",
+                          },
+                          {
+                            name: "name",
+                            type: "string",
+                            label: "Person name",
+                          },
+                          {
+                            name: "role",
+                            type: "string",
+                            label: "Person role and company",
+                          },
+                        ],
+                      },
                     ],
                   },
                 },
