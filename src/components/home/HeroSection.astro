@@ -4,18 +4,23 @@ import { HeroAccordion } from "./hero/HeroAccordion";
 interface Props {
   data: {
     cards: any[];
+    defaultActiveIndex?: number;
   };
 }
 
 const { data } = Astro.props;
-const { cards = [] } = data;
+const { cards = [], defaultActiveIndex = 0 } = data;
 ---
 
 <section
-  class="w-full bg-white relative pb-12 overflow-hidden z-30 mx-6 sm:mx-0"
+  class="w-full bg-white relative pb-12 overflow-hidden z-30"
   data-sb-object-id="src/content/pages/homepage.json"
 >
   <div class="mx-auto h-full">
-    <HeroAccordion client:load cards={cards} />
+    <HeroAccordion
+      client:load
+      cards={cards}
+      defaultActiveIndex={defaultActiveIndex}
+    />
   </div>
 </section>

@@ -5,12 +5,21 @@ import { glob } from "astro/loaders";
 
 const heroSchema = (image: any) =>
   z.object({
+    defaultActiveIndex: z.number().optional().default(0),
     cards: z
       .array(
         z.object({
-          highlight: z.string(),
-          headline: z.string(),
-          description: z.string(),
+          lines: z.array(
+            z.object({
+              text: z.string(),
+              color: z.enum(["white", "dark"]),
+            }),
+          ),
+          alignment: z.enum(["left", "right"]),
+          supplementary: z.object({
+            text: z.string(),
+            position: z.enum(["bottom-left", "bottom-right"]),
+          }),
           image: image().optional(),
           theme: z.enum(["green", "white", "grey"]),
         }),

@@ -11,9 +11,7 @@ const team = homepage?.data?.contacts?.team || [];
 
 // 2. Filter featured people
 const featuredPeople =
-  team.filter((p: any) => p.isFeatured) ||
-  team.slice(0, 1) ||
-  [];
+  team.filter((p: any) => p.isFeatured) || team.slice(0, 1) || [];
 
 interface Props {
   title?: string;
