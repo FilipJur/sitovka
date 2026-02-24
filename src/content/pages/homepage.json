@@ -71,6 +71,11 @@
         "introText": "Od nápadu po publikaci tvoříme obsah, který dává smysl lidem i algoritmům. Budujeme autentické osobní i firemní značky, připravujeme texty, vizuály, strategie a kampaně s výsledky. Zvládáme i další sítě, blogy, články a spolupráce s influencery či UGC tvůrci, každý formát využíváme  k zapamatovatelnému vyprávění vašeho příběhu. \n",
         "items": [
             {
+                "title": "#tým",
+                "description": "**Nejsme korporát** ani anonymní agentura. Jsme tým lidí, kteří s vámi komunikují napřímo, lidsky a na rovinu. Nasloucháme vašim potřebám, ptáme se a hledáme řešení, která dávají smysl – pro vás, váš byznys i vaše zákazníky. \n",
+                "image": "../../assets/images/Sitovka Web Team.jpg"
+            },
+            {
                 "image": "../../assets/images/services/items/1/image.jpg",
                 "title": "#obsah",
                 "description": "**Obsah je král** – správa sítí, webové texty, newslettery, krizová komunikace i kompletní copywriting. Tvoříme obsah na míru podle cílové skupiny a tone of voice, propojujeme kreativitu s daty a strategickým myšlením.\n"
@@ -84,11 +89,6 @@
                 "image": "../../assets/images/services/items/3/image.jpg",
                 "title": "#technologie",
                 "description": "**Sledujeme trendy** a testujeme nové platformy, aby vaše značka byla vidět. Postaráme se o web, UX, SEO, grafiku, brand building a kompletní vizuální identitu s moderními technologiemi  a novými přístupy.\n"
-            },
-            {
-                "title": "#tým",
-                "description": "**Nejsme korporát** ani anonymní agentura. Jsme tým lidí, kteří s vámi komunikují napřímo, lidsky a na rovinu. Nasloucháme vašim potřebám, ptáme se a hledáme řešení, která dávají smysl – pro vás, váš byznys i vaše zákazníky. \n",
-                "image": "../../assets/images/Frame 19.png"
             }
         ]
     },
@@ -132,74 +132,68 @@
             {
                 "tabLabel": "BigMat",
                 "heading": "BigMat - Strategický obsah pro stavebnictví",
-                "description": "**BigMat - Strategický obsah pro stavebnictví**\n\nKomplexní správa sociálních sítí a tvorba obsahu pro stavební materiály.",
+                "description": "**Změny výsledků BigMat po navázání spolupráce s námi**\n",
                 "metrics": [
                     {
-                        "label": "Nárůst organického dosahu",
-                        "value": "150 %",
+                        "label": "Nárůst návštěvnosti sociálních sítí",
+                        "value": "95 %",
                         "showCheckmark": true
                     },
                     {
-                        "label": "Noví sledující",
-                        "value": "12 500",
+                        "label": "Nárůst obratu společnosti ",
+                        "value": "45 %",
                         "showCheckmark": true
+                    },
+                    {
+                        "label": "Pokles nákladů na inzerci",
+                        "value": "-1 000 0000 Kč",
+                        "showCheckmark": false
                     }
-                ],
-                "testimonial": {
-                    "quote": "Spolupráce se Síťovkou nám přinesla skvělé výsledky. Profesionální přístup a kreativní řešení.",
-                    "avatar": "../../assets/images/team/team/2/avatar.jpg",
-                    "clientLogo": "../../assets/images/clients/logos/1/logo.png",
-                    "name": "Petr Novák",
-                    "role": "marketingový ředitel, BigMat"
-                }
+                ]
             },
             {
                 "tabLabel": "P-LAB",
                 "heading": "P-LAB - Komunikace vědy",
-                "description": "**P-LAB - Komunikace vědy**\n\nPopularizace vědy a laboratorních služeb na sociálních sítích.",
+                "description": "**Změny výsledků P-LAB po navázání spolupráce s námi**\n",
                 "metrics": [
                     {
-                        "label": "Zvýšení engagement rate",
-                        "value": "300 %",
+                        "label": "Nárůst počtu sledujících FB stránky",
+                        "value": "100 %",
                         "showCheckmark": true
                     },
                     {
-                        "label": "Vytvořených příspěvků",
-                        "value": "500+",
-                        "showCheckmark": false
+                        "label": "Dosah jednoho příspěvku až",
+                        "value": "25 000",
+                        "showCheckmark": true
                     },
                     {
-                        "label": "Dosažených lidí",
-                        "value": "2M+",
+                        "label": "Počet oslovených uživatelů",
+                        "value": "488 000",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Placených zobrazení ",
+                        "value": "1,2 milionu",
                         "showCheckmark": true
                     }
-                ],
-                "testimonial": {
-                    "quote": "Díky Síťovce jsme dokázali přiblížit vědu široké veřejnosti. Skvělá spolupráce!",
-                    "avatar": "../../assets/images/team/team/1/avatar.jpg",
-                    "clientLogo": "../../assets/images/clients/logos/2/logo.svg",
-                    "name": "Anna Svobodová",
-                    "role": "CEO, P-LAB"
-                }
+                ]
             },
             {
                 "tabLabel": "Galerie Butovice",
                 "heading": "Galerie Butovice - Lifestyle obsah",
-                "description": "**Galerie Butovice - Lifestyle obsah**\n\nBudování komunity a brand awareness pro nákupní centrum.",
+                "description": "**Změny výsledků Galerie Butovice po navázání spolupráce s námi**\n",
                 "metrics": [
                     {
-                        "label": "Růst komunity",
-                        "value": "85 %",
+                        "label": "Facebook",
+                        "value": "+20 %",
+                        "showCheckmark": true
+                    },
+                    {
+                        "label": "Instagram",
+                        "value": "+200 %",
                         "showCheckmark": true
                     }
-                ],
-                "testimonial": {
-                    "quote": "Síťovka nám pomohla najít náš hlas na sociálních sítích. Doporučuji!",
-                    "avatar": "../../assets/images/team/team/3/avatar.jpg",
-                    "clientLogo": "../../assets/images/clients/logos/3/logo.png",
-                    "name": "Martin Dvořák",
-                    "role": "marketing manager, Galerie Butovice"
-                }
+                ]
             }
         ]
     },
