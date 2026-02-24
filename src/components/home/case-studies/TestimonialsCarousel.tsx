@@ -91,16 +91,16 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
     return (
       <>
         <div className="flex items-center w-full">
-          {showNavButtons && items.length > 4 && (
+          {showNavButtons && items.length >= 2 && (
             <button
               onClick={() => emblaApi?.scrollPrev()}
-              className="hidden md:flex p-3 rounded-full hover:bg-primary transition-colors"
+              className="hidden md:flex p-3 rounded-full hover:bg-white/10 transition-colors"
               aria-label="Předchozí reference"
             >
               <ChevronLeft className="w-8 h-8 text-white" />
             </button>
           )}
-          {showNavButtons && items.length <= 4 && (
+          {showNavButtons && items.length < 2 && (
             <div className="w-0 md:w-auto" />
           )}
           <div className="embla flex-1 min-w-0 w-full">
@@ -162,7 +162,7 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
               </div>
             </div>
           </div>
-          {showNavButtons && items.length > 4 && (
+          {showNavButtons && items.length >= 2 && (
             <button
               onClick={() => emblaApi?.scrollNext()}
               className="hidden md:flex p-3 rounded-full hover:bg-white/10 transition-colors"
@@ -171,12 +171,12 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
           )}
-          {showNavButtons && items.length <= 4 && (
+          {showNavButtons && items.length < 2 && (
             <div className="w-0 md:w-auto" />
           )}
         </div>
 
-        {items.length > 4 && (
+        {items.length >= 2 && (
           <div className="flex items-center justify-center gap-2 mt-6">
             {items.map((_, index) => (
               <button

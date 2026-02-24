@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import { mdToHtml } from "@/utils/markdown";
 import { CaseStudiesTabs } from "./case-studies/CaseStudiesTabs";
 import { MotionLayoutWrapper } from "./MotionLayoutWrapper";
+import { mdToHtml } from "@/utils/markdown";
 
 interface Props {
   data: {
@@ -29,16 +29,37 @@ function getInitialTabFromURL(url: string) {
   return null;
 }
 
-// Process Case Studies - pass raw data, markdown conversion happens in components
+// Helper to convert image object to plain src URL
+function processImage(image: any) {
+  if (!image) return undefined;
+  // Handle both { src: string } objects and string URLs
+  if (typeof image === 'string') return { src: image };
+  return { src: image.src };
+}
+
+// Process Case Studies - serialize image objects to plain URLs for React islands
 const processedStudies = data.items.map((study) => ({
-  ...study,
+  tabLabel: study.tabLabel,
+  heading: study.heading,
+  description: study.description,
+  metrics: study.metrics || [],
+  testimonial: study.testimonial ? {
+    quote: study.testimonial.quote,
+    avatar: processImage(study.testimonial.avatar),
+    clientLogo: processImage(study.testimonial.clientLogo),
+    name: study.testimonial.name || '',
+    role: study.testimonial.role || '',
+  } : undefined,
 }));
 
 // Fetch Testimonials (Still separate collection)
 const testimonials = await getCollection("testimonials");
 const processedTestimonials = testimonials.map((t) => ({
-  ...t.data,
   content: mdToHtml(t.data.content),
+  avatar: processImage(t.data.avatar),
+  logo: processImage(t.data.logo),
+  name: t.data.name || '',
+  role: t.data.role || '',
 }));
 
 const initialTab = getInitialTabFromURL(Astro.url.href);
