@@ -97,7 +97,7 @@ export const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white">
-        <div className="w-full max-w-[1140px] mx-auto h-36 flex items-center justify-between px-5">
+        <div className="w-full max-w-[1140px] mx-auto h-24 md:h-36 flex items-center justify-between px-5">
           {/* Logo */}
           <a href="/#" className="shrink-0 group" aria-label="Domů">
             <Logo className="h-10 w-auto" aria-hidden="true" />
