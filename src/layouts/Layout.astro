@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import Header from "@/components/layout/Header.astro";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer.astro";
 import { getEntry } from "astro:content";
 import ReactModalProvider from "@/components/home/ContactModalProvider";
@@ -39,7 +39,7 @@ const {
   </head>
   <body class="bg-white text-brand-dark antialiased mx-0 sm:mx-5 mb-5">
     <!-- Header -->
-    <Header />
+    <Header client:load />
 
     <!-- Main Content -->
     <main class="pt-36">
