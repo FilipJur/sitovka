@@ -106,6 +106,8 @@ export const CaseStudiesTabs = ({
   const isLastTab = activeTab === allTabLabels[allTabLabels.length - 1];
   const isReferenceTab = activeTab === "reference";
 
+  const [carouselNeedsNavigation, setCarouselNeedsNavigation] = useState(false);
+
   return (
     <Tabs.Root
       value={activeTab}
@@ -126,8 +128,10 @@ export const CaseStudiesTabs = ({
       <motion.div
         layout
         transition={{ type: "spring", bounce: 0, duration: 0.3, mass: 0.7 }}
-        className={`relative bg-brand-green rounded-b-[60px] text-brand-dark min-h-[450px] ${
-          activeTab === "reference" ? "p-8 md:py-12 md:px-0" : "p-8 md:p-12"
+        className={`relative bg-brand-green rounded-b-[60px] text-brand-dark min-h-[450px] p-8 ${
+          isReferenceTab && carouselNeedsNavigation
+            ? "md:py-12 md:px-0"
+            : "md:p-12"
         }`}
       >
         {/* Navigation arrows - desktop only, not for reference tab */}
@@ -190,7 +194,7 @@ export const CaseStudiesTabs = ({
             <TestimonialsCarousel
               ref={carouselRef}
               items={testimonials}
-              showNavButtons={testimonials.length > 4}
+              onNavigationChange={setCarouselNeedsNavigation}
             />
           </div>
         </Tabs.Content>

@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
 } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -11,87 +12,137 @@ import { cn } from "@/utils/cn";
 
 interface Props {
   items: any[];
-  showNavButtons?: boolean;
+  onNavigationChange?: (needsNavigation: boolean) => void;
 }
 
 export interface TestimonialsCarouselRef {
   reInit: () => void;
-  canScrollPrev: () => boolean;
-  canScrollNext: () => boolean;
 }
 
+// Calculate visible slides based on viewport width
+const getVisibleSlides = (width: number): number => {
+  if (width >= 1280) return 4; // xl: 4 slides
+  if (width >= 1024) return 3; // lg: 3 slides
+  if (width >= 768) return 2; // md: 2 slides
+  return 1; // mobile: 1 slide
+};
+
+// Clone items to enable proper looping - duplicates the array
+const cloneItems = <T,>(items: T[]): T[] => {
+  if (items.length === 0) return items;
+  return [...items, ...items];
+};
+
 const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
-  ({ items, showNavButtons = true }, ref) => {
-    const [canScroll, setCanScroll] = useState({ prev: false, next: false });
+  ({ items, onNavigationChange }, ref) => {
+    const [viewportWidth, setViewportWidth] = useState(
+      typeof window !== "undefined" ? window.innerWidth : 1200,
+    );
 
-    const [emblaRef, emblaApi] = useEmblaCarousel({
-      align: "start",
-      loop: true,
-      dragFree: false,
-      skipSnaps: false,
-      dragThreshold: 20,
-      duration: 30,
-      containScroll: "trimSnaps",
-      slidesToScroll: 1,
-    });
+    const originalItemCount = items.length;
+    const shouldEnableCarousel = originalItemCount > 1;
 
-    const onSelect = React.useCallback(() => {
-      if (!emblaApi) return;
-      setCanScroll({
-        prev: emblaApi.canScrollPrev(),
-        next: emblaApi.canScrollNext(),
-      });
-    }, [emblaApi]);
+    // Clone items if we need navigation to enable proper looping
+    const clonedItems = useMemo(() => {
+      if (!shouldEnableCarousel || originalItemCount <= 1) return items;
+      return cloneItems(items);
+    }, [items, shouldEnableCarousel, originalItemCount]);
+
+    const needsNavigation = shouldEnableCarousel && originalItemCount > 1;
+
+    // Notify parent of navigation state change
+    useEffect(() => {
+      onNavigationChange?.(needsNavigation);
+    }, [needsNavigation, onNavigationChange]);
+
+    // Track viewport resize
+    useEffect(() => {
+      const handleResize = () => {
+        setViewportWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+      needsNavigation
+        ? {
+            align: "start",
+            loop: true,
+            dragFree: false,
+            skipSnaps: false,
+            dragThreshold: 20,
+            duration: 30,
+            containScroll: "trimSnaps",
+            slidesToScroll: 1,
+          }
+        : undefined, // Disable carousel when not needed
+    );
 
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const onSelectIndex = React.useCallback(() => {
+    const onSelect = useCallback(() => {
       if (!emblaApi) return;
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    }, [emblaApi]);
+      // Map the selected index back to the original item index for dots
+      const realIndex = emblaApi.selectedScrollSnap() % originalItemCount;
+      setSelectedIndex(realIndex);
+    }, [emblaApi, originalItemCount]);
 
     useEffect(() => {
-      if (!emblaApi) return;
-      onSelectIndex();
-      emblaApi.on("select", onSelectIndex);
-      return () => {
-        emblaApi.off("select", onSelectIndex);
-      };
-    }, [emblaApi, onSelectIndex]);
-
-    useEffect(() => {
-      if (!emblaApi) return;
+      if (!emblaApi || !needsNavigation) return;
       onSelect();
       emblaApi.on("select", onSelect);
       return () => {
         emblaApi.off("select", onSelect);
       };
-    }, [emblaApi, onSelect]);
+    }, [emblaApi, onSelect, needsNavigation]);
 
-    const scrollTo = React.useCallback(
-      (index: number) => emblaApi && emblaApi.scrollTo(index),
-      [emblaApi],
+    const scrollTo = useCallback(
+      (index: number) => {
+        if (!emblaApi) return;
+        // Find the nearest instance of this item in the cloned array
+        const currentSnap = emblaApi.selectedScrollSnap();
+        const currentRealIndex = currentSnap % originalItemCount;
+
+        // Calculate the shortest distance to the target index
+        let targetSnap: number;
+        if (index >= currentRealIndex) {
+          targetSnap = currentSnap + (index - currentRealIndex);
+        } else {
+          targetSnap =
+            currentSnap + (originalItemCount - currentRealIndex + index);
+        }
+
+        emblaApi.scrollTo(targetSnap);
+      },
+      [emblaApi, originalItemCount],
     );
 
     useImperativeHandle(
       ref,
       () => ({
         reInit: () => {
-          if (emblaApi) {
+          if (emblaApi && needsNavigation) {
             emblaApi.reInit();
             onSelect();
           }
         },
-        canScrollPrev: () => emblaApi?.canScrollPrev() ?? false,
-        canScrollNext: () => emblaApi?.canScrollNext() ?? false,
       }),
-      [emblaApi, onSelect],
+      [emblaApi, onSelect, needsNavigation],
+    );
+
+    // Memoize the slide class to avoid recalculation
+    const slideClass = useMemo(
+      () =>
+        "flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] xl:flex-[0_0_25%] min-w-0 px-2.5",
+      [],
     );
 
     return (
       <>
         <div className="flex items-center w-full">
-          {showNavButtons && items.length >= 2 && (
+          {needsNavigation && (
             <button
               onClick={() => emblaApi?.scrollPrev()}
               className="hidden md:flex p-3 rounded-full hover:bg-white/10 transition-colors"
@@ -100,19 +151,30 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
               <ChevronLeft className="w-8 h-8 text-white" />
             </button>
           )}
-          {showNavButtons && items.length < 2 && (
-            <div className="w-0 md:w-auto" />
-          )}
+          {!needsNavigation && <div className="w-0 md:w-auto" />}
           <div className="embla flex-1 min-w-0 w-full">
             <div
-              className="embla__viewport w-full overflow-hidden"
+              className={cn(
+                "w-full",
+                needsNavigation ? "overflow-hidden" : "overflow-visible",
+              )}
               ref={emblaRef}
             >
-              <div className="embla__container w-full flex">
-                {items.map((item, idx) => (
+              <div
+                className={cn(
+                  "w-full",
+                  needsNavigation
+                    ? "flex"
+                    : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+                )}
+              >
+                {(needsNavigation ? clonedItems : items).map((item, idx) => (
                   <div
-                    key={item.name || idx}
-                    className="embla__slide flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_calc(100%/3)] xl:flex-[0_0_25%] min-w-0 px-2.5"
+                    key={`${item.name || idx}-${idx}`}
+                    className={cn(
+                      needsNavigation ? slideClass : "px-2.5",
+                      "min-w-0",
+                    )}
                   >
                     <div className="flex flex-col text-sm">
                       <div className="flex gap-5 mb-[30px] items-center flex-wrap">
@@ -151,7 +213,7 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
                   </div>
                 ))}
                 {items.length === 0 && (
-                  <div className="embla__slide flex-[0_0_100%] min-w-0">
+                  <div className="flex-[0_0_100%] min-w-0">
                     <div className="p-6 bg-white/10 rounded-3xl">
                       <p className="font-book italic text-brand-dark">
                         Žádné reference k dispozici.
@@ -162,7 +224,7 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
               </div>
             </div>
           </div>
-          {showNavButtons && items.length >= 2 && (
+          {needsNavigation && (
             <button
               onClick={() => emblaApi?.scrollNext()}
               className="hidden md:flex p-3 rounded-full hover:bg-white/10 transition-colors"
@@ -171,12 +233,10 @@ const TestimonialsCarousel = forwardRef<TestimonialsCarouselRef, Props>(
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
           )}
-          {showNavButtons && items.length < 2 && (
-            <div className="w-0 md:w-auto" />
-          )}
+          {!needsNavigation && <div className="w-0 md:w-auto" />}
         </div>
 
-        {items.length >= 2 && (
+        {needsNavigation && originalItemCount >= 2 && (
           <div className="flex items-center justify-center gap-2 mt-6">
             {items.map((_, index) => (
               <button
