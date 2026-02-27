@@ -227,102 +227,125 @@ export const HeroAccordion = ({ cards, defaultActiveIndex = 0 }: HeroProps) => {
       </div>
 
       {/* Desktop Accordion */}
-      <div className="hidden lg:flex w-full flex-col lg:flex-row gap-2.5 xl:gap-5 select-none">
-        {cards.map((card, index) => {
-          const isActive = index === activeIndex;
-          // Always use layout percentages - mobile/desktop switching is handled by CSS display
-          const targetWidth = `${currentLayout[index]}%`;
-          const layoutForIndex = currentLayout[index];
+      <div className="hidden lg:flex w-full flex-col gap-6">
+        <div className="flex w-full flex-col lg:flex-row gap-2.5 xl:gap-5 select-none">
+          {cards.map((card, index) => {
+            const isActive = index === activeIndex;
+            // Always use layout percentages - mobile/desktop switching is handled by CSS display
+            const targetWidth = `${currentLayout[index]}%`;
+            const layoutForIndex = currentLayout[index];
 
-          // Start at 5% width and expand to target with stagger (only on initial load)
-          const initialWidth = "5%";
-          const staggerDelay = isMounted ? 0 : index * 0.1;
+            // Start at 5% width and expand to target with stagger (only on initial load)
+            const initialWidth = "5%";
+            const staggerDelay = isMounted ? 0 : index * 0.1;
 
-          return (
-            <motion.div
-              key={index}
-              layout={isDesktop && isMounted}
-              initial={{
-                opacity: 0,
-                y: 20,
-                width: initialWidth,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                width: targetWidth,
-                boxShadow:
-                  isActive && isDesktop
-                    ? "0 15px 30px -5px rgba(0, 0, 0, 0.15)"
-                    : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
-              }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{
-                opacity: { duration: 0.6, delay: staggerDelay },
-                y: {
-                  type: "spring",
-                  stiffness: 50,
-                  damping: 12,
-                  mass: 0.8,
-                  delay: staggerDelay,
-                },
-                width: {
-                  type: "spring",
-                  stiffness: 50,
-                  damping: 12,
-                  mass: 0.8,
-                  delay: staggerDelay,
-                },
-                boxShadow: { duration: 0.3 },
-              }}
-              onClick={() => setActiveIndex(index)}
-              whileHover={{
-                boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15)",
-                filter: "brightness(0.95)",
-              }}
-              style={{
-                backgroundImage: card.image ? `url(${card.image.src})` : "none",
-                backgroundSize: "auto 100%",
-                backgroundPosition: getImagePositionFromAlignment(
-                  card.alignment,
-                ),
-                backgroundRepeat: "no-repeat",
-              }}
-              className={cn(
-                "relative rounded-[60px] overflow-hidden cursor-pointer",
-                "w-full lg:w-auto",
-                card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]",
-                isActive && isDesktop ? "z-10" : "",
-              )}
-              data-sb-field-path={`hero.cards.${index}`}
-            >
-              {/* Content Container */}
-              <div
+            return (
+              <motion.div
+                key={index}
+                layout={isDesktop && isMounted}
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                  width: initialWidth,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  width: targetWidth,
+                  boxShadow:
+                    isActive && isDesktop
+                      ? "0 15px 30px -5px rgba(0, 0, 0, 0.15)"
+                      : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+                }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{
+                  opacity: { duration: 0.6, delay: staggerDelay },
+                  y: {
+                    type: "spring",
+                    stiffness: 50,
+                    damping: 12,
+                    mass: 0.8,
+                    delay: staggerDelay,
+                  },
+                  width: {
+                    type: "spring",
+                    stiffness: 50,
+                    damping: 12,
+                    mass: 0.8,
+                    delay: staggerDelay,
+                  },
+                  boxShadow: { duration: 0.3 },
+                }}
+                onClick={() => setActiveIndex(index)}
+                whileHover={{
+                  boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.15)",
+                  filter: "brightness(0.95)",
+                }}
+                style={{
+                  backgroundImage: card.image
+                    ? `url(${card.image.src})`
+                    : "none",
+                  backgroundSize: "auto 100%",
+                  backgroundPosition: getImagePositionFromAlignment(
+                    card.alignment,
+                  ),
+                  backgroundRepeat: "no-repeat",
+                }}
                 className={cn(
-                  "relative p-5 flex flex-col justify-between min-h-[400px]",
-                  isDesktop && !isActive ? "opacity-100" : "opacity-100",
+                  "relative rounded-[60px] overflow-hidden cursor-pointer",
+                  "w-full lg:w-auto",
+                  card.theme === "green" ? "bg-brand-green" : "bg-[#F5F5F5]",
+                  isActive && isDesktop ? "z-10" : "",
                 )}
+                data-sb-field-path={`hero.cards.${index}`}
               >
-                {/* Main Text - Constrained for edge cards when active */}
+                {/* Content Container */}
                 <div
                   className={cn(
-                    "relative z-10 pointer-events-none",
-                    isActive && index === 0 && "w-full max-w-[1100px] ml-auto",
-                    isActive && index === 4 && "w-full max-w-[1100px] mr-auto",
+                    "relative p-5 flex flex-col justify-between min-h-[400px]",
+                    isDesktop && !isActive ? "opacity-100" : "opacity-100",
                   )}
                 >
-                  <HeroLines lines={card.lines} alignment={card.alignment} />
-                </div>
+                  {/* Main Text - Constrained for edge cards when active */}
+                  <div
+                    className={cn(
+                      "relative z-10 pointer-events-none",
+                      isActive &&
+                        index === 0 &&
+                        "w-full max-w-[1100px] ml-auto",
+                      isActive &&
+                        index === 4 &&
+                        "w-full max-w-[1100px] mr-auto",
+                    )}
+                  >
+                    <HeroLines lines={card.lines} alignment={card.alignment} />
+                  </div>
 
-                {/* Supplementary Text */}
-                <SupplementaryText
-                  supplementary={card.supplementary}
-                  isActive={isActive}
-                />
-              </div>
-            </motion.div>
-          );
-        })}
+                  {/* Supplementary Text */}
+                  <SupplementaryText
+                    supplementary={card.supplementary}
+                    isActive={isActive}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Desktop Pagination Dots */}
+        <div className="flex items-center justify-center gap-2">
+          {cards.map((_, index) => (
+            <button
+              key={`desktop-dot-${index}`}
+              onClick={() => setActiveIndex(index)}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all",
+                index === activeIndex ? "bg-brand-green w-8" : "bg-gray-300",
+              )}
+              aria-label={`Activate card ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
