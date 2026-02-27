@@ -335,12 +335,21 @@ export const HeroAccordion = ({ cards, defaultActiveIndex = 0 }: HeroProps) => {
         {/* Desktop Pagination Dots */}
         <div className="flex items-center justify-center gap-2">
           {cards.map((_, index) => (
-            <button
+            <motion.button
               key={`desktop-dot-${index}`}
               onClick={() => setActiveIndex(index)}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.15,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
               className={cn(
-                "w-2 h-2 rounded-full transition-all",
-                index === activeIndex ? "bg-brand-green w-8" : "bg-gray-300",
+                "h-2 rounded-full transition-all",
+                index === activeIndex
+                  ? "bg-brand-green w-8"
+                  : "bg-gray-300 w-2",
               )}
               aria-label={`Activate card ${index + 1}`}
             />
