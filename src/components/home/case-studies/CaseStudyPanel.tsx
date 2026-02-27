@@ -49,7 +49,7 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
   return (
     <div className={cn("flex flex-col lg:flex-row gap-8 lg:gap-12", className)}>
       {/* Left side - Infographic (3/4) */}
-      <div className="flex-1 lg:w-3/4">
+      <div className="flex-1 lg:w-3/4 text-center md:text-left">
         {/* Description with inline heading */}
         {descriptionHtml && (
           <div className="mb-8">
@@ -64,7 +64,7 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
         {study.metrics && study.metrics.length > 0 && (
           <div className="relative">
             {/* Grid container with gaps */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 place-items-center md:place-items-start">
               {study.metrics.map((metric, index) => (
                 <div key={index} className="relative">
                   {/* Metric content */}
@@ -72,7 +72,7 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
                     <p className="text-sm font-book text-brand-dark leading-snug">
                       {metric.label}
                     </p>
-                    <p className="text-5xl md:text-6xl font-brand-heading text-brand-dark whitespace-nowrap text-center">
+                    <p className="text-4xl sm:text-5xl md:text-6xl font-brand-heading text-brand-dark text-center">
                       {metric.value}
                       {metric.showCheckmark !== false && (
                         <span className="text-white">✓</span>
@@ -140,16 +140,20 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
           </div>
 
           {/* CTA Button */}
-          <div className="mt-auto">
+          <div className="mt-auto flex justify-center lg:justify-start">
             <Button
               href="#kontakty"
               variant="dark"
-              className="w-full text-left px-6 py-4 h-auto"
+              className="w-full md:w-auto text-center md:text-left px-6 py-4 h-auto"
             >
               <span className="block">
-                <span className="text-[27px] leading-tight">Vyzkoušejte,</span>
+                <span className="text-xl sm:text-2xl md:text-[27px] leading-tight">
+                  Vyzkoušejte,
+                </span>
                 <br />
-                <span className="text-base">co Síťovka přinese vám</span>
+                <span className="text-sm md:text-base">
+                  co Síťovka přinese vám
+                </span>
               </span>
             </Button>
           </div>

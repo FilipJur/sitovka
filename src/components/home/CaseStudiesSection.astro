@@ -33,7 +33,7 @@ function getInitialTabFromURL(url: string) {
 function processImage(image: any) {
   if (!image) return undefined;
   // Handle both { src: string } objects and string URLs
-  if (typeof image === 'string') return { src: image };
+  if (typeof image === "string") return { src: image };
   return { src: image.src };
 }
 
@@ -43,13 +43,15 @@ const processedStudies = data.items.map((study) => ({
   heading: study.heading,
   description: study.description,
   metrics: study.metrics || [],
-  testimonial: study.testimonial ? {
-    quote: study.testimonial.quote,
-    avatar: processImage(study.testimonial.avatar),
-    clientLogo: processImage(study.testimonial.clientLogo),
-    name: study.testimonial.name || '',
-    role: study.testimonial.role || '',
-  } : undefined,
+  testimonial: study.testimonial
+    ? {
+        quote: study.testimonial.quote,
+        avatar: processImage(study.testimonial.avatar),
+        clientLogo: processImage(study.testimonial.clientLogo),
+        name: study.testimonial.name || "",
+        role: study.testimonial.role || "",
+      }
+    : undefined,
 }));
 
 // Fetch Testimonials (Still separate collection)
@@ -58,8 +60,8 @@ const processedTestimonials = testimonials.map((t) => ({
   content: mdToHtml(t.data.content),
   avatar: processImage(t.data.avatar),
   logo: processImage(t.data.logo),
-  name: t.data.name || '',
-  role: t.data.role || '',
+  name: t.data.name || "",
+  role: t.data.role || "",
 }));
 
 const initialTab = getInitialTabFromURL(Astro.url.href);
@@ -72,7 +74,7 @@ const initialTab = getInitialTabFromURL(Astro.url.href);
 >
   <div class="container">
     <h2
-      class="text-2xl font-brand-heading text-brand-dark text-center mb-12 reveal-text"
+      class="text-2xl font-brand-heading text-brand-dark text-center mb-8 sm:mb-12 reveal-text"
       data-delay="0"
       data-sb-field-path="caseStudies.heading"
     >

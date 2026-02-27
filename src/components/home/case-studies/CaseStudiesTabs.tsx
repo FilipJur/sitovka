@@ -8,6 +8,7 @@ import TestimonialsCarousel, {
 } from "./TestimonialsCarousel";
 import { CaseStudyPanel } from "./CaseStudyPanel";
 import type { CaseStudy } from "./CaseStudyPanel";
+import { MobileTabDropdown } from "@/components/ui/MobileTabDropdown";
 
 interface Props {
   studies: CaseStudy[];
@@ -108,13 +109,29 @@ export const CaseStudiesTabs = ({
 
   const [carouselNeedsNavigation, setCarouselNeedsNavigation] = useState(false);
 
+  const tabOptions = [
+    ...studies.map((study) => ({
+      value: study.tabLabel,
+      label: study.tabLabel,
+    })),
+    { value: "reference", label: "Reference" },
+  ];
+
   return (
     <Tabs.Root
       value={activeTab}
       onValueChange={handleTabChange}
       className="flex flex-col"
     >
-      <Tabs.List className="flex flex-wrap w-full gap-2.5 mb-0 z-10 relative">
+      {/* Mobile Dropdown - Shows active tab as trigger */}
+      <MobileTabDropdown
+        options={tabOptions}
+        value={activeTab}
+        onChange={handleTabChange}
+      />
+
+      {/* Desktop Tabs - Horizontal layout */}
+      <Tabs.List className="hidden md:flex flex-wrap w-full gap-2.5 mb-0 z-10 relative">
         {studies.map((study) => (
           <Trigger
             key={study.tabLabel}
