@@ -210,6 +210,31 @@
             "value": "1,2 milionu",
             "showCheckmark": true
           }
+    },
+    "about": {
+        "heading": "O nás",
+        "col1": "Jsme Síťovka – obsahová agentura, která věří, že dobrý obsah dokáže víc než reklama. Pomáháme značkám i jednotlivcům **zviditelnit se v digitálním světě** – mluvit jasně, autenticky a s dlouhodobým efektem. Nevyrábíme instantní posty ani prázdné kampaně. Tvoříme **obsah, který dává smysl – baví, vzdělává nebo prodává.** Každý příspěvek, článek i video má svůj účel, strategii a přidanou hodnotu.\n",
+        "col2": "Zaměřujeme se na **LinkedIn**, kde pomáháme budovat **osobní i firemní značky.** Spravujeme profily, píšeme texty, vymýšlíme strategie a kampaně, které fungují. Umíme ale i další sociální sítě, blogy, články a spolupráce s influencery či UGC tvůrci. Od prvního nápadu až po publikaci se **postaráme o to, aby váš obsah byl vidět a slyšet** na těch správných místech.\n\n\n\nNavrhujeme strategie a připravujeme **výkonnostní kampaně**, které přivádí nové návštěvníky, objednávky i reálný zisk a nasměrují váš e-shop k lepším výsledkům.\n",
+        "image": "../../assets/images/about/bio/image.png",
+        "benefits": [
+            {
+                "iconId": "board",
+                "titleHashtag": "#děláme",
+                "titleRemainder": "obsah, který funguje",
+                "description": "Spravujeme sociální sítě, tvoříme texty, fotky i videa, které baví lidi, podporují značku i prodávají"
+            },
+            {
+                "iconId": "target",
+                "titleHashtag": "#umíme",
+                "titleRemainder": " zacílit správně",
+                "description": "Nastavíme kampaně tak, aby oslovily ty, na kterých vám opravdu záleží — bez plýtvání rozpočtem."
+            },
+            {
+                "iconId": "light",
+                "titleHashtag": "#jsme",
+                "titleRemainder": "kreativní a féroví",
+                "description": "Kombinujeme nápady s daty, držíme krok s trendy a mluvíme s vámi lidsky, ne agenturně."
+            }
         ]
       },
       {
