@@ -49,7 +49,7 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
   return (
     <div className={cn("flex flex-col lg:flex-row gap-8 lg:gap-12", className)}>
       {/* Left side - Infographic (3/4) */}
-      <div className="flex-1 lg:w-3/4 text-center md:text-left">
+      <div className="flex-1 lg:w-3/4">
         {/* Description with inline heading */}
         {descriptionHtml && (
           <div className="mb-8">
@@ -64,7 +64,7 @@ export const CaseStudyPanel = ({ study, className }: Props) => {
         {study.metrics && study.metrics.length > 0 && (
           <div className="relative">
             {/* Grid container with gaps */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 place-items-center md:place-items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
               {study.metrics.map((metric, index) => (
                 <div key={index} className="relative">
                   {/* Metric content */}
