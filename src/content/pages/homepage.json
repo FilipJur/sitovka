@@ -110,7 +110,7 @@
                     "text": "#neseme vám online řešení",
                     "position": "bottom-left"
                 },
-                "image": "../../assets/images/hero/cards/4/image.png",
+                "image": "../../assets/images/jana.png",
                 "theme": "green"
             }
         ]
@@ -158,7 +158,7 @@
             },
             {
                 "image": "../../assets/images/services/items/2/image.png",
-                "title": "#cílení",
+                "title": "#strategie",
                 "description": "Máte skvělý obsah, službu nebo produkt? My ho **přesně zacílíme** – připravíme obsah na míru, společně si stanovíme KPI, navrhneme strategii a připravíme kampaně tak, aby dorazily k těm správným lidem a doručily výsledky –  ať už se jedná o interakce, leady nebo prodeje. \n"
             },
             {
@@ -220,7 +220,7 @@
                     },
                     {
                         "label": "Pokles nákladů na inzerci",
-                        "value": "-1 000 0000 Kč",
+                        "value": "-1 mil. Kč",
                         "showCheckmark": false
                     }
                 ],
